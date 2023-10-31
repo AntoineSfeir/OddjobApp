@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "254163221221",
+    "project_id": "oddjob-app",
+    "storage_bucket": "oddjob-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254163221221:android:21aea2e3174a81caef320c",
+        "android_client_info": {
+          "package_name": "com.example.odd_job_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtLfUJ7B2yUQIaR4u73zM2qBiTvUljmAM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
