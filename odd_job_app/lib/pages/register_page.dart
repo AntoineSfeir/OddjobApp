@@ -18,7 +18,67 @@ class _RegisterPageState extends State<RegisterPage> {
   final _confirmPasswordController = new TextEditingController();
   final _firstNameController = new TextEditingController();
   final _lastNameController = new TextEditingController();
-  final _ageController = new TextEditingController();
+  final _birthDateController = new TextEditingController();
+  final _addressController = TextEditingController();
+  final _cityController = TextEditingController();
+  final _stateController = TextEditingController();
+  final _zipCodeController = TextEditingController();
+  DateTime? _selectedDate = DateTime.now();
+
+  String? _selectedState;
+
+  List<String> states = [
+    'AL',
+    'AK',
+    'AZ',
+    'AR',
+    'CA',
+    'CO',
+    'CT',
+    'DE',
+    'FL',
+    'GA',
+    'HI',
+    'ID',
+    'IL',
+    'IN',
+    'IA',
+    'KS',
+    'KY',
+    'LA',
+    'ME',
+    'MD',
+    'MA',
+    'MI',
+    'MN',
+    'MS',
+    'MO',
+    'MT',
+    'NE',
+    'NV',
+    'NH',
+    'NJ',
+    'NM',
+    'NY',
+    'NC',
+    'ND',
+    'OH',
+    'OK',
+    'OR',
+    'PA',
+    'RI',
+    'SC',
+    'SD',
+    'TN',
+    'TX',
+    'UT',
+    'VT',
+    'VA',
+    'WA',
+    'WV',
+    'WI',
+    'WY',
+  ];
 
   @override
   void dispose() {
@@ -27,7 +87,11 @@ class _RegisterPageState extends State<RegisterPage> {
     _confirmPasswordController.dispose();
     _firstNameController.dispose();
     _lastNameController.dispose();
-    _ageController.dispose();
+    _birthDateController.dispose();
+    _addressController.dispose();
+    _cityController.dispose();
+    _stateController.dispose();
+    _zipCodeController.dispose();
     super.dispose();
   }
 
@@ -42,7 +106,11 @@ class _RegisterPageState extends State<RegisterPage> {
         _firstNameController.text.trim(),
         _lastNameController.text.trim(),
         _emailController.text.trim(),
-        int.parse(_ageController.text.trim()),
+        _birthDateController.text.trim(),
+        _addressController.text.trim(),
+        _cityController.text.trim(),
+        _stateController.text.trim(),
+        _zipCodeController.text.trim(),
       );
     } else {
       showDialog(
@@ -55,14 +123,65 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  // Save user details to firestore
   Future addUserDetails(
-      String firstName, String lastName, String email, int age) async {
+      String firstName,
+      String lastName,
+      String email,
+      String bday,
+      String address,
+      String city,
+      String state,
+      String zip_code) async {
     await FirebaseFirestore.instance.collection('users').add({
       'firstName': firstName,
       'lastName': lastName,
       'email': email,
-      'age': age,
+      'dob': bday,
+      'address': address,
+      'city': city,
+      'zip': zip_code,
+      'state': state,
     });
+  }
+
+  // Select date of birth
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2101),
+    );
+
+    if (picked != null && picked != _selectedDate)
+      setState(() {
+        if (calculateAge(picked) < 18) {
+          showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  content:
+                      Text("You must be 18 years old or older to register!"),
+                );
+              });
+        }
+        _selectedDate = picked;
+        _birthDateController.text = "${picked.toLocal()}".split(' ')[0];
+      });
+  }
+
+  // Calculate age
+  int calculateAge(DateTime birthDate) {
+    DateTime currentDate = DateTime.now();
+    int age = currentDate.year - birthDate.year;
+
+    if (currentDate.month < birthDate.month ||
+        (currentDate.month == birthDate.month &&
+            currentDate.day < birthDate.day)) {
+      age--;
+    }
+    return age;
   }
 
   // Check if password is confimed
@@ -145,29 +264,170 @@ class _RegisterPageState extends State<RegisterPage> {
 
               SizedBox(height: 10),
 
-              // age text field
+              // dob text field
               Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      border: Border.all(color: Colors.white),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: TextField(
-                        controller: _ageController,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Age',
-                        ),
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    border: Border.all(color: Colors.white),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20.0),
+                    child: TextFormField(
+                      controller: _birthDateController,
+                      onTap: () {
+                        _selectDate(context);
+                      },
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Date of Birth',
                       ),
                     ),
-                  )),
+                  ),
+                ),
+              ),
 
               SizedBox(height: 10),
 
+              // Address text field
+              Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 25.0,
+                          right: 5.0), 
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: TextField(
+                            controller: _addressController,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Address',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  // Zip code text field
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 5.0,
+                          right: 25.0), // Adjust the left padding as needed
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: TextField(
+                            controller: _zipCodeController,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'Zip Code',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(height: 10),
+
+              // Create a Row to put "City" and "State" fields next to each other
+              Row(
+                children: [
+                  // City text field
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 25.0,
+                          right: 5.0), // Adjust the right padding as needed
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: TextField(
+                            controller: _cityController,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: 'City',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  // State dropdown
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 5.0,
+                          right: 25.0), // Adjust the left padding as needed
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          border: Border.all(color: Colors.white),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 20.0),
+                          child: DropdownButton<String>(
+                            value: _selectedState,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                _selectedState = newValue;
+                                _stateController.text = newValue ?? '';
+                              });
+                            },
+                            items: [
+                              // Add a custom hint item at the top
+                              DropdownMenuItem<String>(
+                                value:
+                                    null, // Use null as the value for the hint
+                                child: Text(
+                                  'Select a state', // Your hint text
+                                  style: TextStyle(
+                                      color: Colors
+                                          .grey), // Customize the hint style
+                                ),
+                              ),
+                              // Add the rest of the states
+                              ...states.map<DropdownMenuItem<String>>(
+                                  (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              SizedBox(height: 10),
               // email textfield
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -214,6 +474,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
 
               SizedBox(height: 10),
+
               // Confirm Password text feild
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -236,7 +497,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
 
-              SizedBox(height: 20),
+              SizedBox(height: 30),
 
               // sign up button
               Padding(
