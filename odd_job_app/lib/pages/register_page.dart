@@ -13,6 +13,7 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   // Controller
+  final _usernameController = new TextEditingController();
   final _emailController = new TextEditingController();
   final _passwordController = new TextEditingController();
   final _confirmPasswordController = new TextEditingController();
@@ -92,6 +93,7 @@ class _RegisterPageState extends State<RegisterPage> {
     _cityController.dispose();
     _stateController.dispose();
     _zipCodeController.dispose();
+    _usernameController.dispose();
     super.dispose();
   }
 
@@ -111,6 +113,7 @@ class _RegisterPageState extends State<RegisterPage> {
         _cityController.text.trim(),
         _stateController.text.trim(),
         _zipCodeController.text.trim(),
+        _usernameController.text.trim(),
       );
     } else {
       showDialog(
@@ -125,6 +128,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   // Save user details to firestore
   Future addUserDetails(
+      String username,
       String firstName,
       String lastName,
       String email,
@@ -134,6 +138,7 @@ class _RegisterPageState extends State<RegisterPage> {
       String state,
       String zip_code) async {
     await FirebaseFirestore.instance.collection('users').add({
+      'username': username,
       'firstName': firstName,
       'lastName': lastName,
       'email': email,
@@ -156,6 +161,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     if (picked != null && picked != _selectedDate)
       setState(() {
+        // must be older than 18 to create an account
         if (calculateAge(picked) < 18) {
           showDialog(
               context: context,
@@ -217,6 +223,30 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               SizedBox(height: 40),
+
+              // username text field
+              Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 20.0),
+                      child: TextField(
+                        controller: _usernameController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Username',
+                        ),
+                      ),
+                    ),
+                  )
+                ),
+
+              SizedBox(height: 10),
 
               // first name text field
               Padding(

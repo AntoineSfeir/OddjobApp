@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
+import 'package:odd_job_app/pages/post_job_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:odd_job_app/read%20data/get_job_title.dart';
+import 'package:odd_job_app/read%20data/get_user_name.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -17,8 +20,8 @@ class _HomePageState extends State<HomePage> {
   List<String> docIDs = [];
 
   Future getDocID() async {
-    // get the current user's docIDs
-    await FirebaseFirestore.instance.collection('users').get().then(
+    // get the current job's docIDs
+    await FirebaseFirestore.instance.collection('jobs').get().then(
           (snapshot) => snapshot.docs.forEach((document) {
             print(document.reference.toString());
             docIDs.add(document.reference.id);
@@ -34,18 +37,19 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text (
+          user.email!,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('signed in as: ' + user.email!),
-              MaterialButton(
-                onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                },
-                color: Colors.deepPurple[200],
-                child: Text('Sign Out'),
-              ),
               Expanded(
                 child: FutureBuilder(
                 future: getDocID(),
@@ -54,7 +58,7 @@ class _HomePageState extends State<HomePage> {
                     itemCount: docIDs.length,
                     itemBuilder: (content, index) {
                       return ListTile(
-                        title: Text(docIDs[index]),
+                        title: GetJobTitle(documentId: docIDs[index]),
                       );
                     },
                   );
@@ -100,10 +104,26 @@ class _HomePageState extends State<HomePage> {
                           MaterialPageRoute(
                               builder: (context) => ProfilePage()),
                         );
-                      })
-                ]),
+                      }),
+                       const SizedBox(width: 40.0),
+                ]
+              ),
+
           ),
-        )
+          
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+                   Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => PostJobPage()),
+                        );
+          },
+          backgroundColor: const Color(0xFF1D465D),
+          child: const Icon(Icons.add),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       );
   }
 }
