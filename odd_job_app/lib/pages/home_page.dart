@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
 import 'package:odd_job_app/pages/post_job_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:odd_job_app/read%20data/get_job_title.dart';
-import 'package:odd_job_app/read%20data/get_user_name.dart';
+import 'package:odd_job_app/read%20data/get_jobs_data.dart';
+import 'package:odd_job_app/read%20data/get_user_data.dart';
 
 
 class HomePage extends StatefulWidget {
