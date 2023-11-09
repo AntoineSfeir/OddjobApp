@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/auth/auth_page.dart';
+import 'package:odd_job_app/auth/main_page.dart';
 import 'package:odd_job_app/pages/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:odd_job_app/pages/login_page.dart';
@@ -108,7 +109,7 @@ class _ProfileState extends State<ProfilePage> {
                     FirebaseAuth.instance.signOut();
                      Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => AuthPage()),
+                      MaterialPageRoute(builder: (context) => MainPage()),
                     );
                   },    
                   child: Container(
