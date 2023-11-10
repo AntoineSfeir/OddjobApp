@@ -111,7 +111,7 @@ class _HomePageState extends State<HomePage> {
             MaterialPageRoute(builder: (context) => PostJobPage()),
           );
         },
-        backgroundColor: const Color(0xFF1D465D),
+        backgroundColor: Colors.green,
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

@@ -23,7 +23,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
   
   Future<void> getUserData() async {
     // Check if user is not null before accessing its properties
-    if (user != null) {
+    if (user.email != null) {
       // get the current job's docIDs
       await FirebaseFirestore.instance.collection('users').get().then(
             (snapshot) => snapshot.docs.forEach((document) {
