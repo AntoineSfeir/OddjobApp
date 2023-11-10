@@ -23,6 +23,7 @@ class _ProfileState extends State<ProfilePage> {
   int currentPageIndex = 3;
   final user = FirebaseAuth.instance.currentUser!;
   String? username;
+  String? currentUserDocId;
   File? _image; // Variable to store the selected image
 
   Future<void> getUsername() async {
@@ -31,6 +32,7 @@ class _ProfileState extends State<ProfilePage> {
             if (document["email"] == user.email) {
               setState(() {
                 username = document["username"];
+                currentUserDocId = document.reference.id;
               });
             }
           }),
@@ -39,20 +41,32 @@ class _ProfileState extends State<ProfilePage> {
 
   // Function to open the image picker
   Future<void> _getImage() async {
-    final pickedFile = await ImagePicker()
-        .pickImage(source: ImageSource.gallery); // Updated method name
+    try {
+      final pickedFile =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
 
-    if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-      });
+      if (pickedFile != null) {
+        // Check if the image is of type JPEG
+        if (pickedFile.mimeType == 'image/jpeg') {
+          setState(() {
+            _image = File(pickedFile.path);
+          });
 
-      // Upload the selected image
-      await _uploadImage(_image!);
+          // Upload the selected image
+          await _uploadImage(_image!);
+        } else {
+          // Handle the case when the selected image is not a JPEG
+          print('Unsupported image type: ${pickedFile.mimeType}');
+          // You can display an error message or take other appropriate actions
+        }
+      }
+    } catch (error) {
+      // Handle other exceptions that might occur during image picking
+      print('Error picking image: $error');
+      // You can display an error message or take other appropriate actions
     }
   }
 
-// Function to upload the image to the server
   Future<void> _uploadImage(File imageFile) async {
     try {
       // Generate a unique filename for the image
@@ -68,7 +82,7 @@ class _ProfileState extends State<ProfilePage> {
       String imageUrl = await storageReference.getDownloadURL();
 
       // Update the user profile with the new avatar URL
-      await updateProfileWithNewAvatar(imageUrl as http.Response);
+      await updateProfileWithNewAvatar(imageUrl);
     } catch (error) {
       // Handle any unexpected errors during the upload process
       print('Error uploading image: $error');
@@ -77,17 +91,18 @@ class _ProfileState extends State<ProfilePage> {
 
   String? avatarUrl;
 // Function to update user profile with the new avatar URL
-  Future<void> updateProfileWithNewAvatar(http.Response response) async {
+  Future<void> updateProfileWithNewAvatar(String url) async {
     // Extract the avatar URL from the server response
-    avatarUrl = response.headers['location'];
-
-    // Update the user profile with the new avatar URL
-    // You should have a method to update user data in your backend or use a service like Firebase Firestore
-    // Example using Firebase Firestore:
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(user.uid) // Replace with the actual document ID for the user
-        .update({'avatarUrl': avatarUrl});
+    avatarUrl = url;
+    try {
+      // Update the user profile with the new avatar URL
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentUserDocId)
+          .update({'avatarUrl': avatarUrl});
+    } on FirebaseFirestore catch (e) {
+      print('Error updating user profile: $e');
+    }
   }
 
   @override
