@@ -5,7 +5,7 @@ import 'package:odd_job_app/pages/forgot_pw_page.dart';
 
 class LoginPage extends StatefulWidget {
   final VoidCallback showRegisterPage;
-  const LoginPage({Key? key,required this.showRegisterPage}) : super(key: key);
+  const LoginPage({Key? key, required this.showRegisterPage}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -18,10 +18,10 @@ class _LoginPageState extends State<LoginPage> {
 
   Future signIn() async {
     try {
-await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-    );
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
     } on FirebaseAuthException catch (e) {
       print(e);
       showDialog(
@@ -50,24 +50,18 @@ await FirebaseAuth.instance.signInWithEmailAndPassword(
           child: SingleChildScrollView(
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Icon(
-                Icons.work,
-                size: 100,
+              Image.asset(
+                'assets/imgs/OddjobLogo.png',
+                width: 300, // Adjust the width as needed
+                height: 150, // Adjust the height as needed
               ),
               // Hello again!
-              Text('Hello again!',
+              Text('Welcome Back!',
                   style: GoogleFonts.bebasNeue(
                     fontSize: 52,
                   )),
-              SizedBox(height: 10),
-              Text(
-                "Welcome to OddJob!",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
               SizedBox(height: 50),
+              
 
               // email textfield
               Padding(
@@ -96,7 +90,7 @@ await FirebaseAuth.instance.signInWithEmailAndPassword(
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: TextField(
-                 obscureText: true,
+                  obscureText: true,
                   controller: _passwordController,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
@@ -115,31 +109,26 @@ await FirebaseAuth.instance.signInWithEmailAndPassword(
               ),
 
               SizedBox(height: 10),
-               
+
               // Forgot Password button
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return ForgotPasswordPage();
-                              }
-                            )
-                          );
-                        },
-                       child: Text('Forgot Password?',
-                                         style: TextStyle(
-                                         color: Colors.blue,
-                                         fontWeight: FontWeight.bold,
-                                       )
-                                       ),
-                     ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return ForgotPasswordPage();
+                        }));
+                      },
+                      child: Text('Forgot Password?',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          )),
+                    ),
                   ],
                 ),
               ),
@@ -154,7 +143,7 @@ await FirebaseAuth.instance.signInWithEmailAndPassword(
                   child: Container(
                       padding: EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: Colors.deepPurple,
+                        color: Colors.indigoAccent,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Center(
@@ -181,7 +170,7 @@ await FirebaseAuth.instance.signInWithEmailAndPassword(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  GestureDetector (
+                  GestureDetector(
                     onTap: widget.showRegisterPage,
                     child: Text(
                       " Register now",
