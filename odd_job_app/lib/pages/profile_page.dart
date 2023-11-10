@@ -46,6 +46,7 @@ class _ProfileState extends State<ProfilePage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: Colors.grey[300],
         body: Stack(
           children: [
             Column(

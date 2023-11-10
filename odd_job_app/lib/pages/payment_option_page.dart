@@ -12,6 +12,7 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
         title: Text(
           "Payment Options",
