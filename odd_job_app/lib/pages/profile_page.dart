@@ -1,12 +1,16 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:odd_job_app/auth/main_page.dart';
-import 'package:odd_job_app/pages/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:odd_job_app/pages/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/pages/job_history_page.dart';
 import 'package:odd_job_app/pages/about_oddjob_page.dart';
 import 'package:odd_job_app/pages/profile_info_page.dart';
 import 'package:odd_job_app/pages/payment_option_page.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -17,22 +21,73 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfileState extends State<ProfilePage> {
   int currentPageIndex = 3;
-
   final user = FirebaseAuth.instance.currentUser!;
-
   String? username;
+  File? _image; // Variable to store the selected image
 
   Future<void> getUsername() async {
-    // get the current job's docIDs
     await FirebaseFirestore.instance.collection('users').get().then(
           (snapshot) => snapshot.docs.forEach((document) {
             if (document["email"] == user.email) {
               setState(() {
                 username = document["username"];
               });
-            } 
+            }
           }),
         );
+  }
+
+  // Function to open the image picker
+  Future<void> _getImage() async {
+    final pickedFile = await ImagePicker()
+        .pickImage(source: ImageSource.gallery); // Updated method name
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+
+      // Upload the selected image
+      await _uploadImage(_image!);
+    }
+  }
+
+// Function to upload the image to the server
+  Future<void> _uploadImage(File imageFile) async {
+    try {
+      // Generate a unique filename for the image
+      String fileName = '${DateTime.now()}.png';
+
+      // Upload the image to Firebase Storage
+      firebase_storage.Reference storageReference =
+          firebase_storage.FirebaseStorage.instance.ref().child(fileName);
+
+      await storageReference.putFile(imageFile);
+
+      // Get the download URL of the uploaded image
+      String imageUrl = await storageReference.getDownloadURL();
+
+      // Update the user profile with the new avatar URL
+      await updateProfileWithNewAvatar(imageUrl as http.Response);
+    } catch (error) {
+      // Handle any unexpected errors during the upload process
+      print('Error uploading image: $error');
+    }
+  }
+
+  String? avatarUrl;
+// Function to update user profile with the new avatar URL
+  Future<void> updateProfileWithNewAvatar(http.Response response) async {
+    // Extract the avatar URL from the server response
+    avatarUrl = response.headers['location'];
+
+    // Update the user profile with the new avatar URL
+    // You should have a method to update user data in your backend or use a service like Firebase Firestore
+    // Example using Firebase Firestore:
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid) // Replace with the actual document ID for the user
+        .update({'avatarUrl': avatarUrl});
   }
 
   @override
@@ -65,19 +120,37 @@ class _ProfileState extends State<ProfilePage> {
                 // Profile Picture and Name
                 Row(
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.width * 0.15,
-                        top: MediaQuery.of(context).size.height * 0.05,
-                      ),
-                      width: 80,
-                      height: 80,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.blue, // Blue circle
+                    GestureDetector(
+                      onTap: _getImage, // Open image picker on tap
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width * 0.15,
+                          top: MediaQuery.of(context).size.height * 0.05,
+                        ),
+                        width: 100,
+                        height: 100,
+                        child: ClipOval(
+                          child: _image != null
+                              ? Image.file(
+                                  _image!,
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.network(
+                                  avatarUrl ??
+                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKurFbiK1YFmGY6LV3FwBqui2WOp7Kx7Jk7A&usqp=CAU",
+                                  width: 100,
+                                  height: 100,
+                                  fit: BoxFit.cover,
+                                ),
+                        ),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.blue, // Blue circle
+                        ),
                       ),
                     ),
-
                     // Display username
                     Container(
                       margin: EdgeInsets.only(
@@ -138,11 +211,10 @@ class _ProfileState extends State<ProfilePage> {
                 // Job history
                 TextButton(
                   onPressed: () {
-                     Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => JobHistoryPage()),
-                        );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => JobHistoryPage()),
+                    );
                   },
                   child: Container(
                     alignment: Alignment.centerLeft,
@@ -184,7 +256,7 @@ class _ProfileState extends State<ProfilePage> {
                 // About OddJob
                 TextButton(
                   onPressed: () {
-                     Navigator.push(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => AboutOddJobPage()),
