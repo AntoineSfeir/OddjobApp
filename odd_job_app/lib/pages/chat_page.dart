@@ -2,6 +2,7 @@ import "package:cloud_firestore/cloud_firestore.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
 import "package:odd_job_app/chat/chat_service.dart";
+import "package:odd_job_app/chat/message_bubble.dart";
 
 class ChatPage extends StatefulWidget {
   final String recieverEmail;
@@ -73,14 +74,16 @@ class _ChatPageState extends State<ChatPage> {
 
       return Container(
         alignment: alignment,
-        child: Text(data['message'])
-        );
+        child: Padding (
+          padding: EdgeInsets.all(8.0),
+        child: ChatBubble(message: data['message'], isSender: (data['recieverUser'] != auth.currentUser!.email) )
+        ),
+      );
   }
 
   Widget buildMessageInput() {
     return Row(
       children: [
-        //need to make a text input box
         Expanded(
           child: TextField(
                         controller: _messageController,
