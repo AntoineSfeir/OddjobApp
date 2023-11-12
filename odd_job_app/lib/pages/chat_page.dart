@@ -12,12 +12,12 @@ class ChatPage extends StatefulWidget {
   State<ChatPage> createState() => _ChatPageState();
 }
 
-ChatService chat = new ChatService();
 
 class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
   final ChatService _chatService = ChatService();
   final FirebaseAuth auth = FirebaseAuth.instance;
+  ChatService chat = new ChatService();
 
 
   void sendMessage() async {
@@ -47,29 +47,29 @@ class _ChatPageState extends State<ChatPage> {
 
 
   Widget buildMessageList() {
-    String? userEmail = auth.currentUser?.email;
-    String user;
-    if (userEmail != null) {
-      user = userEmail;
-    } else {
-      user = "null value";
-    }
-    return StreamBuilder(
-      stream: chat.getMessages(user, widget.recieverEmail),
-      builder: (context, snapshot) {
-        return ListView(
-          children: snapshot.data!.docs.map((document) => buildMessageItem(document)).toList(),
-        );
-      },
-    );
-  }
+  return StreamBuilder(
+    stream: chat.getMessages(auth.currentUser?.email ?? '', widget.recieverEmail),
+    builder: (context, snapshot) {
+      if (snapshot.hasError) {
+        return Text('Error ${snapshot.error}');
+      }
+      if (snapshot.connectionState == ConnectionState.waiting) {
+        return Text("Loading");
+      }
+      return ListView(
+        children: snapshot.data!.docs.map((document) => buildMessageItem(document)).toList(),
+      );
+    },
+  );
+}
+
 
 
 
   Widget buildMessageItem(DocumentSnapshot doc) {
       Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
 
-      var alignment = (data['recieverEmail'] == auth.currentUser!.email) ? Alignment.centerRight : Alignment.centerLeft;
+      var alignment = (data['recieverUser'] != auth.currentUser!.email) ? Alignment.centerRight : Alignment.centerLeft;
 
       return Container(
         alignment: alignment,
