@@ -4,6 +4,7 @@ import 'package:odd_job_app/auth/main_page.dart';
 import 'package:odd_job_app/pages/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:odd_job_app/pages/login_page.dart';
+import 'package:odd_job_app/pages/messages_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -159,7 +160,13 @@ class _ProfileState extends State<ProfilePage> {
                   icon: const Icon(Icons.chat),
                   color: Colors.white,
                   iconSize: 40.0,
-                  onPressed: () {},
+                  onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MessagesPage()),
+                        );
+                      },
                 ),
                 IconButton (
                   icon: const Icon(Icons.person),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
 import 'package:odd_job_app/pages/post_job_page.dart';
+import 'package:odd_job_app/pages/messages_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/read%20data/get_jobs_data.dart';
 import 'package:odd_job_app/read%20data/get_user_data.dart';
@@ -92,7 +93,13 @@ class _HomePageState extends State<HomePage> {
                     icon: const Icon(Icons.chat),
                     color: Colors.white,
                     iconSize: 40.0,
-                    onPressed: () {},
+                    onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MessagesPage()),
+                        );
+                      },
                   ),
                   IconButton(
                       icon: const Icon(Icons.person),
