@@ -9,7 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class GetUserName extends StatelessWidget {
   final String documentId;
   
-  GetUserName({required this.documentId});
+  const GetUserName({super.key, required this.documentId});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class GetUserName extends StatelessWidget {
             "${data['username']}",
           );
         }
-        return Text(
+        return const Text(
           "Loading...",
           style: TextStyle(
             fontSize: 20,

@@ -2,30 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
 import 'package:odd_job_app/pages/post_job_page.dart';
+import 'package:odd_job_app/pages/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:odd_job_app/pages/search_page.dart';
-import 'package:odd_job_app/pages/job_title.dart';
+import 'package:odd_job_app/jobs/job.dart';
+import 'package:odd_job_app/jobs/jobcard.dart';
+import 'package:odd_job_app/jobs/jobdescription.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<SearchPage> createState() => _SearchPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _SearchPageState extends State<SearchPage> {
   final user = FirebaseAuth.instance.currentUser!;
+  final db = FirebaseFirestore.instance;
 
   List<String> docIDs = [];
+  List<Job> jo = [];
 
-  Future getDocID() async {
-    // get the current user's docIDs
-    await FirebaseFirestore.instance.collection('users').get().then(
-          (snapshot) => snapshot.docs.forEach((document) {
-            print(document.reference.toString());
-            docIDs.add(document.reference.id);
-          }),
-        );
+  Future allJobs() async {
+    await db
+        .collection('jobs')
+        .get()
+        .then((snapshot) => snapshot.docs.forEach((element) {
+              Job i = Job.fromSnapshot(element);
+              i.ID = element.id;
+              print(i.ID);
+              jo.add(i);
+            }));
+    // final jobData = snapshot.docs.map((e) => Job.fromSnapshot(e)).toList();
+    // jo = jobData;
   }
 
   final String cardBackground = '#1B475E';
@@ -34,18 +42,6 @@ class _HomePageState extends State<HomePage> {
       Color(int.parse(cardBackground.substring(1, 7), radix: 16) + 0xFF000000);
   late final Color moneyTextColor =
       Color(int.parse(moneyText.substring(1, 7), radix: 16) + 0xFF000000);
-  List<String> items = ['My Bids', 'Lawn Mowing', 'House Cleaning'];
-  String? selectedItem = 'My Bids';
-  List<String> items1 = ['My Jobs', 'Lawn Mowing', 'House Cleaning'];
-  String? selectedJob = 'My Jobs';
-  List<String> items2 = ['My Posted Jobs', 'Lawn Mowing', 'House Cleaning'];
-  String? selectedPostedJob = 'My Posted Jobs';
-  List<String> expan = ['Item 1', 'Item 2', 'Item 3'];
-  List<bool> isExpanded = [
-    false,
-    false,
-    false
-  ]; // Keep track of expansion state
 
   @override
   void initState() {
@@ -57,6 +53,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('signed in as: ${user.email!}'),
             const Image(
@@ -68,21 +65,37 @@ class _HomePageState extends State<HomePage> {
               height: 25,
               color: Colors.black,
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: expan.length,
+            Flexible(
+                child: ListView.builder(
+              // shrinkWrap: true,
               itemBuilder: (context, index) {
-                return ExpansionTile(
-                  title: const Text("My Jobs"),
-                  onExpansionChanged: (expanded) {
-                    setState(
-                      () {
-                        isExpanded[index] = expanded;
-                      },
-                    );
-                  },
+                return FutureBuilder(
+                  future: allJobs(),
+                  builder: ((context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      if (jo.isNotEmpty) {
+                        return Column(
+                          children: jo.map((Job) => JobCard(job: Job)).toList(),
+                        );
+                      } else if (snapshot.hasError) {
+                        return Center(
+                          child: Text(snapshot.error.toString()),
+                        );
+                      } else {
+                        return const Text('Something went wrong');
+                      }
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  }),
                 );
               },
+              itemCount: 1,
+            )),
+            const SizedBox(
+              height: 30,
             ),
           ],
         ),
@@ -99,18 +112,18 @@ class _HomePageState extends State<HomePage> {
                 icon: const Icon(Icons.home),
                 color: const Color.fromARGB(255, 248, 248, 248),
                 iconSize: 40.0,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HomePage()),
+                  );
+                },
               ),
               IconButton(
                 icon: const Icon(Icons.search),
                 color: const Color.fromARGB(255, 238, 239, 239),
                 iconSize: 40.0,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SearchPage()),
-                  );
-                },
+                onPressed: () {},
               ),
               IconButton(
                 //alignment: ,

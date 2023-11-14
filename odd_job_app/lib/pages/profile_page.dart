@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:odd_job_app/auth/auth_page.dart';
 import 'package:odd_job_app/auth/main_page.dart';
 import 'package:odd_job_app/pages/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:odd_job_app/pages/login_page.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({super.key});
 
   @override
   State<ProfilePage> createState() => _ProfileState();
@@ -109,12 +107,12 @@ class _ProfileState extends State<ProfilePage> {
                     FirebaseAuth.instance.signOut();
                      Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MainPage()),
+                      MaterialPageRoute(builder: (context) => const MainPage()),
                     );
                   },    
                   child: Container(
                     alignment: Alignment.centerLeft,
-                    child: Row(
+                    child: const Row(
                       children: <Widget>[
                         Icon(Icons.logout),
                         SizedBox(width: 5,),
@@ -131,7 +129,7 @@ class _ProfileState extends State<ProfilePage> {
           ],
         ),
          bottomNavigationBar: BottomAppBar(
-    color: Color.fromARGB(255, 132, 51, 218),
+    color: const Color.fromARGB(255, 132, 51, 218),
           shape: const CircularNotchedRectangle(),
           child: SizedBox(
             height: 60.0,
@@ -140,18 +138,18 @@ class _ProfileState extends State<ProfilePage> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.home),
-                  color: Color.fromARGB(255, 248, 248, 248),
+                  color: const Color.fromARGB(255, 248, 248, 248),
                   iconSize: 40.0,
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
+                      MaterialPageRoute(builder: (context) => const HomePage()),
                     );
                   }
                 ),
                 IconButton (
                   icon: const Icon(Icons.search),
-                  color: Color.fromARGB(255, 238, 239, 239),
+                  color: const Color.fromARGB(255, 238, 239, 239),
                   iconSize: 40.0,
                   onPressed: () {},
                 ),
@@ -163,12 +161,12 @@ class _ProfileState extends State<ProfilePage> {
                 ),
                 IconButton (
                   icon: const Icon(Icons.person),
-                  color: Color.fromARGB(255, 238, 239, 239),
+                  color: const Color.fromARGB(255, 238, 239, 239),
                   iconSize: 40.0,
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ProfilePage()),
+                      MaterialPageRoute(builder: (context) => const ProfilePage()),
                     );
                   }
                 )
@@ -188,11 +186,11 @@ class OptionItem extends StatelessWidget {
   final VoidCallback onPressedCallback; // Define a callback parameter
 
   const OptionItem({
-    Key? key,
+    super.key,
     required this.icon,
     required this.text,
     required this.onPressedCallback, // Add the callback parameter
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
