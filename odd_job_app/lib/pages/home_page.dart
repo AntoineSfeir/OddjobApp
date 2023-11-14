@@ -3,8 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
 import 'package:odd_job_app/pages/post_job_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:odd_job_app/pages/search_page.dart';
 import 'package:odd_job_app/pages/job_title.dart';
+import 'package:odd_job_app/read%20data/get_jobs_data.dart';
+
+
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,7 +26,6 @@ class _HomePageState extends State<HomePage> {
     // get the current user's docIDs
     await FirebaseFirestore.instance.collection('users').get().then(
           (snapshot) => snapshot.docs.forEach((document) {
-            print(document.reference.toString());
             docIDs.add(document.reference.id);
           }),
         );
@@ -55,77 +58,77 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      backgroundColor: Colors.grey[300],
+      appBar: AppBar(
+        title: Text(
+          "Job Listings",
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('signed in as: ${user.email!}'),
-            const Image(
-              image: AssetImage('assets/ODDJOBLOGO.png'),
-              width: 250,
-              height: 150,
-            ),
-            const Divider(
-              height: 25,
-              color: Colors.black,
-            ),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: expan.length,
-              itemBuilder: (context, index) {
-                return ExpansionTile(
-                  title: const Text("My Jobs"),
-                  onExpansionChanged: (expanded) {
-                    setState(
-                      () {
-                        isExpanded[index] = expanded;
-                      },
+            Expanded(
+              child: FutureBuilder(
+              future: getDocID(),
+              builder: (context, snapshot) {
+                return ListView.builder(
+                  itemCount: docIDs.length,
+                  itemBuilder: (content, index) {
+                    return ListTile(
+                      title: GetJobTitle(documentId: docIDs[index]),
                     );
                   },
                 );
               },
-            ),
+            ))
           ],
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: cardBackGroundColor,
+        color: Colors.blue,
         shape: const CircularNotchedRectangle(),
         child: SizedBox(
           height: 60.0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.home),
-                color: const Color.fromARGB(255, 248, 248, 248),
-                iconSize: 40.0,
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: const Icon(Icons.search),
-                color: const Color.fromARGB(255, 238, 239, 239),
-                iconSize: 40.0,
-                onPressed: () {
-                  Navigator.push(
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+            IconButton(
+              icon: const Icon(Icons.home),
+              color: Color.fromARGB(255, 248, 248, 248),
+              iconSize: 40.0,
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: const Icon(Icons.search),
+              color: Color.fromARGB(255, 238, 239, 239),
+              iconSize: 40.0,
+              onPressed: () {
+               Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const SearchPage()),
                   );
-                },
-              ),
-              IconButton(
-                //alignment: ,
-                icon: const Icon(Icons.chat),
-                color: Colors.white,
-                iconSize: 40.0,
-                onPressed: () {},
-              ),
-              IconButton(
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.chat),
+              color: Colors.white,
+              iconSize: 40.0,
+              onPressed: () {},
+            ),
+            IconButton(
                 icon: const Icon(Icons.person),
-                color: Colors.white,
+                color: Color.fromARGB(255, 238, 239, 239),
+
                 iconSize: 40.0,
                 onPressed: () {
                   Navigator.push(
                     context,
+
                     MaterialPageRoute(
                         builder: (context) => const ProfilePage()),
                   );
@@ -134,16 +137,19 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(width: 40.0),
             ],
           ),
+
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const PostJobPage()),
+
+            MaterialPageRoute(builder: (context) => PostJobPage()),
           );
         },
-        backgroundColor: const Color(0xFF1D465D),
+        backgroundColor: Colors.green,
+
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

@@ -152,6 +152,7 @@ class _PostJobPageState extends State<PostJobPage> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+
             children: <Widget>[
               Flexible(
                   child: ListView.builder(

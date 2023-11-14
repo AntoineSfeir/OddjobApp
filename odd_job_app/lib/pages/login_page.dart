@@ -5,7 +5,9 @@ import 'package:odd_job_app/pages/forgot_pw_page.dart';
 
 class LoginPage extends StatefulWidget {
   final VoidCallback showRegisterPage;
-  const LoginPage({super.key,required this.showRegisterPage});
+
+  const LoginPage({Key? key, required this.showRegisterPage}) : super(key: key);
+
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -17,10 +19,21 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
 
   Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-    );
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text(e.message.toString()),
+            );
+          });
+    }
   }
 
   @override
@@ -39,24 +52,22 @@ class _LoginPageState extends State<LoginPage> {
           child: SingleChildScrollView(
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              const Icon(
-                Icons.work,
-                size: 100,
+
+              Image.asset(
+                'assets/imgs/OddjobLogo.png',
+                width: 300, // Adjust the width as needed
+                height: 150, // Adjust the height as needed
+
               ),
               // Hello again!
-              Text('Hello again!',
+              Text('Welcome Back!',
                   style: GoogleFonts.bebasNeue(
                     fontSize: 52,
                   )),
-              const SizedBox(height: 10),
-              const Text(
-                "Welcome to OddJob!",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.normal,
-                ),
-              ),
-              const SizedBox(height: 50),
+
+              SizedBox(height: 50),
+              
+
 
               // email textfield
               Padding(
@@ -85,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: TextField(
-                 obscureText: true,
+                  obscureText: true,
                   controller: _passwordController,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
@@ -103,32 +114,31 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
 
-              const SizedBox(height: 10),
-               
+
+              SizedBox(height: 10),
+
+
               // Forgot Password button
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return const ForgotPasswordPage();
-                              }
-                            )
-                          );
-                        },
-                       child: const Text('Forgot Password?',
-                                         style: TextStyle(
-                                         color: Colors.blue,
-                                         fontWeight: FontWeight.bold,
-                                       )
-                                       ),
-                     ),
+
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return ForgotPasswordPage();
+                        }));
+                      },
+                      child: Text('Forgot Password?',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          )),
+                    ),
+
                   ],
                 ),
               ),
@@ -143,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: Colors.deepPurple,
+                        color: Colors.indigoAccent,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Center(
@@ -170,7 +180,7 @@ class _LoginPageState extends State<LoginPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  GestureDetector (
+                  GestureDetector(
                     onTap: widget.showRegisterPage,
                     child: const Text(
                       " Register now",
