@@ -91,6 +91,12 @@ class _MessagesPageState extends State<MessagesPage> {
   return StreamBuilder<QuerySnapshot>(
     stream: FirebaseFirestore.instance.collection("users").snapshots(), 
     builder: (context, snapshot) {
+      if(snapshot.hasError) {
+        return Text('Error');
+      }
+      if(snapshot.connectionState == ConnectionState.waiting) {
+        return Text("Loading...");
+      }
       return ListView(
         children: snapshot.data!.docs.map<Widget>((doc) => buildUserListItem(context, doc)).toList(),
     );
@@ -119,5 +125,3 @@ Widget buildUserListItem(BuildContext context, DocumentSnapshot doc) {
   }
 }
 }
-
-//34 min in 
