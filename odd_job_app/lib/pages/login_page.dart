@@ -5,7 +5,9 @@ import 'package:odd_job_app/pages/forgot_pw_page.dart';
 
 class LoginPage extends StatefulWidget {
   final VoidCallback showRegisterPage;
+
   const LoginPage({Key? key, required this.showRegisterPage}) : super(key: key);
+
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -13,8 +15,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   // Controller
-  final _emailController = new TextEditingController();
-  final _passwordController = new TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   Future signIn() async {
     try {
@@ -50,18 +52,22 @@ class _LoginPageState extends State<LoginPage> {
           child: SingleChildScrollView(
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+
               Image.asset(
                 'assets/imgs/OddjobLogo.png',
                 width: 300, // Adjust the width as needed
                 height: 150, // Adjust the height as needed
+
               ),
               // Hello again!
               Text('Welcome Back!',
                   style: GoogleFonts.bebasNeue(
                     fontSize: 52,
                   )),
+
               SizedBox(height: 50),
               
+
 
               // email textfield
               Padding(
@@ -70,11 +76,11 @@ class _LoginPageState extends State<LoginPage> {
                   controller: _emailController,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
+                      borderSide: const BorderSide(color: Colors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.deepPurple),
+                      borderSide: const BorderSide(color: Colors.deepPurple),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     hintText: 'Email',
@@ -84,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // password textfield
               Padding(
@@ -94,11 +100,11 @@ class _LoginPageState extends State<LoginPage> {
                   controller: _passwordController,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white),
+                      borderSide: const BorderSide(color: Colors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.deepPurple),
+                      borderSide: const BorderSide(color: Colors.deepPurple),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     hintText: 'Password',
@@ -108,7 +114,9 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
 
+
               SizedBox(height: 10),
+
 
               // Forgot Password button
               Padding(
@@ -116,6 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+
                     GestureDetector(
                       onTap: () {
                         Navigator.push(context,
@@ -129,11 +138,12 @@ class _LoginPageState extends State<LoginPage> {
                             fontWeight: FontWeight.bold,
                           )),
                     ),
+
                   ],
                 ),
               ),
 
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
 
               // sign in button
               Padding(
@@ -141,12 +151,12 @@ class _LoginPageState extends State<LoginPage> {
                 child: GestureDetector(
                   onTap: signIn,
                   child: Container(
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: Colors.indigoAccent,
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Center(
+                      child: const Center(
                           child: Text(
                         'Sign In',
                         style: TextStyle(
@@ -158,13 +168,13 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
 
-              SizedBox(height: 25),
+              const SizedBox(height: 25),
 
               // not a member? register now
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Not a member?",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -172,7 +182,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   GestureDetector(
                     onTap: widget.showRegisterPage,
-                    child: Text(
+                    child: const Text(
                       " Register now",
                       style: TextStyle(
                         color: Colors.blue,

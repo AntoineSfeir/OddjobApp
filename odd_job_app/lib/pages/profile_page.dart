@@ -1,9 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+
 import 'package:odd_job_app/auth/main_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:odd_job_app/pages/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/pages/job_history_page.dart';
@@ -12,8 +15,9 @@ import 'package:odd_job_app/pages/profile_info_page.dart';
 import 'package:odd_job_app/pages/payment_option_page.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
+
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({super.key});
 
   @override
   State<ProfilePage> createState() => _ProfileState();
@@ -205,13 +209,15 @@ class _ProfileState extends State<ProfilePage> {
                   onPressed: () {
                     Navigator.push(
                       context,
+
                       MaterialPageRoute(
                           builder: (context) => ProfileInfoPage()),
+
                     );
                   },
                   child: Container(
                     alignment: Alignment.centerLeft,
-                    child: Row(
+                    child: const Row(
                       children: <Widget>[
                         Icon(Icons.person),
                         SizedBox(
@@ -222,6 +228,7 @@ class _ProfileState extends State<ProfilePage> {
                     ),
                   ),
                 ),
+
 
                 // Job history
                 TextButton(
@@ -252,6 +259,7 @@ class _ProfileState extends State<ProfilePage> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => PaymentOptionsPage()),
+
                     );
                   },
                   child: Container(
@@ -267,6 +275,7 @@ class _ProfileState extends State<ProfilePage> {
                     ),
                   ),
                 ),
+
 
                 // About OddJob
                 TextButton(
@@ -290,6 +299,7 @@ class _ProfileState extends State<ProfilePage> {
                     ),
                   ),
                 ),
+
 
                 // logout button
                 TextButton(

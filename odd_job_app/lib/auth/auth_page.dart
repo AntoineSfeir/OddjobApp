@@ -3,7 +3,7 @@ import 'package:odd_job_app/pages/login_page.dart';
 import 'package:odd_job_app/pages/register_page.dart';
 
 class AuthPage extends StatefulWidget {
-  const AuthPage({Key? key}) : super(key: key);
+  const AuthPage({super.key});
 
   @override
   State<AuthPage> createState() => _AuthPageState();
