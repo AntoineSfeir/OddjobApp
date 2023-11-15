@@ -7,6 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:odd_job_app/auth/main_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+import 'package:odd_job_app/pages/login_page.dart';
+import 'package:odd_job_app/pages/messages_page.dart';
 import 'package:odd_job_app/pages/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/pages/job_history_page.dart';

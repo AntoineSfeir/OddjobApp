@@ -4,6 +4,7 @@ import 'package:odd_job_app/pages/job_title.dart';
 import 'package:odd_job_app/pages/search_page.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
 import 'package:odd_job_app/pages/post_job_page.dart';
+import 'package:odd_job_app/pages/messages_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/read%20data/get_jobs_data.dart';
 
@@ -102,7 +103,13 @@ class _HomePageState extends State<HomePage> {
               icon: const Icon(Icons.chat),
               color: Colors.white,
               iconSize: 40.0,
-              onPressed: () {},
+              onPressed: () {
+              Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MessagesPage()),
+                        );
+              },
             ),
             IconButton(
                 icon: const Icon(Icons.person),
@@ -121,7 +128,6 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(width: 40.0),
             ],
           ),
-
         ),
       ),
       floatingActionButton: FloatingActionButton(
