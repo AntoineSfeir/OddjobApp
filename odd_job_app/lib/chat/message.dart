@@ -4,7 +4,8 @@ class Message {
   final String senderEmail;
   final String receiverEmail;
   final String message;
-  final Timestamp timestamp;
+  //final Timestamp timestamp;
+  final FieldValue timestamp;
 
   Message({
     required this.senderEmail,

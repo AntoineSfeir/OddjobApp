@@ -10,13 +10,15 @@ class ChatService extends ChangeNotifier {
   //send
   Future<void> sendMessage(String recieverEmail, String message) async {
     final String currentEmail = auth.currentUser!.email.toString();
-    final Timestamp time = Timestamp.now();
+    //final Timestamp time = Timestamp.now();
+    final FieldValue serverTime = FieldValue.serverTimestamp();
 
     Message newMessage = Message(
       senderEmail: currentEmail,
       receiverEmail: recieverEmail,
       message: message,
-      timestamp: time,
+      //timestamp: time,
+      timestamp: serverTime,
     );
 
   List<String> users = [currentEmail, recieverEmail];
