@@ -8,9 +8,6 @@ import 'package:odd_job_app/pages/messages_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/read%20data/get_jobs_data.dart';
 
-
-
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -58,12 +55,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+        home: Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
         title: Text(
-          "Job Listings",
+          "Home",
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -80,46 +78,45 @@ class _HomePageState extends State<HomePage> {
         shape: const CircularNotchedRectangle(),
         child: SizedBox(
           height: 60.0,
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-            IconButton(
-              icon: const Icon(Icons.home),
-              color: Color.fromARGB(255, 248, 248, 248),
-              iconSize: 40.0,
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: const Icon(Icons.search),
-              color: Color.fromARGB(255, 238, 239, 239),
-              iconSize: 40.0,
-              onPressed: () {
-               Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SearchPage()),
-                  );
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.chat),
-              color: Colors.white,
-              iconSize: 40.0,
-              onPressed: () {
-              Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MessagesPage()),
-                        );
-              },
-            ),
-            IconButton(
-                icon: const Icon(Icons.person),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.home),
+                color: Color.fromARGB(255, 248, 248, 248),
+                iconSize: 40.0,
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: const Icon(Icons.search),
                 color: Color.fromARGB(255, 238, 239, 239),
-
                 iconSize: 40.0,
                 onPressed: () {
                   Navigator.push(
                     context,
-
+                    MaterialPageRoute(builder: (context) => const SearchPage()),
+                  );
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.chat),
+                color: Colors.white,
+                iconSize: 40.0,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MessagesPage()),
+                  );
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.person),
+                color: Color.fromARGB(255, 238, 239, 239),
+                iconSize: 40.0,
+                onPressed: () {
+                  Navigator.push(
+                    context,
                     MaterialPageRoute(
                         builder: (context) => const ProfilePage()),
                   );
@@ -134,15 +131,13 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           Navigator.push(
             context,
-
-            MaterialPageRoute(builder: (context) => PostJobPage()),
+            MaterialPageRoute(builder: (context) => const PostJobPage()),
           );
         },
         backgroundColor: Colors.green,
-
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-    );
+    ));
   }
 }

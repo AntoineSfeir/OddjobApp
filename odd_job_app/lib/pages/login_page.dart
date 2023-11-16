@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.deepPurple),
+                      borderSide: const BorderSide(color: Colors.indigoAccent),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     hintText: 'Email',
@@ -104,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.deepPurple),
+                      borderSide: const BorderSide(color: Colors.indigoAccent),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     hintText: 'Password',

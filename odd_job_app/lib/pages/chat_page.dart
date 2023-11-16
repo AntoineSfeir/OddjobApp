@@ -1,7 +1,7 @@
-import "package:cloud_firestore/cloud_firestore.dart";
-import "package:firebase_auth/firebase_auth.dart";
 import "package:flutter/material.dart";
+import "package:firebase_auth/firebase_auth.dart";
 import "package:odd_job_app/chat/chat_service.dart";
+import "package:cloud_firestore/cloud_firestore.dart";
 import "package:odd_job_app/chat/message_bubble.dart";
 
 class ChatPage extends StatefulWidget {
@@ -18,7 +18,7 @@ class _ChatPageState extends State<ChatPage> {
   final TextEditingController _messageController = TextEditingController();
   final ChatService _chatService = ChatService();
   final FirebaseAuth auth = FirebaseAuth.instance;
-  ChatService chat = new ChatService();
+  ChatService chat = ChatService();
 
 
   void sendMessage() async {
@@ -31,6 +31,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       backgroundColor: Colors.grey[300],
     appBar: AppBar(title: Text(widget.recieverUser)),
     body: Column( 
       children: [
@@ -55,7 +56,7 @@ class _ChatPageState extends State<ChatPage> {
         return Text('Error ${snapshot.error}');
       }
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return Text("Loading");
+        return const Text("Loading");
       }
       return ListView(
         children: snapshot.data!.docs.map((document) => buildMessageItem(document)).toList(),
@@ -75,7 +76,7 @@ class _ChatPageState extends State<ChatPage> {
       return Container(
         alignment: alignment,
         child: Padding (
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
         child: ChatBubble(message: data['message'], isSender: (data['recieverUser'] != auth.currentUser!.email) )
         ),
       );
@@ -87,13 +88,13 @@ class _ChatPageState extends State<ChatPage> {
         Expanded(
           child: TextField(
                         controller: _messageController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'Enter Message',
                         ),
                       )
         ),
 
-        IconButton(onPressed: sendMessage, icon: Icon(Icons.arrow_upward))
+        IconButton(onPressed: sendMessage, icon: const Icon(Icons.arrow_upward))
 
       ],
     );

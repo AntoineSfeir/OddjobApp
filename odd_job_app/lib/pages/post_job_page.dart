@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:odd_job_app/pages/address.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class PostJobPage extends StatefulWidget {
   const PostJobPage({super.key});
@@ -137,10 +137,14 @@ class _PostJobPageState extends State<PostJobPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Post a Job'),
-        backgroundColor: const Color(0xFF1D465D), // Set your desired color here
-      ),
+      backgroundColor: Colors.grey[300],
+     appBar: AppBar(
+              title: const Text('Post a Job',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold)),
+            ),
       body: SlidingUpPanel(
         backdropEnabled: true,
         defaultPanelState: PanelState.CLOSED,
@@ -212,7 +216,7 @@ class _PostJobPageState extends State<PostJobPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons
                                       .location_on, // Use the appropriate address icon
                                   color: Colors.black,
@@ -227,7 +231,7 @@ class _PostJobPageState extends State<PostJobPage> {
                                     ),
                                   ),
                                 ),
-                                Icon(
+                                const Icon(
                                   Icons
                                       .arrow_forward, // Use the appropriate arrow icon
                                   color: Colors.black,
@@ -265,7 +269,7 @@ class _PostJobPageState extends State<PostJobPage> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 16),
+                                const SizedBox(height: 16),
                               ],
                             ),
                           ),
@@ -293,7 +297,7 @@ class _PostJobPageState extends State<PostJobPage> {
                             onPressed: postJob,
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  const Color(0xFF1D465D)),
+                                  Color.fromARGB(255, 51, 154, 214)),
                             ),
                             child: const Text('Post Job'),
                           )

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:odd_job_app/pages/profile_page.dart';
-import 'package:odd_job_app/pages/post_job_page.dart';
-import 'package:odd_job_app/pages/home_page.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/jobs/job.dart';
 import 'package:odd_job_app/jobs/jobcard.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:odd_job_app/pages/home_page.dart';
+import 'package:odd_job_app/pages/profile_page.dart';
+import 'package:odd_job_app/pages/messages_page.dart';
+import 'package:odd_job_app/pages/post_job_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/jobs/jobdescription.dart';
 
 class SearchPage extends StatefulWidget {
@@ -50,20 +51,20 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+         backgroundColor: Colors.grey[300],
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Text('signed in as: ${user.email!}'),
-            const Image(
-              image: AssetImage('assets/ODDJOBLOGO.png'),
-              width: 250,
-              height: 150,
-            ),
-            const Divider(
-              height: 25,
-              color: Colors.black,
+            AppBar(
+              title: const Text('Find a Job',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold)),
             ),
             Flexible(
                 child: ListView.builder(
@@ -94,14 +95,11 @@ class _SearchPageState extends State<SearchPage> {
               },
               itemCount: 1,
             )),
-            const SizedBox(
-              height: 30,
-            ),
           ],
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: cardBackGroundColor,
+        color: Colors.blue,
         shape: const CircularNotchedRectangle(),
         child: SizedBox(
           height: 60.0,
@@ -130,7 +128,13 @@ class _SearchPageState extends State<SearchPage> {
                 icon: const Icon(Icons.chat),
                 color: Colors.white,
                 iconSize: 40.0,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MessagesPage()),
+                  );
+                },
               ),
               IconButton(
                 icon: const Icon(Icons.person),
@@ -156,10 +160,11 @@ class _SearchPageState extends State<SearchPage> {
             MaterialPageRoute(builder: (context) => const PostJobPage()),
           );
         },
-        backgroundColor: const Color(0xFF1D465D),
+        backgroundColor: Colors.green,
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+    )
     );
   }
 }

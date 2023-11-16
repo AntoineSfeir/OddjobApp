@@ -1,22 +1,19 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-
 import 'package:odd_job_app/auth/main_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-import 'package:odd_job_app/pages/login_page.dart';
-import 'package:odd_job_app/pages/messages_page.dart';
 import 'package:odd_job_app/pages/home_page.dart';
+import 'package:odd_job_app/pages/login_page.dart';
+import 'package:odd_job_app/pages/search_page.dart';
+import 'package:odd_job_app/pages/messages_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/pages/job_history_page.dart';
 import 'package:odd_job_app/pages/about_oddjob_page.dart';
 import 'package:odd_job_app/pages/profile_info_page.dart';
 import 'package:odd_job_app/pages/payment_option_page.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -211,10 +208,8 @@ class _ProfileState extends State<ProfilePage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-
                       MaterialPageRoute(
                           builder: (context) => ProfileInfoPage()),
-
                     );
                   },
                   child: Container(
@@ -230,7 +225,6 @@ class _ProfileState extends State<ProfilePage> {
                     ),
                   ),
                 ),
-
 
                 // Job history
                 TextButton(
@@ -261,7 +255,6 @@ class _ProfileState extends State<ProfilePage> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => PaymentOptionsPage()),
-
                     );
                   },
                   child: Container(
@@ -277,7 +270,6 @@ class _ProfileState extends State<ProfilePage> {
                     ),
                   ),
                 ),
-
 
                 // About OddJob
                 TextButton(
@@ -302,14 +294,13 @@ class _ProfileState extends State<ProfilePage> {
                   ),
                 ),
 
-
                 // logout button
                 TextButton(
                   onPressed: () {
                     FirebaseAuth.instance.signOut();
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => MainPage()),
+                      MaterialPageRoute(builder: (context) => const MainPage()),
                     );
                   },
                   child: Container(
@@ -344,32 +335,39 @@ class _ProfileState extends State<ProfilePage> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => HomePage()),
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage()),
                         );
                       }),
                   IconButton(
                     icon: const Icon(Icons.search),
                     color: Color.fromARGB(255, 238, 239, 239),
                     iconSize: 40.0,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SearchPage()),
+                      );
+                    },
                   ),
                   IconButton(
                     icon: const Icon(Icons.chat),
                     color: Colors.white,
                     iconSize: 40.0,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MessagesPage()),
+                      );
+                    },
                   ),
                   IconButton(
                       icon: const Icon(Icons.person),
                       color: Color.fromARGB(255, 238, 239, 239),
                       iconSize: 40.0,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ProfilePage()),
-                        );
-                      })
+                      onPressed: () {})
                 ]),
           ),
         ),
