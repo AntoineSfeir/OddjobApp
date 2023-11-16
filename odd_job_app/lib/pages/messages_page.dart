@@ -5,7 +5,6 @@ import 'package:odd_job_app/pages/home_page.dart';
 import 'package:odd_job_app/pages/search_page.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:odd_job_app/pages/post_job_page.dart';
 
 class MessagesPage extends StatefulWidget {
   const MessagesPage({super.key});
@@ -25,7 +24,7 @@ class _MessagesPageState extends State<MessagesPage> {
           
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Messages",
           style: TextStyle(
             fontSize: 20,
@@ -43,7 +42,7 @@ class _MessagesPageState extends State<MessagesPage> {
               Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
             IconButton(
               icon: const Icon(Icons.home),
-              color: Color.fromARGB(255, 248, 248, 248),
+              color: const Color.fromARGB(255, 248, 248, 248),
               iconSize: 40.0,
               onPressed: () {
                 Navigator.push(
@@ -54,7 +53,7 @@ class _MessagesPageState extends State<MessagesPage> {
             ),
             IconButton(
               icon: const Icon(Icons.search),
-              color: Color.fromARGB(255, 238, 239, 239),
+              color: const Color.fromARGB(255, 238, 239, 239),
               iconSize: 40.0,
               onPressed: () {
                 Navigator.push(
@@ -71,7 +70,7 @@ class _MessagesPageState extends State<MessagesPage> {
             ),
             IconButton(
                 icon: const Icon(Icons.person),
-                color: Color.fromARGB(255, 238, 239, 239),
+                color: const Color.fromARGB(255, 238, 239, 239),
                 iconSize: 40.0,
                 onPressed: () {
                   Navigator.push(
@@ -91,10 +90,10 @@ class _MessagesPageState extends State<MessagesPage> {
         stream: FirebaseFirestore.instance.collection("users").snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Text('Error');
+            return const Text('Error');
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading...");
+            return const Text("Loading...");
           }
           return ListView(
             children: snapshot.data!.docs

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:odd_job_app/pages/job_title.dart';
 import 'package:odd_job_app/pages/search_page.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
 import 'package:odd_job_app/pages/post_job_page.dart';
 import 'package:odd_job_app/pages/messages_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:odd_job_app/read%20data/get_jobs_data.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -60,7 +58,7 @@ class _HomePageState extends State<HomePage> {
         home: Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Home",
           style: TextStyle(
             fontSize: 20,
@@ -68,7 +66,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
         ),
@@ -83,13 +81,13 @@ class _HomePageState extends State<HomePage> {
             children: [
               IconButton(
                 icon: const Icon(Icons.home),
-                color: Color.fromARGB(255, 248, 248, 248),
+                color: const Color.fromARGB(255, 248, 248, 248),
                 iconSize: 40.0,
                 onPressed: () {},
               ),
               IconButton(
                 icon: const Icon(Icons.search),
-                color: Color.fromARGB(255, 238, 239, 239),
+                color: const Color.fromARGB(255, 238, 239, 239),
                 iconSize: 40.0,
                 onPressed: () {
                   Navigator.push(
@@ -112,7 +110,7 @@ class _HomePageState extends State<HomePage> {
               ),
               IconButton(
                 icon: const Icon(Icons.person),
-                color: Color.fromARGB(255, 238, 239, 239),
+                color: const Color.fromARGB(255, 238, 239, 239),
                 iconSize: 40.0,
                 onPressed: () {
                   Navigator.push(

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class JobHistoryPage extends StatelessWidget {
-  const JobHistoryPage({Key? key}) : super(key: key);
+  const JobHistoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Job History",
           style: TextStyle(
             fontSize: 20,
@@ -16,8 +16,8 @@ class JobHistoryPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: const Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -48,7 +48,7 @@ class JobHistoryItem extends StatelessWidget {
   final String date;
   final String status;
 
-  const JobHistoryItem({
+  const JobHistoryItem({super.key, 
     required this.jobTitle,
     required this.date,
     required this.status,
@@ -58,12 +58,12 @@ class JobHistoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 2,
-      margin: EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 16),
       child: ListTile(
-        contentPadding: EdgeInsets.all(16),
+        contentPadding: const EdgeInsets.all(16),
         title: Text(
           jobTitle,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
@@ -71,15 +71,15 @@ class JobHistoryItem extends StatelessWidget {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               "Date: $date",
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               "Status: $status",
-              style: TextStyle(fontSize: 16),
+              style: const TextStyle(fontSize: 16),
             ),
           ],
         ),

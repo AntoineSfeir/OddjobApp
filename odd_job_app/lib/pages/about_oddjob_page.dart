@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class AboutOddJobPage extends StatelessWidget {
-  const AboutOddJobPage({Key? key}) : super(key: key);
+  const AboutOddJobPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "About OddJob",
           style: TextStyle(
             fontSize: 20,
@@ -16,8 +16,8 @@ class AboutOddJobPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      body: const Padding(
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

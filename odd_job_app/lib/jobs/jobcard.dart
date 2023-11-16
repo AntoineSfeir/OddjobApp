@@ -1,17 +1,15 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:odd_job_app/jobs/compute_time_to_display.dart';
-import 'package:odd_job_app/jobs/geolocation/compute_distance.dart';
 import 'package:odd_job_app/jobs/job.dart';
 import 'package:odd_job_app/jobs/jobdescription.dart';
+import 'package:odd_job_app/jobs/compute_time_to_display.dart';
+import 'package:odd_job_app/jobs/geolocation/compute_distance.dart';
 
 //import 'package:geolocator/geolocator.dart';
 
 class JobCard extends StatelessWidget {
   late final Job job;
-  computeDistance computedDistance = new computeDistance();
-  computeTime computedTime = new computeTime();
+  ComputeDistance computedDistance = ComputeDistance();
+  computeTime computedTime = computeTime();
   final String cardBackground = '#1B475E';
   final String moneyText = '#8BD5FF';
   late final Color cardBackGroundColor =
@@ -20,7 +18,7 @@ class JobCard extends StatelessWidget {
       Color(int.parse(moneyText.substring(1, 7), radix: 16) + 0xFF000000);
 
   //JobCard({super.key, required this.job});
-  JobCard({Key? key, required this.job}) : super(key: key);
+  JobCard({super.key, required this.job});
 
   @override
   Widget build(BuildContext context) {

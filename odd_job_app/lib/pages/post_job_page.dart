@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import 'package:flutter/material.dart';
 import 'package:odd_job_app/pages/address.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -52,6 +53,11 @@ class _PostJobPageState extends State<PostJobPage> {
       _jobStartingBidController.text.trim(),
       g,
       address,
+    );
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => const JobPostedSuccessfullyPage(),
+      )
     );
   }
 
@@ -129,9 +135,6 @@ class _PostJobPageState extends State<PostJobPage> {
       enterYourAddressHere;
     });
     _panelController.close();
-    print(address);
-    print('LOCATION = ${location.latitude}, ${location.longitude}');
-    print('WE DIDIDIDIDIDIDIDIDI IT RAHHHHHHHHHHHHHHHHHH');
   }
 
   @override
@@ -155,18 +158,13 @@ class _PostJobPageState extends State<PostJobPage> {
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-
+           mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Flexible(
                   child: ListView.builder(
                       itemCount: 1,
                       itemBuilder: (context, index) {
                         return Column(children: [
-                          const Text(
-                            'Job Title:',
-                            style: TextStyle(fontSize: 18),
-                          ),
                           TextFormField(
                             controller: _jobTitleController,
                             decoration: const InputDecoration(
@@ -175,10 +173,6 @@ class _PostJobPageState extends State<PostJobPage> {
                             ),
                           ),
                           const SizedBox(height: 16),
-                          const Text(
-                            'Job Description:',
-                            style: TextStyle(fontSize: 18),
-                          ),
                           TextFormField(
                               controller: _jobDescriptionController,
                               decoration: const InputDecoration(
@@ -211,7 +205,7 @@ class _PostJobPageState extends State<PostJobPage> {
                             },
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  const Color(0xFFFFFF)),
+                                  const Color(0x00ffffff)),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -221,12 +215,12 @@ class _PostJobPageState extends State<PostJobPage> {
                                       .location_on, // Use the appropriate address icon
                                   color: Colors.black,
                                 ),
-                                Container(
+                                SizedBox(
                                   width: 200,
                                   child: Text(
                                     enterYourAddressHere,
                                     overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.black,
                                     ),
                                   ),
@@ -297,7 +291,7 @@ class _PostJobPageState extends State<PostJobPage> {
                             onPressed: postJob,
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  Color.fromARGB(255, 51, 154, 214)),
+                                  const Color.fromARGB(255, 51, 154, 214)),
                             ),
                             child: const Text('Post Job'),
                           )
@@ -308,5 +302,114 @@ class _PostJobPageState extends State<PostJobPage> {
         ),
       ),
     );
+  }
+}
+
+
+class JobPostedSuccessfullyPage extends StatelessWidget {
+  const JobPostedSuccessfullyPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Post a Job',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Animated Check Mark
+            AnimatedCheckMark(),
+
+            // Success Message
+            SizedBox(height: 16),
+            Text(
+              'Your job has been successfully posted!',
+              style: TextStyle(fontSize: 18),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AnimatedCheckMark extends StatefulWidget {
+  const AnimatedCheckMark({super.key});
+
+  @override
+  _AnimatedCheckMarkState createState() => _AnimatedCheckMarkState();
+}
+
+class _AnimatedCheckMarkState extends State<AnimatedCheckMark>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _opacityAnimation;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Animation Controller
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+
+    // Opacity Animation
+    _opacityAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: const Interval(0.7, 1.0, curve: Curves.easeOut),
+    ));
+
+    // Scale Animation
+    _scaleAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: const Interval(0.0, 0.7, curve: Curves.easeOutBack),
+    ));
+
+    // Start the animation
+    _controller.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Opacity(
+          opacity: _opacityAnimation.value,
+          child: Transform.scale(
+            scale: _scaleAnimation.value,
+            child: const Icon(
+              Icons.check_circle,
+              color: Colors.green,
+              size: 100,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

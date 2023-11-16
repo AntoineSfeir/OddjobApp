@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/jobs/job.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class JobDescriptionPage extends StatefulWidget {
   final String ID;
-  const JobDescriptionPage({Key? key, required this.ID}) : super(key: key);
+  const JobDescriptionPage({super.key, required this.ID});
 
   @override
   State<JobDescriptionPage> createState() => _JobDescriptionPageState();
@@ -15,9 +15,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
   late Job thisJob;
 
   Future allJobs() async {
-    print(widget.ID);
     widget.ID.trim();
-    print('jobs/${widget.ID}');
     DocumentSnapshot<Map<String, dynamic>> doc =
         await db.collection('jobs/').doc(widget.ID).get();
     thisJob = Job.fromSnapshot(doc);
@@ -27,7 +25,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('TEST'),
+          title: const Text('TEST'),
           backgroundColor: Colors.amber,
         ),
         body: FutureBuilder(

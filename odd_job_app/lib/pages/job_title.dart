@@ -1,7 +1,5 @@
 import "package:flutter/material.dart";
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/pages/home_page.dart';
-
 class JobTitlePage extends StatefulWidget {
   const JobTitlePage({super.key});
 
@@ -17,7 +15,7 @@ class _JobTitlePageState extends State<JobTitlePage> {
           title: const Text('Post a Job'),
           backgroundColor: const Color(0xFF1D465D),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back),
+            icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.push(
                 context,

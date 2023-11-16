@@ -1,11 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:odd_job_app/auth/main_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:odd_job_app/pages/home_page.dart';
-import 'package:odd_job_app/pages/login_page.dart';
 import 'package:odd_job_app/pages/search_page.dart';
 import 'package:odd_job_app/pages/messages_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -58,16 +56,19 @@ class _ProfileState extends State<ProfilePage> {
           // Upload the selected image
           await _uploadImage(_image!);
         } else {
-          // Handle the case when the selected image is not a JPEG
-          print('Unsupported image type: ${pickedFile.mimeType}');
-          // You can display an error message or take other appropriate actions
+          // Display an error message if the selected file is not of type JPEG
+          // ignore: use_build_context_synchronously
+          showDialog(
+              context: context,
+              builder: (context) {
+                return const AlertDialog(
+                  content: Text('Please select a JPEG image'),
+                );
+              });
         }
       }
-    } catch (error) {
-      // Handle other exceptions that might occur during image picking
-      print('Error picking image: $error');
-      // You can display an error message or take other appropriate actions
-    }
+    // ignore: empty_catches
+    } catch (error) {}
   }
 
   Future<void> _uploadImage(File imageFile) async {
@@ -87,8 +88,15 @@ class _ProfileState extends State<ProfilePage> {
       // Update the user profile with the new avatar URL
       await updateProfileWithNewAvatar(imageUrl);
     } catch (error) {
-      // Handle any unexpected errors during the upload process
-      print('Error uploading image: $error');
+      // Display an error message if there's an error
+      // ignore: use_build_context_synchronously
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text(error.toString()),
+            );
+          });
     }
   }
 
@@ -104,7 +112,14 @@ class _ProfileState extends State<ProfilePage> {
           .doc(currentUserDocId)
           .update({'avatarUrl': avatarUrl});
     } on FirebaseFirestore catch (e) {
-      print('Error updating user profile: $e');
+      // ignore: use_build_context_synchronously
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              content: Text(e.toString()),
+            );
+          });
     }
   }
 
@@ -126,7 +141,7 @@ class _ProfileState extends State<ProfilePage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppBar(
-                  title: Text(
+                  title: const Text(
                     "Profile",
                     style: TextStyle(
                       fontSize: 20,
@@ -147,6 +162,10 @@ class _ProfileState extends State<ProfilePage> {
                         ),
                         width: 100,
                         height: 100,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.blue, // Blue circle
+                        ),
                         child: ClipOval(
                           child: _image != null
                               ? Image.file(
@@ -163,10 +182,6 @@ class _ProfileState extends State<ProfilePage> {
                                   fit: BoxFit.cover,
                                 ),
                         ),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.blue, // Blue circle
-                        ),
                       ),
                     ),
                     // Display username
@@ -180,7 +195,7 @@ class _ProfileState extends State<ProfilePage> {
                         children: [
                           Text(
                             username ?? "no name",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 36,
                               fontWeight: FontWeight.bold,
                             ),
@@ -209,7 +224,7 @@ class _ProfileState extends State<ProfilePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ProfileInfoPage()),
+                          builder: (context) => const ProfileInfoPage()),
                     );
                   },
                   child: Container(
@@ -231,12 +246,13 @@ class _ProfileState extends State<ProfilePage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => JobHistoryPage()),
+                      MaterialPageRoute(
+                          builder: (context) => const JobHistoryPage()),
                     );
                   },
                   child: Container(
                     alignment: Alignment.centerLeft,
-                    child: Row(
+                    child: const Row(
                       children: <Widget>[
                         Icon(Icons.history),
                         SizedBox(
@@ -254,12 +270,12 @@ class _ProfileState extends State<ProfilePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => PaymentOptionsPage()),
+                          builder: (context) => const PaymentOptionsPage()),
                     );
                   },
                   child: Container(
                     alignment: Alignment.centerLeft,
-                    child: Row(
+                    child: const Row(
                       children: <Widget>[
                         Icon(Icons.payment),
                         SizedBox(
@@ -277,12 +293,12 @@ class _ProfileState extends State<ProfilePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AboutOddJobPage()),
+                          builder: (context) => const AboutOddJobPage()),
                     );
                   },
                   child: Container(
                     alignment: Alignment.centerLeft,
-                    child: Row(
+                    child: const Row(
                       children: <Widget>[
                         Icon(Icons.info),
                         SizedBox(
@@ -305,7 +321,7 @@ class _ProfileState extends State<ProfilePage> {
                   },
                   child: Container(
                     alignment: Alignment.centerLeft,
-                    child: Row(
+                    child: const Row(
                       children: <Widget>[
                         Icon(Icons.logout),
                         SizedBox(
@@ -330,7 +346,7 @@ class _ProfileState extends State<ProfilePage> {
                 children: [
                   IconButton(
                       icon: const Icon(Icons.home),
-                      color: Color.fromARGB(255, 248, 248, 248),
+                      color: const Color.fromARGB(255, 248, 248, 248),
                       iconSize: 40.0,
                       onPressed: () {
                         Navigator.push(
@@ -341,7 +357,7 @@ class _ProfileState extends State<ProfilePage> {
                       }),
                   IconButton(
                     icon: const Icon(Icons.search),
-                    color: Color.fromARGB(255, 238, 239, 239),
+                    color: const Color.fromARGB(255, 238, 239, 239),
                     iconSize: 40.0,
                     onPressed: () {
                       Navigator.push(
@@ -365,7 +381,7 @@ class _ProfileState extends State<ProfilePage> {
                   ),
                   IconButton(
                       icon: const Icon(Icons.person),
-                      color: Color.fromARGB(255, 238, 239, 239),
+                      color: const Color.fromARGB(255, 238, 239, 239),
                       iconSize: 40.0,
                       onPressed: () {})
                 ]),

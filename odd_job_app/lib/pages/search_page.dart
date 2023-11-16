@@ -7,7 +7,6 @@ import 'package:odd_job_app/pages/profile_page.dart';
 import 'package:odd_job_app/pages/messages_page.dart';
 import 'package:odd_job_app/pages/post_job_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:odd_job_app/jobs/jobdescription.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -30,7 +29,6 @@ class _SearchPageState extends State<SearchPage> {
         .then((snapshot) => snapshot.docs.forEach((element) {
               Job i = Job.fromSnapshot(element);
               i.ID = element.id;
-              print(i.ID);
               jo.add(i);
             }));
     // final jobData = snapshot.docs.map((e) => Job.fromSnapshot(e)).toList();

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class LocationListTile extends StatelessWidget {
   const LocationListTile({
-    Key? key,
+    super.key,
     required this.location,
     required this.press,
-  }) : super(key: key);
+  });
 
   final String location;
   final VoidCallback press;

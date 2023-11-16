@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CreditCardPage extends StatefulWidget {
-  const CreditCardPage({Key? key}) : super(key: key);
+  const CreditCardPage({super.key});
 
   @override
   _CreditCardPageState createState() => _CreditCardPageState();
@@ -13,7 +13,7 @@ class _CreditCardPageState extends State<CreditCardPage> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Credit Card Details",
           style: TextStyle(
             fontSize: 20,
@@ -26,7 +26,7 @@ class _CreditCardPageState extends State<CreditCardPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               "Card Number",
               style: TextStyle(
                 fontSize: 16,
@@ -35,12 +35,12 @@ class _CreditCardPageState extends State<CreditCardPage> {
             ),
             TextFormField(
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Enter card number",
               ),
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               "Cardholder Name",
               style: TextStyle(
                 fontSize: 16,
@@ -48,11 +48,11 @@ class _CreditCardPageState extends State<CreditCardPage> {
               ),
             ),
             TextFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Enter cardholder name",
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -61,7 +61,7 @@ class _CreditCardPageState extends State<CreditCardPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "Expiry Date",
                         style: TextStyle(
                           fontSize: 16,
@@ -70,20 +70,20 @@ class _CreditCardPageState extends State<CreditCardPage> {
                       ),
                       TextFormField(
                         keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "MM/YY",
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(width: 20),
+                const SizedBox(width: 20),
                 Flexible(
                   flex: 1,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         "CVV",
                         style: TextStyle(
                           fontSize: 16,
@@ -92,7 +92,7 @@ class _CreditCardPageState extends State<CreditCardPage> {
                       ),
                       TextFormField(
                         keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "CVV",
                         ),
                       ),
@@ -101,12 +101,12 @@ class _CreditCardPageState extends State<CreditCardPage> {
                 ),
               ],
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
                 // Handle payment processing
               },
-              child: Text("Submit"),
+              child: const Text("Submit"),
             ),
           ],
         ),

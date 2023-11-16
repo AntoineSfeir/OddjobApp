@@ -6,7 +6,7 @@ import 'package:odd_job_app/pages/forgot_pw_page.dart';
 class LoginPage extends StatefulWidget {
   final VoidCallback showRegisterPage;
 
-  const LoginPage({Key? key, required this.showRegisterPage}) : super(key: key);
+  const LoginPage({super.key, required this.showRegisterPage});
 
 
   @override
@@ -25,7 +25,6 @@ class _LoginPageState extends State<LoginPage> {
         password: _passwordController.text.trim(),
       );
     } on FirebaseAuthException catch (e) {
-      print(e);
       showDialog(
           context: context,
           builder: (context) {
@@ -65,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                     fontSize: 52,
                   )),
 
-              SizedBox(height: 50),
+              const SizedBox(height: 50),
               
 
 
@@ -115,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
 
 
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
 
 
               // Forgot Password button
@@ -129,10 +128,10 @@ class _LoginPageState extends State<LoginPage> {
                       onTap: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return ForgotPasswordPage();
+                          return const ForgotPasswordPage();
                         }));
                       },
-                      child: Text('Forgot Password?',
+                      child: const Text('Forgot Password?',
                           style: TextStyle(
                             color: Colors.blue,
                             fontWeight: FontWeight.bold,

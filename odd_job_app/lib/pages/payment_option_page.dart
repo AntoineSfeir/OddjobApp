@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:odd_job_app/pages/creditcard_page.dart';
 
 class PaymentOptionsPage extends StatefulWidget {
-  const PaymentOptionsPage({Key? key}) : super(key: key);
+  const PaymentOptionsPage({super.key});
 
   @override
   State<PaymentOptionsPage> createState() => _PaymentOptionsPageState();
@@ -14,7 +14,7 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Payment Options",
           style: TextStyle(
             fontSize: 20,
@@ -27,18 +27,18 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             PaymentOptionCard(
               title: "Credit Card",
               icon: Icons.credit_card,
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CreditCardPage()),
+                  MaterialPageRoute(builder: (context) => const CreditCardPage()),
                 );
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             PaymentOptionCard(
               title: "PayPal",
               icon: Icons.payment,
@@ -46,7 +46,7 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
                 // Handle PayPal selection
               },
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             PaymentOptionCard(
               title: "Google Pay",
               icon: Icons.attach_money,
@@ -90,10 +90,10 @@ class PaymentOptionCard extends StatelessWidget {
                 size: 40,
                 color: Colors.blue,
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Text(
                 title,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),

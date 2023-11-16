@@ -2,16 +2,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-//import 'package:flutter_google_maps_webservices/places.dart';
-import 'package:odd_job_app/jobs/geolocation/auto_complete_prediction.dart';
-import 'package:odd_job_app/jobs/geolocation/location_list_tile.dart';
 import 'package:odd_job_app/jobs/geolocation/network_utility.dart';
+import 'package:odd_job_app/jobs/geolocation/location_list_tile.dart';
+import 'package:odd_job_app/jobs/geolocation/auto_complete_prediction.dart';
 import 'package:odd_job_app/jobs/geolocation/place_auto_complete_response.dart';
+//import 'package:flutter_google_maps_webservices/places.dart';
 
 class SearchLocationScreen extends StatefulWidget {
   final Function(LatLng, String) onVariableChanged;
-  const SearchLocationScreen({Key? key, required this.onVariableChanged})
-      : super(key: key);
+  const SearchLocationScreen({super.key, required this.onVariableChanged});
 
   @override
   State<SearchLocationScreen> createState() => _SearchLocationScreenState();
@@ -52,9 +51,9 @@ class _SearchLocationScreenState extends State<SearchLocationScreen> {
       );
 
   List<Location> location = [];
-  LatLng addressLoc = LatLng(0, 0);
+  LatLng addressLoc = const LatLng(0, 0);
   String addressAddress = '';
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
   late GoogleMapController? _mapController;
 
   Future<void> initializeLocation(String address) async {
@@ -66,43 +65,31 @@ class _SearchLocationScreenState extends State<SearchLocationScreen> {
 
   void updateMapCamera(double latitude, double longitude) {
     if (_mapController != null) {
-      print('About to animate camera');
       _mapController!
           .animateCamera(CameraUpdate.newLatLng(LatLng(latitude, longitude)))
           .then((_) {
-        print('Map camera animation completed');
 
         _markers = {
           Marker(
-            markerId: MarkerId('chosenLocation'),
+            markerId: const MarkerId('chosenLocation'),
             position: LatLng(latitude, longitude),
           ),
         };
         setState(() {});
       }).catchError((error) {
-        print('Error during map camera animation: $error');
       });
-    } else {
-      // This print statement will help you determine if this block is being executed
-      print('Map controller is null. Cannot update camera.');
-    }
+    } 
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "Set Job Location",
-            style: TextStyle(color: Colors.black),
-          ),
-        ),
         body: Column(
           children: [
-            Container(
+            SizedBox(
               height: 100,
               child: GoogleMap(
-                  initialCameraPosition: CameraPosition(
+                  initialCameraPosition: const CameraPosition(
                       target: LatLng(30.3997505, -91.1715959), zoom: 10),
                   mapType: MapType.normal,
                   myLocationButtonEnabled: true,
@@ -123,10 +110,10 @@ class _SearchLocationScreenState extends State<SearchLocationScreen> {
                       placeAutocomplete(value);
                     },
                     textInputAction: TextInputAction.search,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                         hintText: "Search your location",
                         prefixIcon: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          padding: EdgeInsets.symmetric(vertical: 12),
                         )),
                   )),
             ),
@@ -141,7 +128,7 @@ class _SearchLocationScreenState extends State<SearchLocationScreen> {
                     widget.onVariableChanged(addressLoc, addressAddress);
                   }
                 },
-                icon: Icon(Icons.house),
+                icon: const Icon(Icons.house),
                 label: const Text("Use This Location"),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.grey,
@@ -164,15 +151,11 @@ class _SearchLocationScreenState extends State<SearchLocationScreen> {
                 itemCount: placePredictions.length,
                 itemBuilder: (context, index) => LocationListTile(
                   press: () {
-                    print('BEFORE INITIALIZE');
                     initializeLocation(placePredictions[index].description!);
                     locationController.text =
                         placePredictions[index].description!;
                     locationFocus.unfocus();
-                    print('AFTER INITIALIZE');
-                    print('BEFORE UPDATE');
 
-                    print('AFTER UPDATE');
                   },
                   location: placePredictions[index].description!,
                 ),
