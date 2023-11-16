@@ -6,6 +6,7 @@ import 'package:odd_job_app/jobs/geolocation/compute_distance.dart';
 
 //import 'package:geolocator/geolocator.dart';
 
+// ignore: must_be_immutable
 class JobCard extends StatelessWidget {
   late final Job job;
   ComputeDistance computedDistance = ComputeDistance();

@@ -1,9 +1,10 @@
 import "package:flutter/material.dart";
-import 'package:flutter/material.dart';
 import 'package:odd_job_app/pages/address.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+// ignore_for_file: library_private_types_in_public_api
+
 
 class PostJobPage extends StatefulWidget {
   const PostJobPage({super.key});
@@ -307,7 +308,7 @@ class _PostJobPageState extends State<PostJobPage> {
 
 
 class JobPostedSuccessfullyPage extends StatelessWidget {
-  const JobPostedSuccessfullyPage({Key? key}) : super(key: key);
+  const JobPostedSuccessfullyPage({super.key});
 
   @override
   Widget build(BuildContext context) {

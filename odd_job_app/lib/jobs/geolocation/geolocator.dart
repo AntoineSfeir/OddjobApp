@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 // import 'package:google_maps_flutter_web/google_maps_flutter_web.dart' as webGM;
 
+// ignore: must_be_immutable
 class MapPicker extends StatefulWidget {
   static const DEFAULT_ZOOM = 14.4746;
   static const KINSHASA_LOCATION = LatLng(-4.325, 15.322222);

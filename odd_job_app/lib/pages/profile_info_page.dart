@@ -6,6 +6,7 @@ class ProfileInfoPage extends StatefulWidget {
   const ProfileInfoPage({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ProfileInfoPageState createState() => _ProfileInfoPageState();
 }
 
@@ -26,6 +27,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
     if (user.email != null) {
       // get the current job's docIDs
       await FirebaseFirestore.instance.collection('users').get().then(
+            // ignore: avoid_function_literals_in_foreach_calls
             (snapshot) => snapshot.docs.forEach((document) {
               if (document["email"] == user.email) {
                 setState(() {
