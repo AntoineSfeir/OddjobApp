@@ -12,6 +12,7 @@ import 'package:odd_job_app/pages/about_oddjob_page.dart';
 import 'package:odd_job_app/pages/profile_info_page.dart';
 import 'package:odd_job_app/pages/payment_option_page.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+// ignore: unused_import
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -67,7 +68,7 @@ class _ProfileState extends State<ProfilePage> {
               });
         }
       }
-    // ignore: empty_catches
+      // ignore: empty_catches
     } catch (error) {}
   }
 

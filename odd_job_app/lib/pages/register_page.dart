@@ -227,72 +227,73 @@ class _RegisterPageState extends State<RegisterPage> {
 
               // username text field
               Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      border: Border.all(color: Colors.white),
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: TextField(
+                  obscureText: true,
+                  controller: _usernameController,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: TextField(
-                        controller: _usernameController,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Username',
-                        ),
-                      ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.indigoAccent),
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                  )
+                    hintText: 'Username',
+                    fillColor: Colors.grey[200],
+                    filled: true,
+                  ),
                 ),
+              ),
 
               const SizedBox(height: 10),
 
               // first name text field
-              Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      border: Border.all(color: Colors.white),
+             Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: TextField(
+                  obscureText: true,
+                  controller: _firstNameController,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: TextField(
-                        controller: _firstNameController,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'First Name',
-                        ),
-                      ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.indigoAccent),
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                  )),
+                    hintText: 'First Name',
+                    fillColor: Colors.grey[200],
+                    filled: true,
+                  ),
+                ),
+              ),
 
               const SizedBox(height: 10),
 
               // last name text field
               Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      border: Border.all(color: Colors.white),
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: TextField(
+                  obscureText: true,
+                  controller: _lastNameController,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: TextField(
-                        controller: _lastNameController,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Last Name',
-                        ),
-                      ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.indigoAccent),
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                  )),
-
+                    hintText: 'Last Name',
+                    fillColor: Colors.grey[200],
+                    filled: true,
+                  ),
+                ),
+              ),
               const SizedBox(height: 10),
 
               // dob text field
@@ -461,24 +462,25 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: 10),
               // email textfield
               Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      border: Border.all(color: Colors.white),
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: TextField(
+                  obscureText: true,
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.white),
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20.0),
-                      child: TextField(
-                        controller: _emailController,
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          hintText: 'Email',
-                        ),
-                      ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.indigoAccent),
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                  )),
+                    hintText: 'Email',
+                    fillColor: Colors.grey[200],
+                    filled: true,
+                  ),
+                ),
+              ),
 
               const SizedBox(height: 10),
 
@@ -494,7 +496,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.deepPurple),
+                      borderSide: const BorderSide(color: Colors.indigoAccent),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     hintText: 'Password',
@@ -518,7 +520,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.deepPurple),
+                      borderSide: const BorderSide(color: Colors.indigoAccent),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     hintText: 'Confirm Password',
@@ -538,7 +540,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
-                        color: Colors.deepPurple,
+                        color: Colors.indigoAccent,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Center(
