@@ -73,7 +73,10 @@ class _OtherProfileState extends State<OtherProfilePage> {
       body: Center(
         child: Column(
           children: [
-            const Expanded(flex: 1, child: _TopPortion()), // Reduced top space
+            Expanded(
+                flex: 1,
+                child:
+                    _TopPortion(username ?? "username")), // Reduced top space
             Expanded(
               flex: 3,
               child: Padding(
@@ -82,13 +85,21 @@ class _OtherProfileState extends State<OtherProfilePage> {
                   children: [
                     // Increased spacing
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
+                         FloatingActionButton.extended(
+                          onPressed: () {},
+                          heroTag: 'Job Offer',
+                          elevation: 0,
+                          backgroundColor: Colors.green,
+                          label: const Text("Send Job Offer"),
+                          icon: const Icon(Icons.inbox),
+                        ),
                         FloatingActionButton.extended(
                           onPressed: () {},
                           heroTag: 'mesage',
                           elevation: 0,
-                          backgroundColor: Colors.green,
+                          backgroundColor: Colors.red,
                           label: const Text("Message"),
                           icon: const Icon(Icons.message_rounded),
                         ),
@@ -228,48 +239,44 @@ class ProfileInfoItem {
 }
 
 class _TopPortion extends StatelessWidget {
-  const _TopPortion();
+  _TopPortion(this.username);
+
+  String username;
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Align(
-          alignment: Alignment.center,
-          child: SizedBox(
-            width: 150,
-            height: 150,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                            'https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=1024x1024&w=is&k=20&c=-mUWsTSENkugJ3qs5covpaj-bhYpxXY-v9RDpzsw504=')),
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: CircleAvatar(
-                    radius: 20,
-                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                    child: Container(
-                      margin: const EdgeInsets.all(8.0),
-                      decoration: const BoxDecoration(
-                          color: Colors.green, shape: BoxShape.circle),
+        Stack(
+          fit: StackFit.loose,
+          children: [
+            SizedBox(
+              width: 150,
+              height: 150,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.black,
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: NetworkImage(
+                      'https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=1024x1024&w=is&k=20&c=-mUWsTSENkugJ3qs5covpaj-bhYpxXY-v9RDpzsw504=',
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
+          ],
+        ),
+        const SizedBox(width: 16), // Adjust the spacing as needed
+        Text(
+          username,
+          style: const TextStyle(
+            fontSize: 36,
+            fontWeight: FontWeight.bold,
           ),
-        )
+        ),
       ],
     );
   }

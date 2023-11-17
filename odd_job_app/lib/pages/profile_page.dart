@@ -27,6 +27,8 @@ class _ProfileState extends State<ProfilePage> {
   String? username;
   String? currentUserDocId;
   File? _image; // Variable to store the selected image
+  int? jobsPosted;
+  int? jobsCompleted;
 
   Future<void> getUsername() async {
     await FirebaseFirestore.instance.collection('users').get().then(
@@ -34,6 +36,8 @@ class _ProfileState extends State<ProfilePage> {
             if (document["email"] == user.email) {
               setState(() {
                 username = document["username"];
+                jobsPosted = document["jobsPosted"];
+                jobsCompleted = document["jobsCompleted"];
                 currentUserDocId = document.reference.id;
               });
             }
@@ -171,8 +175,8 @@ class _ProfileState extends State<ProfilePage> {
                           child: _image != null
                               ? Image.file(
                                   _image!,
-                                  width: 100,
-                                  height: 100,
+                                  width: 150,
+                                  height: 150,
                                   fit: BoxFit.cover,
                                 )
                               : Image.network(
@@ -201,16 +205,31 @@ class _ProfileState extends State<ProfilePage> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+                          
                         ],
+                        
                       ),
                     ),
                   ],
                 ),
+
                 // Divider
                 Container(
                   margin: EdgeInsets.only(
                     left: MediaQuery.of(context).size.width * 0,
-                    top: MediaQuery.of(context).size.height * 0.05,
+                    top: MediaQuery.of(context).size.height * 0.02,
+                    right: MediaQuery.of(context).size.width * 0,
+                  ),
+                  height: 2,
+                  color: (Colors.grey), // Divider color
+                ),
+
+                _ProfileInfoRow(numOfJobsPosted: jobsPosted ?? 0, numOfJobsCompleted: jobsCompleted ?? 0),
+                // Divider
+                Container(
+                  margin: EdgeInsets.only(
+                    left: MediaQuery.of(context).size.width * 0,
+                    top: MediaQuery.of(context).size.height * 0.009,
                     right: MediaQuery.of(context).size.width * 0,
                   ),
                   height: 2,
@@ -391,4 +410,82 @@ class _ProfileState extends State<ProfilePage> {
       ),
     );
   }
+}
+class _ProfileInfoRow extends StatelessWidget {
+  const _ProfileInfoRow({
+    required this.numOfJobsPosted,
+    required this.numOfJobsCompleted,
+  });
+
+  final int numOfJobsPosted;
+  final int numOfJobsCompleted;
+
+  @override
+  Widget build(BuildContext context) {
+    final List<ProfileInfoItem> items = [
+      ProfileInfoItem("Jobs Posted", numOfJobsPosted),
+      ProfileInfoItem("Jobs Completed", numOfJobsCompleted),
+    ];
+
+    return Container(
+      margin: const EdgeInsets.all(15), // Set margin to zero
+      child: SizedBox(
+        height: null, // Set height to null to take available height
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                for (var item in items) ...[
+                  if (items.indexOf(item) != 0) const VerticalDivider(),
+                  _singleItem(context, item),
+                ],
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _singleItem(BuildContext context, ProfileInfoItem item) {
+    return Expanded(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 500),
+        decoration: BoxDecoration(
+          color: Colors.blue, // Change the color as needed
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                item.value.toString(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.white, // Text color
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                item.title,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Colors.white, // Text color
+                    ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ProfileInfoItem {
+  final String title;
+  final int value;
+  const ProfileInfoItem(this.title, this.value);
 }
