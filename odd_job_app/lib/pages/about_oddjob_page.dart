@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutOddJobPage extends StatelessWidget {
   const AboutOddJobPage({super.key});
@@ -14,6 +15,10 @@ class AboutOddJobPage extends StatelessWidget {
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
         ),
       ),
       body: const Padding(
@@ -62,14 +67,44 @@ class AboutOddJobPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            Text("Have questions or suggestions? Click below to email us!",
+                style: TextStyle(fontSize: 16)),
             SizedBox(height: 8),
-            Text(
-              "Have questions or suggestions? Reach out to us at support@oddjobapp.com",
-              style: TextStyle(fontSize: 16),
-            ),
+            MyClickableEmail(),
           ],
         ),
       ),
     );
+  }
+}
+
+class MyClickableEmail extends StatelessWidget {
+  final String emailAddress = "oddjobdeveloper@gmail.com";
+
+  const MyClickableEmail({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => _launchEmail(),
+      child: Text(
+        emailAddress,
+        style: const TextStyle(fontSize: 16, color: Colors.blue),
+      ),
+    );
+  }
+
+  _launchEmail() async {
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: emailAddress,
+      queryParameters: {'subject': 'OddJob Inquiry'},
+    );
+
+    if (await canLaunchUrl(emailLaunchUri)) {
+      await launchUrl(emailLaunchUri);
+    } else {
+      throw 'Could not launch email';
+    }
   }
 }

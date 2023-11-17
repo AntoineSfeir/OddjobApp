@@ -57,6 +57,7 @@ dependencies:
   webview_flutter_wkwebview: ^3.9.4
   path_provider: ^2.1.1
   webview_flutter_android: ^3.12.1
+  url_launcher: ^6.2.1
 
 dependency_overrides: 
  http: ^0.13.4
