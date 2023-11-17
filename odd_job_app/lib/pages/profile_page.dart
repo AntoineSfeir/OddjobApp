@@ -301,7 +301,7 @@ class _ProfileState extends State<ProfilePage> {
                         SizedBox(
                           width: 5,
                         ),
-                        Text('Payment Options'),
+                        Text('Manage Payment Options'),
                       ],
                     ),
                   ),

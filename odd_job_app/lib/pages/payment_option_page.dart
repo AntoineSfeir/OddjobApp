@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:odd_job_app/pages/creditcard_page.dart';
+import '../payemnt/paypal_web_view.dart';
+import 'package:odd_job_app/payemnt/creditcard_page.dart';
+import 'package:odd_job_app/payemnt/google_pay_web_view.dart';
 
 class PaymentOptionsPage extends StatefulWidget {
   const PaymentOptionsPage({super.key});
@@ -34,7 +36,8 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const CreditCardPage()),
+                  MaterialPageRoute(
+                      builder: (context) => const CreditCardPage()),
                 );
               },
             ),
@@ -43,7 +46,11 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
               title: "PayPal",
               icon: Icons.payment,
               onTap: () {
-                // Handle PayPal selection
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const PaypalWebView()),
+                );
               },
             ),
             const SizedBox(height: 20),
@@ -51,7 +58,11 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
               title: "Google Pay",
               icon: Icons.attach_money,
               onTap: () {
-                // Handle Google Pay selection
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const GooglePayWebView()),
+                );
               },
             ),
           ],
