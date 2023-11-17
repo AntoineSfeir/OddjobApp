@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:odd_job_app/pages/job_history_page.dart';
 
 class OtherProfilePage extends StatefulWidget {
   const OtherProfilePage({super.key, required this.recieverDocId});
@@ -61,6 +62,7 @@ class _OtherProfileState extends State<OtherProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text(username ?? "Username"),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -78,25 +80,10 @@ class _OtherProfileState extends State<OtherProfilePage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    Text(
-                      username ?? "Username",
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 25), // Increased spacing
+                    // Increased spacing
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        FloatingActionButton.extended(
-                          onPressed: () {},
-                          heroTag: 'follow',
-                          elevation: 0,
-                          label: const Text("Follow"),
-                          icon: const Icon(Icons.person_add_alt_1),
-                        ),
-                        const SizedBox(width: 16.0),
                         FloatingActionButton.extended(
                           onPressed: () {},
                           heroTag: 'mesage',
@@ -107,6 +94,15 @@ class _OtherProfileState extends State<OtherProfilePage> {
                         ),
                       ],
                     ),
+                    Container(
+                      margin: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width * 0,
+                        top: MediaQuery.of(context).size.height * 0.02,
+                        right: MediaQuery.of(context).size.width * 0,
+                      ),
+                      height: 2,
+                      color: (Colors.grey), // Divider color
+                    ),
                     const SizedBox(height: 16),
                     _ProfileInfoRow(
                       numOfJobsPosted: jobsPosted ?? 0,
@@ -116,7 +112,7 @@ class _OtherProfileState extends State<OtherProfilePage> {
                     Container(
                       margin: EdgeInsets.only(
                         left: MediaQuery.of(context).size.width * 0,
-                        top: MediaQuery.of(context).size.height * 0.02,
+                        top: MediaQuery.of(context).size.height * 0.0001,
                         right: MediaQuery.of(context).size.width * 0,
                       ),
                       height: 2,
@@ -127,7 +123,22 @@ class _OtherProfileState extends State<OtherProfilePage> {
                       communicationRating: comRating ?? "0",
                       workQualityRating: workRating ?? "0",
                       wouldHireAgainRating: hireAgainRating ?? "0",
-                    )
+                    ),
+
+                    const SizedBox(height: 8.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Navigate to the job history page
+                        // You need to replace 'JobHistoryPage' with the actual page you want to navigate to
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const JobHistoryPage(),
+                          ),
+                        );
+                      },
+                      child: const Text("View Job History"),
+                    ),
                   ],
                 ),
               ),
@@ -158,41 +169,56 @@ class _ProfileInfoRow extends StatelessWidget {
     return Container(
       height: 80,
       constraints: const BoxConstraints(maxWidth: 400),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: items
-            .map((item) => Expanded(
-                  child: Row(
-                    children: [
-                      if (items.indexOf(item) != 0) const VerticalDivider(),
-                      Expanded(child: _singleItem(context, item)),
-                    ],
-                  ),
-                ))
-            .toList(),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (var item in items) ...[
+                if (items.indexOf(item) != 0) const VerticalDivider(),
+                _singleItem(context, item),
+              ],
+            ],
+          ),
+        ],
       ),
     );
   }
 
-  Widget _singleItem(BuildContext context, ProfileInfoItem item) => Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              item.value.toString(),
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
+  Widget _singleItem(BuildContext context, ProfileInfoItem item) {
+    return Expanded(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 500),
+        decoration: BoxDecoration(
+          color: Colors.blue, // Change the color as needed
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                item.value.toString(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.white, // Text color
+                ),
               ),
-            ),
+              const SizedBox(height: 4),
+              Text(
+                item.title,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Colors.white, // Text color
+                    ),
+              ),
+            ],
           ),
-          Text(
-            item.title,
-            style: Theme.of(context).textTheme.caption,
-          )
-        ],
-      );
+        ),
+      ),
+    );
+  }
 }
 
 class ProfileInfoItem {
