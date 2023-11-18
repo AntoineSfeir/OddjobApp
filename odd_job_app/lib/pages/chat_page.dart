@@ -131,17 +131,40 @@ class _ChatPageState extends State<ChatPage> {
   }
 
   Widget buildMessageInput() {
-    return Row(
-      children: [
-        Expanded(
-            child: TextField(
-          controller: _messageController,
-          decoration: const InputDecoration(
-            hintText: 'Enter Message',
+  return Row(
+    children: [
+      Expanded(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8.0, bottom: 8.0, top: 8.0, right: 8.0),
+          child: Stack(
+            children: [
+              TextField(
+                controller: _messageController,
+                maxLines: null,
+                decoration: InputDecoration(
+                  hintText: 'Enter Message',
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                ),
+              ),
+              Positioned(
+                right: 0,
+                bottom: 0,
+                child: IconButton(
+                  onPressed: () {
+                    sendMessage();
+                    _messageController.clear(); // Clear the text after sending
+                  },
+                  icon: const Icon(Icons.arrow_upward),
+                ),
+              ),
+            ],
           ),
-        )),
-        IconButton(onPressed: sendMessage, icon: const Icon(Icons.arrow_upward))
-      ],
-    );
-  }
+        ),
+      ),
+    ],
+  );
+}
 }

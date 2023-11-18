@@ -35,7 +35,7 @@ class _MessagesPageState extends State<MessagesPage> {
           ),
           body: buildUserList(),
           bottomNavigationBar: BottomAppBar(
-            color: Colors.blue,
+            color:  Color(0xFF4F82A3),
             shape: const CircularNotchedRectangle(),
             child: SizedBox(
               height: 60.0,
@@ -120,11 +120,11 @@ class _MessagesPageState extends State<MessagesPage> {
         ),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading...");
+            return Text("Loading...", overflow: TextOverflow.ellipsis);
           } else if (snapshot.hasError || snapshot.data == null) {
-            return Text("Send a Message!");
+            return Text("Send a Message!", overflow: TextOverflow.ellipsis);
           } else {
-            return Text(snapshot.data!);
+            return Text(snapshot.data!, overflow: TextOverflow.ellipsis);
           }
         },
       ),
