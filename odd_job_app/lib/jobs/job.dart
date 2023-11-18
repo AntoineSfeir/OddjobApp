@@ -8,6 +8,8 @@ class Job {
   late Timestamp deadline;
   late String address;
   late String ID;
+  late String user;
+  late String displayName;
 
   Job({
     required this.description,
@@ -16,6 +18,8 @@ class Job {
     required this.deadline,
     required this.address,
     required this.longlat,
+    required this.user,
+    required this.displayName,
   });
 
   factory Job.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
@@ -28,9 +32,11 @@ class Job {
       description: data['description'] ?? '', // default value is the space
       title: data['title'] ?? '',
       startingBid: data['startingBid'] ?? '', // default value is the zero
-      longlat: data['Description'] ?? const GeoPoint(0, 0),
+      longlat: data['longlat'] ?? const GeoPoint(0, 0),
       deadline: data['deadline'] ?? Timestamp(0, 0),
       address: data['address'] ?? '',
+      user: data['jobPoster'] ?? '',
+      displayName: data['displayName'] ?? '',
     );
   }
 }

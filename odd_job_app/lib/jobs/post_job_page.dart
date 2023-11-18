@@ -1,10 +1,19 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
-import 'package:odd_job_app/pages/address.dart';
+<<<<<<< Updated upstream:odd_job_app/lib/pages/post_job_page.dart
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:odd_job_app/pages/address.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
+=======
+import 'package:odd_job_app/jobs/address.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:odd_job_app/jobs/job.dart';
+import 'package:odd_job_app/jobs/user.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 // ignore_for_file: library_private_types_in_public_api
-
+>>>>>>> Stashed changes:odd_job_app/lib/jobs/post_job_page.dart
 
 class PostJobPage extends StatefulWidget {
   const PostJobPage({super.key});
@@ -14,6 +23,11 @@ class PostJobPage extends StatefulWidget {
 }
 
 class _PostJobPageState extends State<PostJobPage> {
+  final userEmail = FirebaseAuth.instance.currentUser!.email;
+  final db = FirebaseFirestore.instance;
+  List<user> users = [];
+  late String displayName;
+
   final _jobTitleController = TextEditingController();
   final _jobDescriptionController = TextEditingController();
   final _jobDeadlineDateController = TextEditingController();
@@ -27,6 +41,54 @@ class _PostJobPageState extends State<PostJobPage> {
   //9999999999
   late LatLng location;
   late String address = '';
+
+  List<Job> firstList = [];
+  List<Job> secondList = [];
+  late String jobID;
+
+  Future allJobs(bool whichList) async {
+    if (whichList == true) {
+      await db
+          .collection('jobs')
+          .get()
+          .then((snapshot) => snapshot.docs.forEach((element) {
+                Job i = Job.fromSnapshot(element);
+                i.ID = element.id;
+                firstList.add(i);
+              }));
+    } else {
+      await db
+          .collection('jobs')
+          .get()
+          .then((snapshot) => snapshot.docs.forEach((element) {
+                Job i = Job.fromSnapshot(element);
+                i.ID = element.id;
+                secondList.add(i);
+              }));
+    }
+    // final jobData = snapshot.docs.map((e) => Job.fromSnapshot(e)).toList();
+    // jo = jobData;
+  }
+
+  Future compareLists() async {
+    for (int i = 0; i < secondList.length; i++) {
+      if (!firstList.contains(secondList[i])) {
+        jobID = secondList[i].ID;
+      }
+    }
+    return jobID;
+  }
+
+  Future getUsers() async {
+    await db
+        .collection('users')
+        .get()
+        .then((snapshot) => snapshot.docs.forEach((element) {
+              user i = user.fromSnapshot(element);
+              i.ID = element.id;
+              users.add(i);
+            }));
+  }
 
   void upDateLocation(String chosenAddress, LatLng coordinates) {
     location = coordinates;
@@ -46,6 +108,17 @@ class _PostJobPageState extends State<PostJobPage> {
 
   // Post job to database
   Future postJob() async {
+    await getUsers();
+    await allJobs(true);
+    late user current;
+    for (int i = 0; i < users.length; i++) {
+      if (users[i].email == userEmail) {
+        displayName =
+            "${users[i].firstName} ${users[i].lastName.characters.first.toUpperCase()}.";
+        current = users[i];
+      }
+    }
+
     GeoPoint g = GeoPoint(location.latitude, location.longitude);
     addJobDetails(
       _jobTitleController.text.trim(),
@@ -55,11 +128,34 @@ class _PostJobPageState extends State<PostJobPage> {
       g,
       address,
     );
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(
-        builder: (context) => const JobPostedSuccessfullyPage(),
-      )
-    );
+<<<<<<< Updated upstream:odd_job_app/lib/pages/post_job_page.dart
+=======
+    await addJobToUserCollection(current);
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => const JobPostedSuccessfullyPage(),
+    ));
+  }
+
+  Future addJobToUserCollection(user current) async {
+    await allJobs(false);
+    await compareLists();
+    print("JOB ID = " + jobID);
+    user thisUser = current;
+    print("USER ID = ${thisUser.ID}");
+    CollectionReference postedJobs = FirebaseFirestore.instance
+        .collection('users')
+        .doc(thisUser.ID)
+        .collection('postedJobs');
+    print('ABOUT TO POST \n\n\n\n');
+
+    return postedJobs
+        .add({
+          'ID': jobID,
+        })
+        .then((value) => print("job put in userPosted"))
+        .catchError(
+            (error) => print("Failed to put job in UserPoster: $error"));
+>>>>>>> Stashed changes:odd_job_app/lib/jobs/post_job_page.dart
   }
 
   // Add job details to database
@@ -74,6 +170,8 @@ class _PostJobPageState extends State<PostJobPage> {
           'address': address,
           'longlat': coords,
           'startingBid': bid,
+          'jobPoster': userEmail,
+          'displayName': displayName,
         })
         .then((value) => print("Job posted"))
         .catchError((error) => print("Failed to post job: $error"));
@@ -136,19 +234,28 @@ class _PostJobPageState extends State<PostJobPage> {
       enterYourAddressHere;
     });
     _panelController.close();
+    print(address);
+    print('LOCATION = ${location.latitude}, ${location.longitude}');
+    print('WE DIDIDIDIDIDIDIDIDI IT RAHHHHHHHHHHHHHHHHHH');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< Updated upstream:odd_job_app/lib/pages/post_job_page.dart
+      appBar: AppBar(
+        title: const Text('Post a Job'),
+        backgroundColor: const Color(0xFF1D465D), // Set your desired color here
+=======
       backgroundColor: Colors.grey[300],
-     appBar: AppBar(
-              title: const Text('Post a Job',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold)),
-            ),
+      appBar: AppBar(
+        title: const Text('Post a Job',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold)),
+>>>>>>> Stashed changes:odd_job_app/lib/jobs/post_job_page.dart
+      ),
       body: SlidingUpPanel(
         backdropEnabled: true,
         defaultPanelState: PanelState.CLOSED,
@@ -159,13 +266,22 @@ class _PostJobPageState extends State<PostJobPage> {
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-           mainAxisAlignment: MainAxisAlignment.center,
+<<<<<<< Updated upstream:odd_job_app/lib/pages/post_job_page.dart
+            crossAxisAlignment: CrossAxisAlignment.start,
+
+=======
+            mainAxisAlignment: MainAxisAlignment.center,
+>>>>>>> Stashed changes:odd_job_app/lib/jobs/post_job_page.dart
             children: <Widget>[
               Flexible(
                   child: ListView.builder(
                       itemCount: 1,
                       itemBuilder: (context, index) {
                         return Column(children: [
+                          const Text(
+                            'Job Title:',
+                            style: TextStyle(fontSize: 18),
+                          ),
                           TextFormField(
                             controller: _jobTitleController,
                             decoration: const InputDecoration(
@@ -174,6 +290,10 @@ class _PostJobPageState extends State<PostJobPage> {
                             ),
                           ),
                           const SizedBox(height: 16),
+                          const Text(
+                            'Job Description:',
+                            style: TextStyle(fontSize: 18),
+                          ),
                           TextFormField(
                               controller: _jobDescriptionController,
                               decoration: const InputDecoration(
@@ -206,27 +326,27 @@ class _PostJobPageState extends State<PostJobPage> {
                             },
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  const Color(0x00ffffff)),
+                                  const Color(0xFFFFFF)),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons
                                       .location_on, // Use the appropriate address icon
                                   color: Colors.black,
                                 ),
-                                SizedBox(
+                                Container(
                                   width: 200,
                                   child: Text(
                                     enterYourAddressHere,
                                     overflow: TextOverflow.ellipsis,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: Colors.black,
                                     ),
                                   ),
                                 ),
-                                const Icon(
+                                Icon(
                                   Icons
                                       .arrow_forward, // Use the appropriate arrow icon
                                   color: Colors.black,
@@ -264,7 +384,7 @@ class _PostJobPageState extends State<PostJobPage> {
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 16),
+                                SizedBox(height: 16),
                               ],
                             ),
                           ),
@@ -292,7 +412,7 @@ class _PostJobPageState extends State<PostJobPage> {
                             onPressed: postJob,
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all<Color>(
-                                  const Color.fromARGB(255, 51, 154, 214)),
+                                  const Color(0xFF1D465D)),
                             ),
                             child: const Text('Post Job'),
                           )
@@ -305,7 +425,8 @@ class _PostJobPageState extends State<PostJobPage> {
     );
   }
 }
-
+<<<<<<< Updated upstream:odd_job_app/lib/pages/post_job_page.dart
+=======
 
 class JobPostedSuccessfullyPage extends StatelessWidget {
   const JobPostedSuccessfullyPage({super.key});
@@ -414,3 +535,4 @@ class _AnimatedCheckMarkState extends State<AnimatedCheckMark>
     super.dispose();
   }
 }
+>>>>>>> Stashed changes:odd_job_app/lib/jobs/post_job_page.dart
