@@ -8,6 +8,11 @@ import 'package:odd_job_app/auth/main_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:odd_job_app/pages/home_page.dart';
+<<<<<<< Updated upstream
+=======
+import 'package:odd_job_app/jobs/search_page.dart';
+import 'package:odd_job_app/pages/messages_page.dart';
+>>>>>>> Stashed changes
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/pages/job_history_page.dart';
 import 'package:odd_job_app/pages/about_oddjob_page.dart';
@@ -64,11 +69,16 @@ class _ProfileState extends State<ProfilePage> {
           // You can display an error message or take other appropriate actions
         }
       }
+<<<<<<< Updated upstream
     } catch (error) {
       // Handle other exceptions that might occur during image picking
       print('Error picking image: $error');
       // You can display an error message or take other appropriate actions
     }
+=======
+      // ignore: empty_catches
+    } catch (error) {}
+>>>>>>> Stashed changes
   }
 
   Future<void> _uploadImage(File imageFile) async {
