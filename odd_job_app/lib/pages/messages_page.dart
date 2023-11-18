@@ -5,6 +5,7 @@ import 'package:odd_job_app/pages/home_page.dart';
 import 'package:odd_job_app/pages/search_page.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:odd_job_app/chat/chat_service.dart';
 
 class MessagesPage extends StatefulWidget {
   const MessagesPage({super.key});
@@ -15,6 +16,7 @@ class MessagesPage extends StatefulWidget {
 
 class _MessagesPageState extends State<MessagesPage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
+  final ChatService _chatService = ChatService();
 
   @override
   Widget build(BuildContext context) {
@@ -107,9 +109,25 @@ class _MessagesPageState extends State<MessagesPage> {
 
   Widget buildUserListItem(BuildContext context, DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data()! as Map<String, dynamic>;
+    
     if (auth.currentUser!.email != data['email']) {
       return ListTile(
-        title: Text(data['email']),
+        title: Text(data['firstName'] + " " + data['lastName']),
+        subtitle: FutureBuilder<String?>(
+        future: _chatService.getMostRecentMessage(
+          auth.currentUser!.email!,
+          data['email'],
+        ),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading...");
+          } else if (snapshot.hasError || snapshot.data == null) {
+            return Text("Send a Message!");
+          } else {
+            return Text(snapshot.data!);
+          }
+        },
+      ),
         onTap: () {
           Navigator.push(
             context,
