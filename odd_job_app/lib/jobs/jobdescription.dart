@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/jobs/job.dart';
-
+import 'package:odd_job_app/jobs/user.dart';
+import 'package:odd_job_app/jobs/bid_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:odd_job_app/pages/other_profile_page.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:odd_job_app/jobs/checkout.dart';
 import 'package:odd_job_app/jobs/compute_time_to_display.dart';
 import 'package:odd_job_app/jobs/geolocation/compute_distance.dart';
-import 'package:odd_job_app/jobs/job.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:odd_job_app/jobs/user.dart';
-import 'package:odd_job_app/pages/other_profile_page.dart';
 
 class JobDescriptionPage extends StatefulWidget {
   final String ID;
-  const JobDescriptionPage({Key? key, required this.ID}) : super(key: key);
+  // ignore: non_constant_identifier_names
+  const JobDescriptionPage({super.key, required this.ID});
 
   @override
   State<JobDescriptionPage> createState() => _JobDescriptionPageState();
@@ -23,7 +20,7 @@ class JobDescriptionPage extends StatefulWidget {
 class _JobDescriptionPageState extends State<JobDescriptionPage> {
   ComputeDistance computedDistance = ComputeDistance();
   computeTime computedTime = computeTime();
-  Set<Marker> _markers = {};
+  final Set<Marker> _markers = {};
   final db = FirebaseFirestore.instance;
   late Job thisJob;
   late user thisUser;
@@ -38,16 +35,6 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
         await db.collection('jobs/').doc(widget.ID).get();
     thisJob = Job.fromSnapshot(doc);
     l = LatLng(thisJob.longlat.latitude, thisJob.longlat.longitude);
-    // await FirebaseFirestore.instance.collection('users').get().then(
-    //       (snapshot) => snapshot.docs.forEach((document) {
-    //         if (document.reference.id == thisJob.posterID) {
-    //           setState(() {
-    //             userDocId = document.reference.id;
-    //             print(userDocId);
-    //           });
-    //         }
-    //       }),
-    //     );
 
     DocumentSnapshot<Map<String, dynamic>> userDoc =
         await db.collection('users/').doc(thisJob.posterID).get();
@@ -245,7 +232,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => CheckOut(
+                                    builder: (context) => BidPage(
                                         stringBid: thisJob.startingBid)),
                               );
                             },

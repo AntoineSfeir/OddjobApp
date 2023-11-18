@@ -6,6 +6,8 @@
 		<array>
 			<string>googlechromes</string>
 			<string>comgooglemaps</string>
+			<string>googlegmail</string>
+			<string>mailto</string>
 		</array>
 		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 		<string>Allow us to get your location</string>

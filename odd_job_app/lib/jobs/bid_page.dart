@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:odd_job_app/jobs/test.dart';
 
-class CheckOut extends StatefulWidget {
+class BidPage extends StatefulWidget {
   final String stringBid;
 
-  const CheckOut({Key? key, required this.stringBid}) : super(key: key);
+  const BidPage({super.key, required this.stringBid});
 
   @override
-  State<CheckOut> createState() => _CheckOutState();
+  State<BidPage> createState() => _BidPageState();
 }
 
-class _CheckOutState extends State<CheckOut> {
+class _BidPageState extends State<BidPage> {
   late int bid;
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
@@ -31,7 +30,10 @@ class _CheckOutState extends State<CheckOut> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Check Out'),
+        title: const Text(
+          'Bids',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -39,32 +41,37 @@ class _CheckOutState extends State<CheckOut> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   'Current Bid:',
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(width: 8),
                 Text(
                   '\$$bid',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             TextField(
               controller: _controller,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Enter your bid',
                 border: OutlineInputBorder(),
+                labelText: 'Your Bid',
+                prefixText: '\$',
               ),
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _saveBid,
-              child: Text('Bid Now'),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: _saveBid,
+                child: const Text('Bid Now'),
+              ),
             ),
           ],
         ),
