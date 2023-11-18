@@ -107,7 +107,7 @@ class _MessagesPageState extends State<MessagesPage> {
     Map<String, dynamic> data = doc.data()! as Map<String, dynamic>;
     if (auth.currentUser!.email != data['email']) {
       return ListTile(
-        title: Text(data['email']),
+        title: Text(data['firstName'] + " " + data['lastName']),
         onTap: () {
           Navigator.push(
             context,
