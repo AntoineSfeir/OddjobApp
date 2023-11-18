@@ -120,11 +120,11 @@ class _MessagesPageState extends State<MessagesPage> {
         ),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading...");
+            return Text("Loading...", overflow: TextOverflow.ellipsis);
           } else if (snapshot.hasError || snapshot.data == null) {
-            return Text("Send a Message!");
+            return Text("Send a Message!", overflow: TextOverflow.ellipsis);
           } else {
-            return Text(snapshot.data!);
+            return Text(snapshot.data!, overflow: TextOverflow.ellipsis);
           }
         },
       ),
