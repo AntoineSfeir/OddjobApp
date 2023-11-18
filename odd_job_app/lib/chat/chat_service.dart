@@ -21,25 +21,51 @@ class ChatService extends ChangeNotifier {
       timestamp: serverTime,
     );
 
-  List<String> users = [currentEmail, recieverEmail];
-  users.sort();
-  String chatRoomName = users.join("_");
+    List<String> users = [currentEmail, recieverEmail];
+    users.sort();
+    String chatRoomName = users.join("_");
 
-  await firestore.collection("chatrooms").doc(chatRoomName).collection('messages').add(newMessage.toMap());
+    await firestore
+        .collection("chatrooms")
+        .doc(chatRoomName)
+        .collection('messages')
+        .add(newMessage.toMap());
   }
-
 
   //get
   Stream<QuerySnapshot> getMessages(String userEmail, String otherEmail) {
-      List<String> users = [userEmail, otherEmail];
+    List<String> users = [userEmail, otherEmail];
+    users.sort();
+    String chatRoomName = users.join("_");
+
+    return firestore
+        .collection('chatrooms')
+        .doc(chatRoomName)
+        .collection('messages')
+        .orderBy('timestamp', descending: false)
+        .snapshots();
+  }
+
+  //getOne
+Future<String?> getMostRecentMessage(String userEmail, String otherEmail) async {
+  List<String> users = [userEmail, otherEmail];
   users.sort();
   String chatRoomName = users.join("_");
 
-  return firestore
-    .collection('chatrooms')
-    .doc(chatRoomName)
-    .collection('messages')
-    .orderBy('timestamp', descending: false)
-    .snapshots();
+  QuerySnapshot querySnapshot = await firestore
+      .collection('chatrooms')
+      .doc(chatRoomName)
+      .collection('messages')
+      .orderBy('timestamp', descending: true)
+      .limit(1)
+      .get();
+
+  if (querySnapshot.docs.isNotEmpty) {
+    return querySnapshot.docs.first.get('message') as String;
+  } else {
+    return null; // No message found
   }
+}
+
+
 }
