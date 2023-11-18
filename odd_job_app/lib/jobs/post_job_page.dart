@@ -1,11 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
-<<<<<<< Updated upstream:odd_job_app/lib/pages/post_job_page.dart
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:odd_job_app/pages/address.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-=======
 import 'package:odd_job_app/jobs/address.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/jobs/job.dart';
@@ -13,7 +7,6 @@ import 'package:odd_job_app/jobs/user.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 // ignore_for_file: library_private_types_in_public_api
->>>>>>> Stashed changes:odd_job_app/lib/jobs/post_job_page.dart
 
 class PostJobPage extends StatefulWidget {
   const PostJobPage({super.key});
@@ -27,6 +20,7 @@ class _PostJobPageState extends State<PostJobPage> {
   final db = FirebaseFirestore.instance;
   List<user> users = [];
   late String displayName;
+  late String userID;
 
   final _jobTitleController = TextEditingController();
   final _jobDescriptionController = TextEditingController();
@@ -115,6 +109,7 @@ class _PostJobPageState extends State<PostJobPage> {
       if (users[i].email == userEmail) {
         displayName =
             "${users[i].firstName} ${users[i].lastName.characters.first.toUpperCase()}.";
+        userID = users[i].ID;
         current = users[i];
       }
     }
@@ -128,8 +123,6 @@ class _PostJobPageState extends State<PostJobPage> {
       g,
       address,
     );
-<<<<<<< Updated upstream:odd_job_app/lib/pages/post_job_page.dart
-=======
     await addJobToUserCollection(current);
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => const JobPostedSuccessfullyPage(),
@@ -155,7 +148,6 @@ class _PostJobPageState extends State<PostJobPage> {
         .then((value) => print("job put in userPosted"))
         .catchError(
             (error) => print("Failed to put job in UserPoster: $error"));
->>>>>>> Stashed changes:odd_job_app/lib/jobs/post_job_page.dart
   }
 
   // Add job details to database
@@ -172,6 +164,7 @@ class _PostJobPageState extends State<PostJobPage> {
           'startingBid': bid,
           'jobPoster': userEmail,
           'displayName': displayName,
+          'posterID': userID,
         })
         .then((value) => print("Job posted"))
         .catchError((error) => print("Failed to post job: $error"));
@@ -242,11 +235,6 @@ class _PostJobPageState extends State<PostJobPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< Updated upstream:odd_job_app/lib/pages/post_job_page.dart
-      appBar: AppBar(
-        title: const Text('Post a Job'),
-        backgroundColor: const Color(0xFF1D465D), // Set your desired color here
-=======
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
         title: const Text('Post a Job',
@@ -254,7 +242,6 @@ class _PostJobPageState extends State<PostJobPage> {
                 color: Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.bold)),
->>>>>>> Stashed changes:odd_job_app/lib/jobs/post_job_page.dart
       ),
       body: SlidingUpPanel(
         backdropEnabled: true,
@@ -266,12 +253,7 @@ class _PostJobPageState extends State<PostJobPage> {
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-<<<<<<< Updated upstream:odd_job_app/lib/pages/post_job_page.dart
-            crossAxisAlignment: CrossAxisAlignment.start,
-
-=======
             mainAxisAlignment: MainAxisAlignment.center,
->>>>>>> Stashed changes:odd_job_app/lib/jobs/post_job_page.dart
             children: <Widget>[
               Flexible(
                   child: ListView.builder(
@@ -425,8 +407,6 @@ class _PostJobPageState extends State<PostJobPage> {
     );
   }
 }
-<<<<<<< Updated upstream:odd_job_app/lib/pages/post_job_page.dart
-=======
 
 class JobPostedSuccessfullyPage extends StatelessWidget {
   const JobPostedSuccessfullyPage({super.key});
@@ -535,4 +515,3 @@ class _AnimatedCheckMarkState extends State<AnimatedCheckMark>
     super.dispose();
   }
 }
->>>>>>> Stashed changes:odd_job_app/lib/jobs/post_job_page.dart

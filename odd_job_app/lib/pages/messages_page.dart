@@ -19,70 +19,72 @@ class _MessagesPageState extends State<MessagesPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+        debugShowCheckedModeBanner: false,
         home: Scaffold(
-          
-      backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        title: const Text(
-          "Messages",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+          backgroundColor: Colors.grey[300],
+          appBar: AppBar(
+            title: const Text(
+              "Messages",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
-        ),
-      ),
-      body: buildUserList(),
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.blue,
-        shape: const CircularNotchedRectangle(),
-        child: SizedBox(
-          height: 60.0,
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-            IconButton(
-              icon: const Icon(Icons.home),
-              color: const Color.fromARGB(255, 248, 248, 248),
-              iconSize: 40.0,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
-                );
-              },
+          body: buildUserList(),
+          bottomNavigationBar: BottomAppBar(
+            color: Colors.blue,
+            shape: const CircularNotchedRectangle(),
+            child: SizedBox(
+              height: 60.0,
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.home),
+                      color: const Color.fromARGB(255, 248, 248, 248),
+                      iconSize: 40.0,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage()),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.search),
+                      color: const Color.fromARGB(255, 238, 239, 239),
+                      iconSize: 40.0,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const SearchPage()),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.chat),
+                      color: Colors.white,
+                      iconSize: 40.0,
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                        icon: const Icon(Icons.person),
+                        color: const Color.fromARGB(255, 238, 239, 239),
+                        iconSize: 40.0,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ProfilePage()),
+                          );
+                        }),
+                  ]),
             ),
-            IconButton(
-              icon: const Icon(Icons.search),
-              color: const Color.fromARGB(255, 238, 239, 239),
-              iconSize: 40.0,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SearchPage()),
-                );
-              },
-            ),
-            IconButton(
-              icon: const Icon(Icons.chat),
-              color: Colors.white,
-              iconSize: 40.0,
-              onPressed: () {},
-            ),
-            IconButton(
-                icon: const Icon(Icons.person),
-                color: const Color.fromARGB(255, 238, 239, 239),
-                iconSize: 40.0,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ProfilePage()),
-                  );
-                }),
-          ]),
-        ),
-      ),
-    ));
+          ),
+        ));
   }
 
   Widget buildUserList() {

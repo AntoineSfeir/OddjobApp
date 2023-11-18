@@ -10,6 +10,7 @@ class Job {
   late String ID;
   late String user;
   late String displayName;
+  late String posterID;
 
   Job({
     required this.description,
@@ -20,6 +21,7 @@ class Job {
     required this.longlat,
     required this.user,
     required this.displayName,
+    required this.posterID,
   });
 
   factory Job.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
@@ -37,6 +39,7 @@ class Job {
       address: data['address'] ?? '',
       user: data['jobPoster'] ?? '',
       displayName: data['displayName'] ?? '',
+      posterID: data['posterID'] ?? '',
     );
   }
 }

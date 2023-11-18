@@ -3,6 +3,7 @@ import "package:firebase_auth/firebase_auth.dart";
 import "package:odd_job_app/chat/chat_service.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:odd_job_app/chat/message_bubble.dart";
+import "package:odd_job_app/jobs/user.dart";
 import "package:odd_job_app/pages/other_profile_page.dart";
 
 class ChatPage extends StatefulWidget {
@@ -16,6 +17,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  late user receivingUser;
   final TextEditingController _messageController = TextEditingController();
   final ChatService _chatService = ChatService();
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -33,6 +35,15 @@ class _ChatPageState extends State<ChatPage> {
             }
           }),
         );
+
+    DocumentSnapshot<Map<String, dynamic>> userDoc = await FirebaseFirestore
+        .instance
+        .collection('users/')
+        .doc(recieverDocId)
+        .get();
+
+    receivingUser = user.fromSnapshot(userDoc);
+    receivingUser.ID = userDoc.id;
   }
 
   @override
@@ -62,8 +73,9 @@ class _ChatPageState extends State<ChatPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        OtherProfilePage(recieverDocId: recieverDocId ?? ""),
+                    builder: (context) => OtherProfilePage(
+                      recieverUser: receivingUser,
+                    ),
                   ),
                 );
               },

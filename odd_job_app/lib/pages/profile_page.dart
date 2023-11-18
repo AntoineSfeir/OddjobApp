@@ -205,9 +205,7 @@ class _ProfileState extends State<ProfilePage> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          
                         ],
-                        
                       ),
                     ),
                   ],
@@ -224,7 +222,9 @@ class _ProfileState extends State<ProfilePage> {
                   color: (Colors.grey), // Divider color
                 ),
 
-                _ProfileInfoRow(numOfJobsPosted: jobsPosted ?? 0, numOfJobsCompleted: jobsCompleted ?? 0),
+                _ProfileInfoRow(
+                    numOfJobsPosted: jobsPosted ?? 0,
+                    numOfJobsCompleted: jobsCompleted ?? 0),
                 // Divider
                 Container(
                   margin: EdgeInsets.only(
@@ -411,6 +411,7 @@ class _ProfileState extends State<ProfilePage> {
     );
   }
 }
+
 class _ProfileInfoRow extends StatelessWidget {
   const _ProfileInfoRow({
     required this.numOfJobsPosted,

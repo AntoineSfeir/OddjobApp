@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:odd_job_app/jobs/post_job_page.dart';
 import 'package:odd_job_app/pages/search_page.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
-import 'package:odd_job_app/pages/post_job_page.dart';
 import 'package:odd_job_app/pages/messages_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -101,7 +101,8 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const SearchPage()),
+                      MaterialPageRoute(
+                          builder: (context) => const SearchPage()),
                     );
                   },
                 ),
@@ -112,7 +113,8 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const MessagesPage()),
+                      MaterialPageRoute(
+                          builder: (context) => const MessagesPage()),
                     );
                   },
                 ),
@@ -123,7 +125,8 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const ProfilePage()),
+                      MaterialPageRoute(
+                          builder: (context) => const ProfilePage()),
                     );
                   },
                 ),

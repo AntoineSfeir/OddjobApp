@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-<<<<<<< Updated upstream
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/jobs/job.dart';
-=======
+
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:odd_job_app/jobs/checkout.dart';
 import 'package:odd_job_app/jobs/compute_time_to_display.dart';
@@ -10,7 +10,7 @@ import 'package:odd_job_app/jobs/geolocation/compute_distance.dart';
 import 'package:odd_job_app/jobs/job.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/jobs/user.dart';
->>>>>>> Stashed changes
+import 'package:odd_job_app/pages/other_profile_page.dart';
 
 class JobDescriptionPage extends StatefulWidget {
   final String ID;
@@ -26,53 +26,45 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
   Set<Marker> _markers = {};
   final db = FirebaseFirestore.instance;
   late Job thisJob;
+  late user thisUser;
   late GoogleMapController _mapController;
   late LatLng l;
+  late String userDocId;
 
-<<<<<<< Updated upstream
-  Future allJobs() async {
-    print(widget.ID);
-=======
   Future<void> allJobs() async {
->>>>>>> Stashed changes
     widget.ID.trim();
     print('jobs/${widget.ID}');
     DocumentSnapshot<Map<String, dynamic>> doc =
         await db.collection('jobs/').doc(widget.ID).get();
     thisJob = Job.fromSnapshot(doc);
     l = LatLng(thisJob.longlat.latitude, thisJob.longlat.longitude);
+    // await FirebaseFirestore.instance.collection('users').get().then(
+    //       (snapshot) => snapshot.docs.forEach((document) {
+    //         if (document.reference.id == thisJob.posterID) {
+    //           setState(() {
+    //             userDocId = document.reference.id;
+    //             print(userDocId);
+    //           });
+    //         }
+    //       }),
+    //     );
+
+    DocumentSnapshot<Map<String, dynamic>> userDoc =
+        await db.collection('users/').doc(thisJob.posterID).get();
+
+    thisUser = user.fromSnapshot(userDoc);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    allJobs(); // Call the method in initState
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< Updated upstream
-        appBar: AppBar(
-          title: Text('TEST'),
-          backgroundColor: Colors.amber,
-        ),
-        body: FutureBuilder(
-            future: allJobs(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (thisJob != null) {
-                  return Column(
-                    children: <Widget>[Text(thisJob.title)],
-                  );
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text(snapshot.error.toString()),
-                  );
-                } else {
-                  return const Text('Something went wrong');
-                }
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }));
-=======
       appBar: AppBar(
         title: const Text('Job Details'),
         backgroundColor: Colors.amber,
@@ -126,12 +118,23 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text(
-                        thisJob.displayName,
-                        style: TextStyle(
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold,
+                      padding: const EdgeInsets.all(16.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  OtherProfilePage(recieverUser: thisUser),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          thisJob.displayName,
+                          style: const TextStyle(
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -268,6 +271,5 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
         },
       ),
     );
->>>>>>> Stashed changes
   }
 }

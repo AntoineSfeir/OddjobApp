@@ -11,6 +11,8 @@ class user {
   late String username;
   late String zip;
   late String ID;
+  late int jobsPosted;
+  late int jobsCompleted;
 
   user({
     required this.address,
@@ -22,6 +24,8 @@ class user {
     required this.State,
     required this.username,
     required this.zip,
+    required this.jobsCompleted,
+    required this.jobsPosted,
   });
 
   factory user.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
@@ -40,6 +44,8 @@ class user {
       State: data['state'] ?? '',
       username: data['username'] ?? '',
       zip: data['zip'] ?? '',
+      jobsCompleted: data['jobsCompleted'] ?? 0,
+      jobsPosted: data['jobsPosted'] ?? 0,
     );
   }
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:odd_job_app/jobs/user.dart';
 import 'package:odd_job_app/pages/job_history_page.dart';
 
 class OtherProfilePage extends StatefulWidget {
-  const OtherProfilePage({super.key, required this.recieverDocId});
-
-  final String recieverDocId;
+  final user recieverUser;
+  const OtherProfilePage({super.key, required this.recieverUser});
 
   @override
   State<OtherProfilePage> createState() => _OtherProfileState();
@@ -15,19 +15,10 @@ class _OtherProfileState extends State<OtherProfilePage> {
   String? username;
   int? jobsPosted;
   int? jobsCompleted;
+  late user thisUser;
 
   Future<void> getProfileData() async {
-    await FirebaseFirestore.instance.collection('users').get().then(
-          (snapshot) => snapshot.docs.forEach((document) {
-            if (document.reference.id == widget.recieverDocId) {
-              setState(() {
-                username = document["username"];
-                jobsPosted = document["jobsPosted"];
-                jobsCompleted = document["jobsCompleted"];
-              });
-            }
-          }),
-        );
+    thisUser = widget.recieverUser;
   }
 
   String? comRating;
@@ -37,13 +28,14 @@ class _OtherProfileState extends State<OtherProfilePage> {
   Future<void> getProfileReviews() async {
     await FirebaseFirestore.instance
         .collection('users')
-        .doc(widget.recieverDocId)
+        .doc(thisUser.ID)
         .collection('reviews') // Assuming 'reviews' is the subcollection
         .get()
         .then(
           (snapshot) => snapshot.docs.forEach((document) {
             setState(() {
               comRating = document["communication"];
+              print(comRating);
               workRating = document["workQuality"];
               hireAgainRating = document["wouldHireAgain"];
             });
@@ -62,7 +54,7 @@ class _OtherProfileState extends State<OtherProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(username ?? "Username"),
+        title: Text(thisUser.username),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -75,8 +67,7 @@ class _OtherProfileState extends State<OtherProfilePage> {
           children: [
             Expanded(
                 flex: 1,
-                child:
-                    _TopPortion(username ?? "username")), // Reduced top space
+                child: _TopPortion(thisUser.username)), // Reduced top space
             Expanded(
               flex: 3,
               child: Padding(
@@ -87,7 +78,7 @@ class _OtherProfileState extends State<OtherProfilePage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                         FloatingActionButton.extended(
+                        FloatingActionButton.extended(
                           onPressed: () {},
                           heroTag: 'Job Offer',
                           elevation: 0,
@@ -116,8 +107,8 @@ class _OtherProfileState extends State<OtherProfilePage> {
                     ),
                     const SizedBox(height: 16),
                     _ProfileInfoRow(
-                      numOfJobsPosted: jobsPosted ?? 0,
-                      numOfJobsCompleted: jobsCompleted ?? 0,
+                      numOfJobsPosted: thisUser.jobsPosted,
+                      numOfJobsCompleted: thisUser.jobsCompleted,
                     ),
                     // Divider
                     Container(
