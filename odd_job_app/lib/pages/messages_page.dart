@@ -35,7 +35,7 @@ class _MessagesPageState extends State<MessagesPage> {
           ),
           body: buildUserList(),
           bottomNavigationBar: BottomAppBar(
-            color: Colors.blue,
+            color:  Color(0xFF4F82A3),
             shape: const CircularNotchedRectangle(),
             child: SizedBox(
               height: 60.0,

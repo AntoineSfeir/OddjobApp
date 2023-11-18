@@ -141,7 +141,6 @@ class _ChatPageState extends State<ChatPage> {
               TextField(
                 controller: _messageController,
                 maxLines: null,
-                onChanged: (_) => setState(() {}), // Trigger rebuild when text changes
                 decoration: InputDecoration(
                   hintText: 'Enter Message',
                   contentPadding: const EdgeInsets.symmetric(horizontal: 10.0),
