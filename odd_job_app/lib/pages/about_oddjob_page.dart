@@ -67,6 +67,7 @@ class AboutOddJobPage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            SizedBox(height: 8),
             Text("Have questions or suggestions? Click below to email us!",
                 style: TextStyle(fontSize: 16)),
             SizedBox(height: 8),
