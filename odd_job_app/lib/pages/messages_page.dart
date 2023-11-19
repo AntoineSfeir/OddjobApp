@@ -112,7 +112,10 @@ class _MessagesPageState extends State<MessagesPage> {
     
     if (auth.currentUser!.email != data['email']) {
       return ListTile(
-        title: Text(data['firstName'] + " " + data['lastName']),
+        title: Text(data['firstName'] + " " + data['lastName'],
+            style: TextStyle(
+              fontSize: 20)
+              ),
         subtitle: FutureBuilder<String?>(
         future: _chatService.getMostRecentMessage(
           auth.currentUser!.email!,
