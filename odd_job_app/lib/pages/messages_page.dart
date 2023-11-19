@@ -7,6 +7,7 @@ import 'package:odd_job_app/pages/search_page.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/chat/chat_service.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class MessagesPage extends StatefulWidget {
   final user currentUser;
