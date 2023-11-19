@@ -23,8 +23,9 @@ class _MessagesPageState extends State<MessagesPage> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          backgroundColor: Colors.grey[300],
           appBar: AppBar(
+            backgroundColor:
+                Color(0xFF4F82A3), // Set the same color as the bottom bar
             title: const Text(
               "Messages",
               style: TextStyle(
@@ -35,7 +36,7 @@ class _MessagesPageState extends State<MessagesPage> {
           ),
           body: buildUserList(),
           bottomNavigationBar: BottomAppBar(
-            color:  Color(0xFF4F82A3),
+            color: Color(0xFF4F82A3),
             shape: const CircularNotchedRectangle(),
             child: SizedBox(
               height: 60.0,
@@ -109,28 +110,32 @@ class _MessagesPageState extends State<MessagesPage> {
 
   Widget buildUserListItem(BuildContext context, DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data()! as Map<String, dynamic>;
-    
+
     if (auth.currentUser!.email != data['email']) {
       return ListTile(
-        title: Text(data['firstName'] + " " + data['lastName'],
-            style: TextStyle(
-              fontSize: 20)
-              ),
-        subtitle: FutureBuilder<String?>(
-        future: _chatService.getMostRecentMessage(
-          auth.currentUser!.email!,
-          data['email'],
+        leading: CircleAvatar(
+          backgroundColor: Color(0xFFC9D0D4),
+          backgroundImage: data['profilePicture'] != null
+              ? NetworkImage(data['profilePicture'])
+              : null,
         ),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading...", overflow: TextOverflow.ellipsis);
-          } else if (snapshot.hasError || snapshot.data == null) {
-            return Text("Send a Message!", overflow: TextOverflow.ellipsis);
-          } else {
-            return Text(snapshot.data!, overflow: TextOverflow.ellipsis);
-          }
-        },
-      ),
+        title: Text(data['firstName'] + " " + data['lastName'],
+            style: TextStyle(fontSize: 24)),
+        subtitle: FutureBuilder<String?>(
+          future: _chatService.getMostRecentMessage(
+            auth.currentUser!.email!,
+            data['email'],
+          ),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Text("Loading...", overflow: TextOverflow.ellipsis);
+            } else if (snapshot.hasError || snapshot.data == null) {
+              return Text("Send a Message!", overflow: TextOverflow.ellipsis);
+            } else {
+              return Text(snapshot.data!, overflow: TextOverflow.ellipsis);
+            }
+          },
+        ),
         onTap: () {
           Navigator.push(
             context,
