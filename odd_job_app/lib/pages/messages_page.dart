@@ -25,8 +25,9 @@ class _MessagesPageState extends State<MessagesPage> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          backgroundColor: Colors.grey[300],
           appBar: AppBar(
+            backgroundColor:
+                Color(0xFF4F82A3), // Set the same color as the bottom bar
             title: const Text(
               "Messages",
               style: TextStyle(
@@ -148,6 +149,18 @@ class _MessagesPageState extends State<MessagesPage> {
       );
     } else {
       return Container();
+    }
+  }
+
+  Future<String?> getProfilePictureUrl(String documentId) async {
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref('profilePictures/$documentId.jpg');
+      final result = await ref.getDownloadURL();
+      return result;
+    } catch (e) {
+      // The file does not exist
+      return null;
     }
   }
 }

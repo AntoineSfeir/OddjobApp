@@ -639,8 +639,6 @@ PODS:
     - firebase_core
     - Flutter
     - nanopb (< 2.30910.0, >= 2.30908.0)
-  - email_launcher (0.0.1):
-    - Flutter
   - Firebase/Auth (10.17.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 10.17.0)
@@ -821,7 +819,6 @@ PODS:
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
-  - email_launcher (from `.symlinks/plugins/email_launcher/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
@@ -864,8 +861,6 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   cloud_firestore:
     :path: ".symlinks/plugins/cloud_firestore/ios"
-  email_launcher:
-    :path: ".symlinks/plugins/email_launcher/ios"
   firebase_auth:
     :path: ".symlinks/plugins/firebase_auth/ios"
   firebase_core:
@@ -897,7 +892,6 @@ SPEC CHECKSUMS:
   abseil: 926fb7a82dc6d2b8e1f2ed7f3a718bce691d1e46
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   cloud_firestore: c0e21891b99d3ac3d91abfe476ac88830a7c9939
-  email_launcher: 19e0f42a16a904ae74f399c4603c791a157bc6ec
   Firebase: f4ac0b02927af9253ae094d23deecf0890da7374
   firebase_auth: 6a41305f668ac6f9bcbefdedfcba5aacb8367e92
   firebase_core: efc9455611b8769fa90fbdae5da182600bd6901c
