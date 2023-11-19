@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:odd_job_app/auth/main_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:odd_job_app/jobs/user.dart';
 import 'package:odd_job_app/pages/home_page.dart';
 import 'package:odd_job_app/pages/search_page.dart';
 import 'package:odd_job_app/pages/messages_page.dart';
@@ -12,10 +13,12 @@ import 'package:odd_job_app/pages/about_oddjob_page.dart';
 import 'package:odd_job_app/pages/profile_info_page.dart';
 import 'package:odd_job_app/pages/payment_option_page.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+
 // ignore: unused_import
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  final user currentUser;
+  const ProfilePage({super.key, required this.currentUser});
 
   @override
   State<ProfilePage> createState() => _ProfileState();
@@ -23,6 +26,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfileState extends State<ProfilePage> {
   int currentPageIndex = 3;
+
   final user = FirebaseAuth.instance.currentUser!;
   String? username;
   String? currentUserDocId;
@@ -383,7 +387,8 @@ class _ProfileState extends State<ProfilePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const SearchPage()),
+                            builder: (context) =>
+                                SearchPage(currentUser: widget.currentUser)),
                       );
                     },
                   ),
@@ -395,7 +400,9 @@ class _ProfileState extends State<ProfilePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MessagesPage()),
+                            builder: (context) => MessagesPage(
+                                  currentUser: widget.currentUser,
+                                )),
                       );
                     },
                   ),

@@ -3,6 +3,7 @@ import 'package:odd_job_app/jobs/job.dart';
 import 'package:odd_job_app/jobs/jobcard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:odd_job_app/jobs/post_job_page.dart';
+import 'package:odd_job_app/jobs/user.dart';
 import 'package:odd_job_app/pages/home_page.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
 import 'package:odd_job_app/pages/messages_page.dart';
@@ -12,14 +13,14 @@ import 'package:odd_job_app/jobs/jobcard.dart';
 import 'package:odd_job_app/jobs/jobdescription.dart';
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({super.key});
+  final user currentUser;
+  const SearchPage({super.key, required this.currentUser});
 
   @override
   State<SearchPage> createState() => _SearchPageState();
 }
 
 class _SearchPageState extends State<SearchPage> {
-  final user = FirebaseAuth.instance.currentUser!;
   final db = FirebaseFirestore.instance;
 
   List<String> docIDs = [];
@@ -135,7 +136,9 @@ class _SearchPageState extends State<SearchPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const MessagesPage()),
+                            builder: (context) => MessagesPage(
+                                  currentUser: widget.currentUser,
+                                )),
                       );
                     },
                   ),
@@ -147,7 +150,8 @@ class _SearchPageState extends State<SearchPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const ProfilePage()),
+                            builder: (context) =>
+                                ProfilePage(currentUser: widget.currentUser)),
                       );
                     },
                   ),

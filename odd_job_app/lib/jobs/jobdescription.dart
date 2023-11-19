@@ -34,6 +34,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
     DocumentSnapshot<Map<String, dynamic>> doc =
         await db.collection('jobs/').doc(widget.ID).get();
     thisJob = Job.fromSnapshot(doc);
+    thisJob.ID = doc.id;
     l = LatLng(thisJob.longlat.latitude, thisJob.longlat.longitude);
 
     DocumentSnapshot<Map<String, dynamic>> userDoc =
@@ -156,7 +157,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                       padding: EdgeInsets.all(16.0),
                       child: Text(
                         "Expires in " + computedTime.compute(thisJob.deadline),
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 24.0,
                           fontWeight: FontWeight.bold,
                         ),
@@ -233,7 +234,8 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => BidPage(
-                                        stringBid: thisJob.startingBid)),
+                                        stringBid: thisJob.startingBid,
+                                        jobID: thisJob.ID)),
                               );
                             },
                           ),
