@@ -109,10 +109,12 @@ class _MessagesPageState extends State<MessagesPage> {
   }
 
   Widget buildUserListItem(BuildContext context, DocumentSnapshot doc) {
-    Map<String, dynamic> data = doc.data()! as Map<String, dynamic>;
+  Map<String, dynamic> data = doc.data()! as Map<String, dynamic>;
 
-    if (auth.currentUser!.email != data['email']) {
-      return ListTile(
+  if (auth.currentUser!.email != data['email']) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 18.0), // Adjust the top padding as needed
+      child: ListTile(
         leading: CircleAvatar(
           backgroundColor: Color(0xFFC9D0D4),
           backgroundImage: data['profilePicture'] != null
@@ -147,9 +149,10 @@ class _MessagesPageState extends State<MessagesPage> {
             ),
           );
         },
-      );
-    } else {
-      return Container();
-    }
+      ),
+    );
+  } else {
+    return Container();
   }
+}
 }
