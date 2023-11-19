@@ -35,7 +35,7 @@ class _MessagesPageState extends State<MessagesPage> {
           ),
           body: buildUserList(),
           bottomNavigationBar: BottomAppBar(
-            color: Color(0xFF4F82A3),
+            color:  Color(0xFF4F82A3),
             shape: const CircularNotchedRectangle(),
             child: SizedBox(
               height: 60.0,
@@ -109,28 +109,25 @@ class _MessagesPageState extends State<MessagesPage> {
 
   Widget buildUserListItem(BuildContext context, DocumentSnapshot doc) {
     Map<String, dynamic> data = doc.data()! as Map<String, dynamic>;
-
+    
     if (auth.currentUser!.email != data['email']) {
       return ListTile(
-        title: Text(data['firstName'] + " " + data['lastName'],
-            style: TextStyle(
-              fontSize: 20)
-              ),
+        title: Text(data['firstName'] + " " + data['lastName']),
         subtitle: FutureBuilder<String?>(
-          future: _chatService.getMostRecentMessage(
-            auth.currentUser!.email!,
-            data['email'],
-          ),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Text("Loading...", overflow: TextOverflow.ellipsis);
-            } else if (snapshot.hasError || snapshot.data == null) {
-              return Text("Send a Message!", overflow: TextOverflow.ellipsis);
-            } else {
-              return Text(snapshot.data!, overflow: TextOverflow.ellipsis);
-            }
-          },
+        future: _chatService.getMostRecentMessage(
+          auth.currentUser!.email!,
+          data['email'],
         ),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading...", overflow: TextOverflow.ellipsis);
+          } else if (snapshot.hasError || snapshot.data == null) {
+            return Text("Send a Message!", overflow: TextOverflow.ellipsis);
+          } else {
+            return Text(snapshot.data!, overflow: TextOverflow.ellipsis);
+          }
+        },
+      ),
         onTap: () {
           Navigator.push(
             context,
