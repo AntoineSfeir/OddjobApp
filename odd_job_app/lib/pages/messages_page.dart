@@ -6,6 +6,8 @@ import 'package:odd_job_app/pages/search_page.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/chat/chat_service.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+
 
 class MessagesPage extends StatefulWidget {
   const MessagesPage({super.key});
@@ -112,14 +114,29 @@ class _MessagesPageState extends State<MessagesPage> {
   Map<String, dynamic> data = doc.data()! as Map<String, dynamic>;
 
   if (auth.currentUser!.email != data['email']) {
+    String documentId = doc.reference.id;
+
+
     return Padding(
       padding: const EdgeInsets.only(top: 18.0), // Adjust the top padding as needed
       child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: Color(0xFFC9D0D4),
-          backgroundImage: data['profilePicture'] != null
-              ? NetworkImage(data['profilePicture'])
-              : null,
+        leading: FutureBuilder<String?>(
+          future: getProfilePictureUrl(documentId),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              // You can display a loading indicator here if needed
+              return CircularProgressIndicator();
+            } else if (snapshot.hasError || snapshot.data == null) {
+              return CircleAvatar(
+                backgroundColor: Color(0xFFC9D0D4),
+              );
+            } else {
+              return CircleAvatar(
+                backgroundColor: Color(0xFFC9D0D4),
+                backgroundImage: NetworkImage(snapshot.data!),
+              );
+            }
+          },
         ),
         title: Text(data['firstName'] + " " + data['lastName'],
             style: TextStyle(fontSize: 24)),
@@ -155,4 +172,23 @@ class _MessagesPageState extends State<MessagesPage> {
     return Container();
   }
 }
+
+Future<String?> getProfilePictureUrl(String documentId) async {
+  try {
+    final ref = firebase_storage.FirebaseStorage.instance
+        .ref('profilePictures/$documentId.jpg');
+    final result = await ref.getDownloadURL();
+    return result;
+  } catch (e) {
+    // The file does not exist
+    return null;
+  }
+}
+
+
+
+
+
+
+
 }
