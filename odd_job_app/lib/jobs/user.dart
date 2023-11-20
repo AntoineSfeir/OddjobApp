@@ -15,6 +15,11 @@ class user {
   late int jobsPosted;
   late int jobsCompleted;
   late GeoPoint currentLocation;
+  late double communication;
+  late double workQuality;
+  late double wouldHireAgain;
+  late double trustScore;
+  late double averageRating;
 
   user({
     required this.address,
@@ -29,6 +34,11 @@ class user {
     required this.jobsCompleted,
     required this.jobsPosted,
     required this.currentLocation,
+    required this.communication,
+    required this.workQuality,
+    required this.wouldHireAgain,
+    required this.trustScore,
+    required this.averageRating,
   });
 
   factory user.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
@@ -49,6 +59,11 @@ class user {
       zip: data['zip'] ?? '',
       jobsCompleted: data['totalCompletedJobs'] ?? 0,
       jobsPosted: data['totalPostedJobs'] ?? 0,
+      communication: data['communication'] ?? 0.0,
+      workQuality: data['workQuality'] ?? 0.0,
+      wouldHireAgain: data['wouldHireAgain'] ?? 0.0,
+      trustScore: data['trustScore'] ?? 0.0,
+      averageRating: data['averageRating'] ?? 0.0,
       currentLocation: data['exactLocation'] ?? const GeoPoint(0, 0),
     );
   }
