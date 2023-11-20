@@ -26,6 +26,7 @@ class _MessagesPageState extends State<MessagesPage> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
+          backgroundColor: Color(0xFFF8FBFD),
           appBar: AppBar(
             backgroundColor:
                 Color(0xFF4F82A3), // Set the same color as the bottom bar

@@ -59,7 +59,7 @@ class JobCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 25,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -70,6 +70,7 @@ class JobCard extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
                   ),
                   Row(
@@ -87,6 +88,7 @@ class JobCard extends StatelessWidget {
                         style: TextStyle(
                           color: moneyTextColor,
                           fontWeight: FontWeight.bold,
+                          fontSize: 30,
                         ),
                       ),
                     ],
@@ -94,7 +96,7 @@ class JobCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 40,
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -105,6 +107,7 @@ class JobCard extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
                   ),
                   Text(
@@ -113,6 +116,7 @@ class JobCard extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
                   ),
                 ],
