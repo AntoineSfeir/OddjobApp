@@ -119,7 +119,26 @@ class _MessagesPageState extends State<MessagesPage> {
     Map<String, dynamic> data = doc.data()! as Map<String, dynamic>;
 
     if (auth.currentUser!.email != data['email']) {
+      String documentId = doc.reference.id;
       return ListTile(
+        leading: FutureBuilder<String?>(
+          future: getProfilePictureUrl(documentId),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              // You can display a loading indicator here if needed
+              return CircularProgressIndicator();
+            } else if (snapshot.hasError || snapshot.data == null) {
+              return CircleAvatar(
+                backgroundColor: Color(0xFFC9D0D4),
+              );
+            } else {
+              return CircleAvatar(
+                backgroundColor: Color(0xFFC9D0D4),
+                backgroundImage: NetworkImage(snapshot.data!),
+              );
+            }
+          },
+        ),
         title: Text(data['firstName'] + " " + data['lastName']),
         subtitle: FutureBuilder<String?>(
           future: _chatService.getMostRecentMessage(
