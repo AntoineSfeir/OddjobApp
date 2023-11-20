@@ -26,6 +26,7 @@ class _MessagesPageState extends State<MessagesPage> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
+          backgroundColor: Color(0xFFF8FBFD),
           appBar: AppBar(
             backgroundColor:
                 Color(0xFF4F82A3), // Set the same color as the bottom bar
@@ -139,7 +140,8 @@ class _MessagesPageState extends State<MessagesPage> {
             }
           },
         ),
-        title: Text(data['firstName'] + " " + data['lastName']),
+        title: Text(data['firstName'] + " " + data['lastName'],
+        style: TextStyle( fontSize: 20)),
         subtitle: FutureBuilder<String?>(
           future: _chatService.getMostRecentMessage(
             auth.currentUser!.email!,

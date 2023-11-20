@@ -56,12 +56,13 @@ class _SearchPageState extends State<SearchPage> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          backgroundColor: Colors.grey[300],
+          backgroundColor: Color(0xFFF8FBFD),
           body: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 AppBar(
+                  backgroundColor: Color(0xFF4F82A3),
                   title: const Text('Find a Job',
                       style: TextStyle(
                           color: Colors.white,
@@ -102,7 +103,7 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ),
           bottomNavigationBar: BottomAppBar(
-            color: Colors.blue,
+            color: Color(0xFF4F82A3),
             shape: const CircularNotchedRectangle(),
             child: SizedBox(
               height: 60.0,
@@ -167,7 +168,7 @@ class _SearchPageState extends State<SearchPage> {
                 MaterialPageRoute(builder: (context) => const PostJobPage()),
               );
             },
-            backgroundColor: Colors.green,
+            backgroundColor: Color(0xFF2598D7),
             child: const Icon(Icons.add),
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

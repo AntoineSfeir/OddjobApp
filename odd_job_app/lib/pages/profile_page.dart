@@ -144,13 +144,14 @@ class _ProfileState extends State<ProfilePage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Color(0xFFF8FBFD),
         body: Stack(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppBar(
+                  backgroundColor: Color(0xFF4F82A3),
                   title: const Text(
                     "Profile",
                     style: TextStyle(
@@ -158,7 +159,6 @@ class _ProfileState extends State<ProfilePage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  backgroundColor: Colors.blue,
                 ),
                 // Profile Picture and Name
                 Row(
@@ -385,7 +385,7 @@ class _ProfileState extends State<ProfilePage> {
           ],
         ),
         bottomNavigationBar: BottomAppBar(
-          color: Colors.blue,
+          color: Color(0xFF4F82A3),
           shape: const CircularNotchedRectangle(),
           child: SizedBox(
             height: 60.0,

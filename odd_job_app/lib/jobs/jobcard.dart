@@ -14,7 +14,7 @@ import 'package:odd_job_app/jobs/geolocation/compute_distance.dart';
 // ignore: must_be_immutable
 
 //import 'package:geolocator/geolocator.dart';
-//extra push
+
 // ignore: must_be_immutable
 class JobCard extends StatelessWidget {
   late final Job job;
@@ -51,15 +51,16 @@ class JobCard extends StatelessWidget {
             children: <Widget>[
               Text(
                 job.title,
+                overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 30,
+                  fontSize: 25,
                 ),
               ),
               const SizedBox(
-                height: 20,
+                height: 25,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -70,6 +71,7 @@ class JobCard extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
                   ),
                   Row(
@@ -87,6 +89,7 @@ class JobCard extends StatelessWidget {
                         style: TextStyle(
                           color: moneyTextColor,
                           fontWeight: FontWeight.bold,
+                          fontSize: 30,
                         ),
                       ),
                     ],
@@ -94,7 +97,7 @@ class JobCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 40,
+                height: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -107,6 +110,7 @@ class JobCard extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
                   ),
                   Text(
@@ -115,6 +119,7 @@ class JobCard extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
                   ),
                 ],
