@@ -72,7 +72,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                   children: <Widget>[
                     Container(
                       height: 165, // Adjusted height
-                      margin: EdgeInsets.all(16),
+                      margin: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
                         boxShadow: [
@@ -80,7 +80,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 3,
                             blurRadius: 7,
-                            offset: Offset(0, 3),
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
@@ -94,7 +94,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                         onMapCreated: (GoogleMapController controller) {
                           _mapController = controller;
                           _markers.add(Marker(
-                            markerId: MarkerId('jobMarker'),
+                            markerId: const MarkerId('jobMarker'),
                             visible: true,
                             position: l,
                             infoWindow: InfoWindow(
@@ -132,12 +132,12 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                     buildStarRating(avgUserRating),
 
                     Padding(
-                      padding: EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: GestureDetector(
                         onTap: () {},
                         child: Text(
                           "${(avgUserRating/2).round()}/5 stars based on ${5} ratings",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 24.0,
                             fontWeight: FontWeight.bold,
                             color: Colors.blue,
@@ -147,7 +147,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: Text(
                         "Expires in " + computedTime.compute(thisJob.deadline),
                         style: const TextStyle(
@@ -158,8 +158,8 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                     ),
                     const SizedBox(height: 16), // Increased spacing
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 16.0),
-                      padding: EdgeInsets.all(16.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                      padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.black,
@@ -172,20 +172,20 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                         children: [
                           Text(
                             thisJob.title,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16.0,
                             ),
                           ),
                           const SizedBox(height: 8.0),
-                          Divider(
+                          const Divider(
                             color: Colors.black,
                             thickness: 1.0,
                           ),
                           const SizedBox(height: 8.0),
                           Text(
                             thisJob.description,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16.0,
                             ),
@@ -200,7 +200,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                         children: [
                           Text(
                             "Current Bid: ${thisJob.startingBid}",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20.0, // Adjusted font size
                             ),
