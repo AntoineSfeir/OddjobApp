@@ -28,6 +28,8 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
   late LatLng l;
   late String userDocId;
 
+  late int avgUserRating;
+
   Future<void> allJobs() async {
     widget.ID.trim();
     print('jobs/${widget.ID}');
@@ -41,6 +43,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
         await db.collection('users/').doc(thisJob.posterID).get();
 
     thisUser = user.fromSnapshot(userDoc);
+    avgUserRating = thisUser.averageRating.toInt();
   }
 
   @override
@@ -126,24 +129,14 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                         ),
                       ),
                     ),
-                    const Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        children: <Widget>[
-                          Icon(Icons.star, color: Colors.yellow),
-                          Icon(Icons.star, color: Colors.yellow),
-                          Icon(Icons.star, color: Colors.yellow),
-                          Icon(Icons.star, color: Colors.yellow),
-                          Icon(Icons.star, color: Colors.yellow),
-                        ],
-                      ),
-                    ),
+                    buildStarRating(avgUserRating),
+
                     Padding(
                       padding: EdgeInsets.all(16.0),
                       child: GestureDetector(
                         onTap: () {},
-                        child: const Text(
-                          "5/5 stars based on 5 ratings",
+                        child: Text(
+                          "${(avgUserRating/2).round()}/5 stars based on ${5} ratings",
                           style: TextStyle(
                             fontSize: 24.0,
                             fontWeight: FontWeight.bold,
@@ -259,6 +252,24 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
           }
         },
       ),
+    );
+  }
+
+  Widget buildStarRating(int userRating) {
+    List<Icon> stars = [];
+    userRating = (userRating / 2).round();
+
+    for (int i = 0; i < 5; i++) {
+      stars.add(
+        Icon(
+          Icons.star,
+          color: i < userRating ? Colors.yellow : Colors.grey,
+        ),
+      );
+    }
+
+    return Row(
+      children: stars,
     );
   }
 }
