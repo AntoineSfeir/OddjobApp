@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobs/user.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/pages/job_history_page.dart';
 
 class OtherProfilePage extends StatefulWidget {

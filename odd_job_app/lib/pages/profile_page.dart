@@ -183,8 +183,8 @@ class _ProfileState extends State<ProfilePage> {
                               : Image.network(
                                   avatarUrl ??
                                       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKurFbiK1YFmGY6LV3FwBqui2WOp7Kx7Jk7A&usqp=CAU",
-                                  width: 100,
-                                  height: 100,
+                                  width: 150,
+                                  height: 150,
                                   fit: BoxFit.cover,
                                 ),
                         ),
