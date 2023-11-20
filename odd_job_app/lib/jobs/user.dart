@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class user {
@@ -13,6 +14,7 @@ class user {
   late String ID;
   late int jobsPosted;
   late int jobsCompleted;
+  late GeoPoint currentLocation;
 
   user({
     required this.address,
@@ -26,6 +28,7 @@ class user {
     required this.zip,
     required this.jobsCompleted,
     required this.jobsPosted,
+    required this.currentLocation,
   });
 
   factory user.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
@@ -46,6 +49,7 @@ class user {
       zip: data['zip'] ?? '',
       jobsCompleted: data['totalCompletedJobs'] ?? 0,
       jobsPosted: data['totalPostedJobs'] ?? 0,
+      currentLocation: data['exactLocation'] ?? const GeoPoint(0, 0),
     );
   }
 }

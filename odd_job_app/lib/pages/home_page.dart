@@ -194,7 +194,10 @@ class _HomePageState extends State<HomePage> {
                             if (tryingShitOut)
                               Column(
                                 children: allJobsInDB
-                                    .map((Job) => JobCard(job: Job))
+                                    .map((Job) => JobCard(
+                                          job: Job,
+                                          currentUser: currentUser,
+                                        ))
                                     .toList(),
                               ),
                             // ... other buttons and UI elements ...
@@ -222,7 +225,10 @@ class _HomePageState extends State<HomePage> {
                             if (showActiveJobs)
                               Column(
                                 children: allJobsInDB
-                                    .map((Job) => JobCard(job: Job))
+                                    .map((Job) => JobCard(
+                                          job: Job,
+                                          currentUser: currentUser,
+                                        ))
                                     .toList(),
                               ),
                             TextButton(
@@ -249,7 +255,10 @@ class _HomePageState extends State<HomePage> {
                             if (showCurrentBids)
                               Column(
                                 children: allJobsInDB
-                                    .map((Job) => JobCard(job: Job))
+                                    .map((Job) => JobCard(
+                                          job: Job,
+                                          currentUser: currentUser,
+                                        ))
                                     .toList(),
                               ),
                           ],
