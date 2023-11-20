@@ -325,7 +325,7 @@ class _ProfileState extends State<ProfilePage> {
                         SizedBox(
                           width: 5,
                         ),
-                        Text('Manage Address Info'),
+                        Text('Manage Location Settings'),
                       ],
                     ),
                   ),
