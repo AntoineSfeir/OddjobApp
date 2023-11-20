@@ -79,8 +79,12 @@ class _SearchPageState extends State<SearchPage> {
                         if (snapshot.connectionState == ConnectionState.done) {
                           if (jo.isNotEmpty) {
                             return Column(
-                              children:
-                                  jo.map((Job) => JobCard(job: Job)).toList(),
+                              children: jo
+                                  .map((Job) => JobCard(
+                                        job: Job,
+                                        currentUser: widget.currentUser,
+                                      ))
+                                  .toList(),
                             );
                           } else if (snapshot.hasError) {
                             return Center(

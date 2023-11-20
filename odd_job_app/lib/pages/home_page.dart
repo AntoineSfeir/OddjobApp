@@ -132,9 +132,8 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const SizedBox(height: 20),
                             AppBar(
-                              backgroundColor:Color(0xFF4F82A3),
+                              backgroundColor: Color(0xFF4F82A3),
                               title: const Text(
                                 'HomePage',
                                 style: TextStyle(
@@ -196,7 +195,10 @@ class _HomePageState extends State<HomePage> {
                             if (tryingShitOut)
                               Column(
                                 children: allJobsInDB
-                                    .map((Job) => JobCard(job: Job))
+                                    .map((Job) => JobCard(
+                                          job: Job,
+                                          currentUser: currentUser,
+                                        ))
                                     .toList(),
                               ),
                             // ... other buttons and UI elements ...
@@ -224,7 +226,10 @@ class _HomePageState extends State<HomePage> {
                             if (showActiveJobs)
                               Column(
                                 children: allJobsInDB
-                                    .map((Job) => JobCard(job: Job))
+                                    .map((Job) => JobCard(
+                                          job: Job,
+                                          currentUser: currentUser,
+                                        ))
                                     .toList(),
                               ),
                             TextButton(
@@ -251,7 +256,10 @@ class _HomePageState extends State<HomePage> {
                             if (showCurrentBids)
                               Column(
                                 children: allJobsInDB
-                                    .map((Job) => JobCard(job: Job))
+                                    .map((Job) => JobCard(
+                                          job: Job,
+                                          currentUser: currentUser,
+                                        ))
                                     .toList(),
                               ),
                           ],

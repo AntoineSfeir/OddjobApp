@@ -4,10 +4,10 @@ import 'package:flutter_map_math/flutter_geo_math.dart';
 class ComputeDistance {
   late double distanceInMiles = 0;
   FlutterMapMath f = FlutterMapMath();
-  double compute(GeoPoint myLocation, GeoPoint theJob) {
+  String compute(GeoPoint myLocation, GeoPoint theJob) {
     distanceInMiles = f.distanceBetween(myLocation.latitude,
         myLocation.longitude, theJob.latitude, theJob.longitude, "miles");
 
-    return distanceInMiles;
+    return distanceInMiles.toStringAsFixed(2);
   }
 }

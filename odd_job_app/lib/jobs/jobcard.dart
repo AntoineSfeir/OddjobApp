@@ -3,11 +3,7 @@ import 'package:odd_job_app/jobs/job.dart';
 import 'package:odd_job_app/jobs/jobdescription.dart';
 import 'package:odd_job_app/jobs/compute_time_to_display.dart';
 import 'package:odd_job_app/jobs/geolocation/compute_distance.dart';
-
-
-
-
-
+import 'package:odd_job_app/jobs/user.dart';
 
 //import 'package:geolocator/geolocator.dart';
 
@@ -18,6 +14,7 @@ import 'package:odd_job_app/jobs/geolocation/compute_distance.dart';
 // ignore: must_be_immutable
 class JobCard extends StatelessWidget {
   late final Job job;
+  late final user currentUser;
   ComputeDistance computedDistance = ComputeDistance();
   computeTime computedTime = computeTime();
   final String cardBackground = '#1B475E';
@@ -27,7 +24,7 @@ class JobCard extends StatelessWidget {
   late final Color moneyTextColor =
       Color(int.parse(moneyText.substring(1, 7), radix: 16) + 0xFF000000);
 
-  JobCard({super.key, required this.job});
+  JobCard({super.key, required this.job, required this.currentUser});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +39,8 @@ class JobCard extends StatelessWidget {
         color: cardBackgroundColor,
         margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0), // Adjust the radius as needed
+          borderRadius:
+              BorderRadius.circular(15.0), // Adjust the radius as needed
         ),
         child: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -105,7 +103,7 @@ class JobCard extends StatelessWidget {
                 // set current user geo location
                 children: <Widget>[
                   Text(
-                    '${computedDistance.compute(job.longlat, job.longlat).toString()} miles',
+                    '${computedDistance.compute(currentUser.currentLocation, job.longlat)} miles',
                     textAlign: TextAlign.left,
                     style: const TextStyle(
                       color: Colors.white,
