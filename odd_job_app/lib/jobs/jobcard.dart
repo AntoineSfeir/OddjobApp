@@ -98,6 +98,8 @@ class JobCard extends StatelessWidget {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                // set current user geo location
                 children: <Widget>[
                   Text(
                     '${computedDistance.compute(job.longlat, job.longlat).toString()} miles',

@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:odd_job_app/jobs/user.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:odd_job_app/auth/main_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:odd_job_app/jobs/user.dart';
 import 'package:odd_job_app/pages/home_page.dart';
 import 'package:odd_job_app/pages/search_page.dart';
 import 'package:odd_job_app/pages/messages_page.dart';
@@ -12,6 +12,7 @@ import 'package:odd_job_app/pages/job_history_page.dart';
 import 'package:odd_job_app/pages/about_oddjob_page.dart';
 import 'package:odd_job_app/pages/profile_info_page.dart';
 import 'package:odd_job_app/pages/payment_option_page.dart';
+import 'package:odd_job_app/pages/manage_location_page.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 // ignore: unused_import
@@ -260,6 +261,29 @@ class _ProfileState extends State<ProfilePage> {
                           width: 5,
                         ),
                         Text('Profile Info'),
+                      ],
+                    ),
+                  ),
+                ),
+
+                // Manage Address Info
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ManageLocationInfoPage()),
+                    );
+                  },
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    child: const Row(
+                      children: <Widget>[
+                        Icon(Icons.info_outline),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text('Manage Address Info'),
                       ],
                     ),
                   ),
