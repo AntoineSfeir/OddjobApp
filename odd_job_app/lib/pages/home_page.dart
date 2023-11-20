@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/jobs/job.dart';
-import 'package:odd_job_app/jobs/jobcard.dart';
-import 'package:odd_job_app/jobs/post_job_page.dart';
-import 'package:odd_job_app/pages/search_page.dart';
 import 'package:odd_job_app/jobs/user.dart';
-
-import 'package:odd_job_app/pages/messages_page.dart';
+import 'package:odd_job_app/jobs/jobcard.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:odd_job_app/pages/search_page.dart';
+import 'package:odd_job_app/jobs/post_job_page.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:odd_job_app/pages/messages_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -120,6 +119,17 @@ class _HomePageState extends State<HomePage> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Color(0xFFF8FBFD),
+        appBar: AppBar(
+          backgroundColor: Color(0xFF4F82A3),
+          title: const Text(
+            'HomePage',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
         body: Center(
           child: ListView.builder(
             itemBuilder: (context, index) {
@@ -132,17 +142,6 @@ class _HomePageState extends State<HomePage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            AppBar(
-                              backgroundColor: Color(0xFF4F82A3),
-                              title: const Text(
-                                'HomePage',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
                             const SizedBox(height: 20),
                             TextButton(
                               style: TextButton.styleFrom(
