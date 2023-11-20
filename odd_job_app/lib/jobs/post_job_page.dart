@@ -124,27 +124,27 @@ class _PostJobPageState extends State<PostJobPage> {
       address,
     );
     await addJobToUserCollection(current);
-    await addBidsToJobFile();
+    //await addBidsToJobFile();
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => const JobPostedSuccessfullyPage(),
     ));
   }
 
-  Future addBidsToJobFile() async {
-    CollectionReference jobDoc = FirebaseFirestore.instance
-        .collection('jobs')
-        .doc(jobID)
-        .collection('currentBids');
+  // Future addBidsToJobFile() async {
+  //   CollectionReference jobDoc = FirebaseFirestore.instance
+  //       .collection('jobs')
+  //       .doc(jobID)
+  //       .collection('currentBids');
 
-    jobDoc
-        .add({
-          'userID': 'PLACEHOLDER',
-          'bidAmount': 'PLACEHOLDER',
-        })
-        .then((value) => print("job put in userPosted"))
-        .catchError(
-            (error) => print("Failed to put job in UserPoster: $error"));
-  }
+  //   jobDoc
+  //       .add({
+  //         'userID': 'PLACEHOLDER',
+  //         'bidAmount': 'PLACEHOLDER',
+  //       })
+  //       .then((value) => print("job put in userPosted"))
+  //       .catchError(
+  //           (error) => print("Failed to put job in UserPoster: $error"));
+  // }
 
   Future addJobToUserCollection(user current) async {
     await allJobs(false);

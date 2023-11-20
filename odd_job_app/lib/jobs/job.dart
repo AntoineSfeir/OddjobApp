@@ -11,6 +11,7 @@ class Job {
   late String user;
   late String displayName;
   late String posterID;
+  late List<String> bids;
 
   Job({
     required this.description,

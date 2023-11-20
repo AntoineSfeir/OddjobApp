@@ -54,6 +54,20 @@ class _BidPageState extends State<BidPage> {
         .then((value) => print("job put in userPosted"))
         .catchError(
             (error) => print("Failed to put job in UserPoster: $error"));
+
+    CollectionReference userDoc = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userID)
+        .collection('currentBids');
+
+    userDoc
+        .add({
+          'jobID': widget.jobID,
+          'bidAmount': _controller.text.trim(),
+        })
+        .then((value) => print("job put in userPosted"))
+        .catchError(
+            (error) => print("Failed to put job in UserPoster: $error"));
   }
 
   @override

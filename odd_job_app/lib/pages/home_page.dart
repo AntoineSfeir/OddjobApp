@@ -21,24 +21,62 @@ class _HomePageState extends State<HomePage> {
   final db = FirebaseFirestore.instance;
   final userEmail = FirebaseAuth.instance.currentUser!.email;
 
-  List<Job> jo = [];
+  List<Job> allJobsInDB = [];
+  List<Job> allActiveJobs = [];
+  List<Job> allCurrentBids = [];
+  List<Job> allPostedJobs = [];
+  List<String> activeIDs = [];
+  List<String> currentIDs = [];
+  List<String> currentBidAmounts = [];
+  List<String> postedIDs = [];
   List<String> docIDs = [];
+  late Job thisJob;
   bool showPostedJobs = false;
   bool showCurrentBids = false;
   bool showActiveJobs = false;
+  bool tryingShitOut = false;
   bool firstLoad = false;
   List<user> users = [];
   late user currentUser;
 
-  Future getCurrentUser() async {
+  Future sortJobs() async {
+    // await db
+    //     .collection('users')
+    //     .doc(currentUser.ID)
+    //     .collection('activeJobs')
+    //     .get()
+    //     .then((snapshot) => snapshot.docs.forEach((element) {
+    //           activeIDs.add(element['ID']);
+    //         }));
+
     await db
         .collection('users')
+        .doc(currentUser.ID)
+        .collection('currentBids')
         .get()
         .then((snapshot) => snapshot.docs.forEach((element) {
-              user i = user.fromSnapshot(element);
-              i.ID = element.id;
-              users.add(i);
+              currentIDs.add(element['jobID']);
+              currentBidAmounts.add(element['bidAmount']);
             }));
+
+    await db
+        .collection('users')
+        .doc(currentUser.ID)
+        .collection('postedJobs')
+        .get()
+        .then((snapshot) => snapshot.docs.forEach((element) {
+              postedIDs.add(element['ID']);
+            }));
+  }
+
+  Future getCurrentUser() async {
+    await db.collection('users').get().then(
+          (snapshot) => snapshot.docs.forEach((element) {
+            user i = user.fromSnapshot(element);
+            i.ID = element.id;
+            users.add(i);
+          }),
+        );
 
     for (int i = 0; i < users.length; i++) {
       if (users[i].email == userEmail) {
@@ -50,14 +88,13 @@ class _HomePageState extends State<HomePage> {
   Future allJobs() async {
     if (!firstLoad) {
       await getCurrentUser();
-      await db
-          .collection('jobs')
-          .get()
-          .then((snapshot) => snapshot.docs.forEach((element) {
-                Job i = Job.fromSnapshot(element);
-                i.ID = element.id;
-                jo.add(i);
-              }));
+      await db.collection('jobs').get().then(
+            (snapshot) => snapshot.docs.forEach((element) {
+              Job i = Job.fromSnapshot(element);
+              i.ID = element.id;
+              allJobsInDB.add(i);
+            }),
+          );
       firstLoad = true;
     }
   }
@@ -89,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                 future: allJobs(),
                 builder: ((context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
-                    if (jo.isNotEmpty) {
+                    if (allJobsInDB.isNotEmpty) {
                       return Center(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -107,30 +144,60 @@ class _HomePageState extends State<HomePage> {
                             ),
                             const SizedBox(height: 20),
                             TextButton(
-                                style: TextButton.styleFrom(
-                                  textStyle: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              style: TextButton.styleFrom(
+                                textStyle: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                onPressed: () {
-                                  setState(() {
-                                    showPostedJobs = !showPostedJobs;
-                                  });
-                                },
-                                child: const Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('Posted Jobs'),
-                                    Icon(Icons.arrow_forward),
-                                  ],
-                                )),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  showPostedJobs = !showPostedJobs;
+                                });
+                              },
+                              child: const Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Current Bids'),
+                                  Icon(Icons.arrow_downward),
+                                ],
+                              ),
+                            ),
                             if (showPostedJobs)
                               Column(
-                                children:
-                                    jo.map((Job) => JobCard(job: Job)).toList(),
+                                children: [
+                                  TextButton(
+                                    style: TextButton.styleFrom(
+                                      textStyle: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        tryingShitOut = !tryingShitOut;
+                                      });
+                                    },
+                                    child: const Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text('trying'),
+                                        Icon(Icons.arrow_downward),
+                                      ],
+                                    ),
+                                  ),
+                                  // Add other buttons or UI elements related to "Posted Jobs" here
+                                ],
                               ),
+                            if (tryingShitOut)
+                              Column(
+                                children: allJobsInDB
+                                    .map((Job) => JobCard(job: Job))
+                                    .toList(),
+                              ),
+                            // ... other buttons and UI elements ...
                             TextButton(
                               style: TextButton.styleFrom(
                                 textStyle: const TextStyle(
@@ -154,8 +221,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                             if (showActiveJobs)
                               Column(
-                                children:
-                                    jo.map((Job) => JobCard(job: Job)).toList(),
+                                children: allJobsInDB
+                                    .map((Job) => JobCard(job: Job))
+                                    .toList(),
                               ),
                             TextButton(
                               style: TextButton.styleFrom(
@@ -180,8 +248,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                             if (showCurrentBids)
                               Column(
-                                children:
-                                    jo.map((Job) => JobCard(job: Job)).toList(),
+                                children: allJobsInDB
+                                    .map((Job) => JobCard(job: Job))
+                                    .toList(),
                               ),
                           ],
                         ),
