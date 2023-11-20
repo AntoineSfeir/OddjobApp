@@ -44,6 +44,95 @@ class _PostJobPageState extends State<PostJobPage> {
   List<Job> secondList = [];
   late String jobID;
 
+  final List<String> possibleJobs = [
+    'Lawn Care',
+    'Power Washing',
+    'House Cleaning',
+    'Baby Sitting',
+    'Car Washing',
+    'House Painting',
+    'Tutoring',
+    'Moving Assistance',
+    'Pet Sitting',
+    'Plumbing',
+    'Computer Repair',
+    'Programming',
+    'Technology Services',
+    'Graphic Design',
+    'Car Repair',
+    'Other',
+    'Appliance Troubleshooting',
+    'Woodworking',
+    'Delivery',
+    'Furniture Cleaning',
+    'Gardening',
+    'Photography',
+    'Sewing and Alterations',
+    'Organization',
+    'Art',
+    'Music',
+    'Pet Training',
+    'Construction'
+  ];
+
+Autocomplete<String> _buildJobTitleAutocomplete() {
+  return Autocomplete<String>(
+    optionsBuilder: (TextEditingValue textEditingValue) {
+      return possibleJobs
+          .where((String option) =>
+              option.toLowerCase().contains(textEditingValue.text.toLowerCase()))
+          .toList();
+    },
+    onSelected: (String selectedJob) {
+      setState(() {
+        _jobTitleController.text = selectedJob;
+      });
+    },
+    fieldViewBuilder: (BuildContext context, TextEditingController textEditingController,
+        FocusNode focusNode, VoidCallback onFieldSubmitted) {
+      return TextFormField(
+        controller: textEditingController,
+        focusNode: focusNode,
+        onFieldSubmitted: (String value) {
+          onFieldSubmitted();
+        },
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: 'Enter job title',
+        ),
+      );
+    },
+    optionsViewBuilder: (BuildContext context, AutocompleteOnSelected<String> onSelected,
+        Iterable<String> options) {
+      return Align(
+        alignment: Alignment.topLeft,
+        child: Material(
+          elevation: 4.0,
+          child: SizedBox(
+            height: 200.0,
+            child: ListView.builder(
+              padding: EdgeInsets.all(8.0),
+              itemCount: options.length,
+              itemBuilder: (BuildContext context, int index) {
+                final String option = options.elementAt(index);
+                return GestureDetector(
+                  onTap: () {
+                    onSelected(option);
+                  },
+                  child: ListTile(
+                    title: Text(option),
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+      );
+    },
+  );
+}
+
+
   Future allJobs(bool whichList) async {
     if (whichList == true) {
       await db
@@ -292,13 +381,14 @@ class _PostJobPageState extends State<PostJobPage> {
                             'Job Title:',
                             style: TextStyle(fontSize: 18),
                           ),
-                          TextFormField(
-                            controller: _jobTitleController,
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: 'Enter job title',
-                            ),
-                          ),
+                          _buildJobTitleAutocomplete(),
+                          // TextFormField(
+                          //   controller: _jobTitleController,
+                          //   decoration: const InputDecoration(
+                          //     border: OutlineInputBorder(),
+                          //     hintText: 'Enter job title',
+                          //   ),
+                          // ),
                           const SizedBox(height: 16),
                           const Text(
                             'Job Description:',
