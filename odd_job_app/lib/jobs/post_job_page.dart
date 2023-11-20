@@ -1,11 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
-import 'package:odd_job_app/jobs/address.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/jobs/job.dart';
 import 'package:odd_job_app/jobs/user.dart';
+import 'package:odd_job_app/jobs/address.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+
 // ignore_for_file: library_private_types_in_public_api
 
 class PostJobPage extends StatefulWidget {
@@ -21,6 +23,7 @@ class _PostJobPageState extends State<PostJobPage> {
   List<user> users = [];
   late String displayName;
   late String userID;
+  late int totalPostedJobs;
 
   final _jobTitleController = TextEditingController();
   final _jobDescriptionController = TextEditingController();
@@ -39,6 +42,24 @@ class _PostJobPageState extends State<PostJobPage> {
   List<Job> firstList = [];
   List<Job> secondList = [];
   late String jobID;
+
+  Future getTotalJobsPosted() async {
+    await FirebaseFirestore.instance.collection('users').get().then(
+          (snapshot) => snapshot.docs.forEach((document) {
+            if (document["email"] == userEmail) {
+              setState(() {
+                totalPostedJobs = document["totalPostedJobs"];
+              });
+            }
+          }),
+        );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getTotalJobsPosted();
+  }
 
   Future allJobs(bool whichList) async {
     if (whichList == true) {
@@ -113,6 +134,13 @@ class _PostJobPageState extends State<PostJobPage> {
         current = users[i];
       }
     }
+
+    totalPostedJobs++;
+
+    await FirebaseFirestore.instance.collection('users').doc(userID).set({
+      "totalPostedJobs": totalPostedJobs,
+    }, SetOptions(merge: true)).then(
+        ((value) => print("Total Posted Jobs Updated")));
 
     GeoPoint g = GeoPoint(location.latitude, location.longitude);
     addJobDetails(

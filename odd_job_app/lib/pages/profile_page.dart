@@ -15,6 +15,7 @@ import 'package:odd_job_app/pages/payment_option_page.dart';
 import 'package:odd_job_app/pages/manage_location_page.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
+
 // ignore: unused_import
 
 class ProfilePage extends StatefulWidget {
@@ -41,8 +42,8 @@ class _ProfileState extends State<ProfilePage> {
             if (document["email"] == user.email) {
               setState(() {
                 username = document["username"];
-                jobsPosted = document["jobsPosted"];
-                jobsCompleted = document["jobsCompleted"];
+                jobsPosted = document["totalPostedJobs"];
+                jobsCompleted = document["totalCompletedJobs"];
                 currentUserDocId = document.reference.id;
               });
             }
