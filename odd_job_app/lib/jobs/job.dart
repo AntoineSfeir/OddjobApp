@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:odd_job_app/jobs/bid.dart';
 
 class Job {
   late String description;
@@ -11,7 +12,7 @@ class Job {
   late String user;
   late String displayName;
   late String posterID;
-  late List<String> bids;
+  late List<bid> bids;
 
   Job({
     required this.description,

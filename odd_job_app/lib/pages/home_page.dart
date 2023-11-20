@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:odd_job_app/jobs/afterpost_jobdescription.dart';
+import 'package:odd_job_app/jobs/bid.dart';
+import 'package:odd_job_app/jobs/currentbid_jobdescription.dart';
 import 'package:odd_job_app/jobs/job.dart';
 import 'package:odd_job_app/jobs/user.dart';
 import 'package:odd_job_app/jobs/jobcard.dart';
@@ -21,13 +24,13 @@ class _HomePageState extends State<HomePage> {
   final userEmail = FirebaseAuth.instance.currentUser!.email;
 
   List<Job> allJobsInDB = [];
-  List<Job> allActiveJobs = [];
-  List<Job> allCurrentBids = [];
+  //List<Job> allActiveJobs = [];
+
   List<Job> allPostedJobs = [];
-  List<String> activeIDs = [];
-  List<String> currentIDs = [];
-  List<String> currentBidAmounts = [];
-  List<String> postedIDs = [];
+  List<bid> myBids = []; //bids that I have placed
+  List<bid> bidsOnMyJobs =
+      []; //bids that others have placed on the jobs I have posted
+
   List<String> docIDs = [];
   late Job thisJob;
   bool showPostedJobs = false;
@@ -37,6 +40,7 @@ class _HomePageState extends State<HomePage> {
   bool firstLoad = false;
   List<user> users = [];
   late user currentUser;
+  late final Job Jobz;
 
   Future sortJobs() async {
     // await db
@@ -47,25 +51,76 @@ class _HomePageState extends State<HomePage> {
     //     .then((snapshot) => snapshot.docs.forEach((element) {
     //           activeIDs.add(element['ID']);
     //         }));
-
+    print("BEFORE FIRST DB CALL");
     await db
         .collection('users')
         .doc(currentUser.ID)
         .collection('currentBids')
         .get()
         .then((snapshot) => snapshot.docs.forEach((element) {
-              currentIDs.add(element['jobID']);
-              currentBidAmounts.add(element['bidAmount']);
-            }));
+              String bidAmount = element['bidAmount'];
+              String jobID = element['jobID'];
+              late Job thisJob;
+              late user thisUser;
+              for (int i = 0; i < allJobsInDB.length; i++) {
+                if (allJobsInDB[i].ID == jobID) {
+                  thisJob = allJobsInDB[i];
+                }
+              }
+              for (int i = 0; i < users.length; i++) {
+                if (users[i].ID == thisJob.posterID) {
+                  thisUser = users[i];
+                }
+              }
 
+              bid b = bid(
+                  bidder: thisUser,
+                  amount: bidAmount,
+                  jobThatWasBidOn: thisJob);
+
+              myBids.add(b);
+            }));
+    List<Job> jobsIHavePosted = [];
+    print("BEFORE SECOND DB CALL");
     await db
         .collection('users')
         .doc(currentUser.ID)
         .collection('postedJobs')
         .get()
         .then((snapshot) => snapshot.docs.forEach((element) {
-              postedIDs.add(element['ID']);
+              String jobID = element['ID'];
+
+              for (int i = 0; i < allJobsInDB.length; i++) {
+                if (allJobsInDB[i].ID == jobID) {
+                  jobsIHavePosted.add(allJobsInDB[i]);
+                }
+              }
             }));
+    print("BEFORE DB LOOP");
+    for (int i = 0; i < jobsIHavePosted.length; i++) {
+      await db
+          .collection('jobs')
+          .doc(jobsIHavePosted[i].ID)
+          .collection('currentBids')
+          .get()
+          .then((snapshot) => snapshot.docs.forEach((element) {
+                String otherUserID = element['userID'];
+                String theirBidAmount = element['bidAmount'];
+                late user otherUser;
+                for (int j = 0; j < users.length; j++) {
+                  if (users[j].ID == otherUserID) {
+                    otherUser = users[j];
+                    bid b = bid(
+                        bidder: otherUser,
+                        amount: theirBidAmount,
+                        jobThatWasBidOn: jobsIHavePosted[i]);
+                    bidsOnMyJobs.add(b);
+                  }
+                }
+              }));
+    }
+    print("JOBSIHAVEPOSTEDLENGTH =  ${jobsIHavePosted.length}");
+    allPostedJobs = jobsIHavePosted;
   }
 
   Future getCurrentUser() async {
@@ -95,6 +150,8 @@ class _HomePageState extends State<HomePage> {
             }),
           );
       firstLoad = true;
+      print("BEFORE SORTJOBS");
+      await sortJobs();
     }
   }
 
@@ -111,6 +168,155 @@ class _HomePageState extends State<HomePage> {
     super.initState();
 
     getDocID();
+  }
+
+  Widget buildPostedJobsSection() {
+    return Column(
+      children: [
+        const SizedBox(height: 20),
+        TextButton(
+          style: TextButton.styleFrom(
+            textStyle: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          onPressed: () {
+            setState(() {
+              showPostedJobs = !showPostedJobs;
+            });
+          },
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Posted Jobs'),
+              Icon(Icons.arrow_downward),
+            ],
+          ),
+        ),
+        if (showPostedJobs)
+          Column(
+            children: allPostedJobs.map((Job) {
+              return TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          AfterPostJobDescription(thisJob: Job),
+                    ),
+                  );
+                },
+                child: Text(
+                  Job.title, // Replace with your actual property name
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+      ],
+    );
+  }
+
+  Widget buildCurrentBidSection() {
+    return Column(
+      children: [
+        const SizedBox(height: 20),
+        TextButton(
+          style: TextButton.styleFrom(
+            textStyle: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          onPressed: () {
+            setState(() {
+              showCurrentBids = !showCurrentBids;
+            });
+          },
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Current Bids'),
+              Icon(Icons.arrow_downward),
+            ],
+          ),
+        ),
+        if (showCurrentBids)
+          Column(
+            children: myBids.map((myBid) {
+              return TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CurrentBidJobDescription(
+                        thisBid: myBid,
+                      ),
+                    ),
+                  );
+                },
+                child: Text(
+                  myBid.jobThatWasBidOn
+                      .title, // Replace with your actual property name
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+      ],
+    );
+  }
+
+  Widget buildActiveJobsSection() {
+    return Column(
+      children: [
+        const SizedBox(height: 20),
+        TextButton(
+          style: TextButton.styleFrom(
+            textStyle: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          onPressed: () {
+            setState(() {
+              showActiveJobs = !showActiveJobs;
+            });
+          },
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Active Jobs'),
+              Icon(Icons.arrow_downward),
+            ],
+          ),
+        ),
+        if (showActiveJobs)
+          Column(
+            children: allJobsInDB.map((Job) {
+              return TextButton(
+                onPressed: () {
+                  // Add your logic when a job is selected
+                },
+                child: Text(
+                  Job.title, // Replace with your actual property name
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+      ],
+    );
   }
 
   @override
@@ -143,124 +349,9 @@ class _HomePageState extends State<HomePage> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             const SizedBox(height: 20),
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                textStyle: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  showPostedJobs = !showPostedJobs;
-                                });
-                              },
-                              child: const Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Current Bids'),
-                                  Icon(Icons.arrow_downward),
-                                ],
-                              ),
-                            ),
-                            if (showPostedJobs)
-                              Column(
-                                children: [
-                                  TextButton(
-                                    style: TextButton.styleFrom(
-                                      textStyle: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        tryingShitOut = !tryingShitOut;
-                                      });
-                                    },
-                                    child: const Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('trying'),
-                                        Icon(Icons.arrow_downward),
-                                      ],
-                                    ),
-                                  ),
-                                  // Add other buttons or UI elements related to "Posted Jobs" here
-                                ],
-                              ),
-                            if (tryingShitOut)
-                              Column(
-                                children: allJobsInDB
-                                    .map((Job) => JobCard(
-                                          job: Job,
-                                          currentUser: currentUser,
-                                        ))
-                                    .toList(),
-                              ),
-                            // ... other buttons and UI elements ...
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                textStyle: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  showActiveJobs = !showActiveJobs;
-                                });
-                              },
-                              child: const Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Active Jobs'),
-                                  Icon(Icons.arrow_forward),
-                                ],
-                              ),
-                            ),
-                            if (showActiveJobs)
-                              Column(
-                                children: allJobsInDB
-                                    .map((Job) => JobCard(
-                                          job: Job,
-                                          currentUser: currentUser,
-                                        ))
-                                    .toList(),
-                              ),
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                textStyle: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  showCurrentBids = !showCurrentBids;
-                                });
-                              },
-                              child: const Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Current Bids'),
-                                  Icon(Icons.arrow_forward),
-                                ],
-                              ),
-                            ),
-                            if (showCurrentBids)
-                              Column(
-                                children: allJobsInDB
-                                    .map((Job) => JobCard(
-                                          job: Job,
-                                          currentUser: currentUser,
-                                        ))
-                                    .toList(),
-                              ),
+                            buildPostedJobsSection(),
+                            buildCurrentBidSection(),
+                            buildActiveJobsSection(),
                           ],
                         ),
                       );
