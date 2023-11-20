@@ -51,11 +51,12 @@ class JobCard extends StatelessWidget {
             children: <Widget>[
               Text(
                 job.title,
+                overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
                 style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 30,
+                  fontSize: 25,
                 ),
               ),
               const SizedBox(
