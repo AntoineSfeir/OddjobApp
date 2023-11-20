@@ -119,6 +119,7 @@ class _HomePageState extends State<HomePage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        backgroundColor: Color(0xFFF8FBFD),
         body: Center(
           child: ListView.builder(
             itemBuilder: (context, index) {
@@ -133,6 +134,7 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             const SizedBox(height: 20),
                             AppBar(
+                              backgroundColor:Color(0xFF4F82A3),
                               title: const Text(
                                 'HomePage',
                                 style: TextStyle(
@@ -274,7 +276,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         bottomNavigationBar: BottomAppBar(
-          color: Colors.blue,
+          color: Color(0xFF4F82A3),
           shape: const CircularNotchedRectangle(),
           child: SizedBox(
             height: 60.0,
@@ -341,7 +343,7 @@ class _HomePageState extends State<HomePage> {
               MaterialPageRoute(builder: (context) => const PostJobPage()),
             );
           },
-          backgroundColor: Colors.green,
+          backgroundColor: Color(0xFF2598D7),
           child: const Icon(Icons.add),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
