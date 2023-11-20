@@ -44,8 +44,8 @@ class user {
       State: data['state'] ?? '',
       username: data['username'] ?? '',
       zip: data['zip'] ?? '',
-      jobsCompleted: data['jobsCompleted'] ?? 0,
-      jobsPosted: data['jobsPosted'] ?? 0,
+      jobsCompleted: data['totalCompletedJobs'] ?? 0,
+      jobsPosted: data['totalPostedJobs'] ?? 0,
     );
   }
 }
