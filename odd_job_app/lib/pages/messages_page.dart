@@ -139,7 +139,8 @@ class _MessagesPageState extends State<MessagesPage> {
             }
           },
         ),
-        title: Text(data['firstName'] + " " + data['lastName']),
+        title: Text(data['firstName'] + " " + data['lastName'],
+        style: TextStyle( fontSize: 20)),
         subtitle: FutureBuilder<String?>(
           future: _chatService.getMostRecentMessage(
             auth.currentUser!.email!,

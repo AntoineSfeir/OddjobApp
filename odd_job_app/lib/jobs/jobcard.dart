@@ -14,7 +14,7 @@ import 'package:odd_job_app/jobs/geolocation/compute_distance.dart';
 // ignore: must_be_immutable
 
 //import 'package:geolocator/geolocator.dart';
-//extra push
+
 // ignore: must_be_immutable
 class JobCard extends StatelessWidget {
   late final Job job;
