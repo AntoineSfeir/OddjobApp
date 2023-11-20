@@ -205,7 +205,7 @@ class _ProfileState extends State<ProfilePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            username ?? "no name",
+                            widget.currentUser.username,
                             style: const TextStyle(
                               fontSize: 36,
                               fontWeight: FontWeight.bold,
@@ -229,8 +229,8 @@ class _ProfileState extends State<ProfilePage> {
                 ),
 
                 _ProfileInfoRow(
-                    numOfJobsPosted: jobsPosted ?? 0,
-                    numOfJobsCompleted: jobsCompleted ?? 0),
+                    numOfJobsPosted: widget.currentUser.jobsPosted,
+                    numOfJobsCompleted: widget.currentUser.jobsCompleted),
                 // Divider
                 Container(
                   margin: EdgeInsets.only(

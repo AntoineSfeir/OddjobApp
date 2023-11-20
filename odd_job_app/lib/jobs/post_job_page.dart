@@ -11,7 +11,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 // ignore_for_file: library_private_types_in_public_api
 
 class PostJobPage extends StatefulWidget {
-  const PostJobPage({super.key});
+  final user currentUser;
+  const PostJobPage({super.key, required this.currentUser });
 
   @override
   State<PostJobPage> createState() => _PostJobPageState();
@@ -23,7 +24,7 @@ class _PostJobPageState extends State<PostJobPage> {
   List<user> users = [];
   late String displayName;
   late String userID;
-  late int totalPostedJobs;
+  late int totalPostedJobs = widget.currentUser.jobsPosted;
 
   final _jobTitleController = TextEditingController();
   final _jobDescriptionController = TextEditingController();
@@ -42,24 +43,6 @@ class _PostJobPageState extends State<PostJobPage> {
   List<Job> firstList = [];
   List<Job> secondList = [];
   late String jobID;
-
-  Future getTotalJobsPosted() async {
-    await FirebaseFirestore.instance.collection('users').get().then(
-          (snapshot) => snapshot.docs.forEach((document) {
-            if (document["email"] == userEmail) {
-              setState(() {
-                totalPostedJobs = document["totalPostedJobs"];
-              });
-            }
-          }),
-        );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getTotalJobsPosted();
-  }
 
   Future allJobs(bool whichList) async {
     if (whichList == true) {

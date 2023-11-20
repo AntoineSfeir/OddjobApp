@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobs/job.dart';
+import 'package:odd_job_app/jobs/job.dart';
+import 'package:odd_job_app/jobs/user.dart';
+import 'package:odd_job_app/jobs/jobcard.dart';
 import 'package:odd_job_app/jobs/jobcard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:odd_job_app/jobs/post_job_page.dart';
-import 'package:odd_job_app/jobs/user.dart';
 import 'package:odd_job_app/pages/home_page.dart';
+import 'package:odd_job_app/jobs/post_job_page.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
 import 'package:odd_job_app/pages/messages_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:odd_job_app/jobs/job.dart';
-import 'package:odd_job_app/jobs/jobcard.dart';
 import 'package:odd_job_app/jobs/jobdescription.dart';
 
 class SearchPage extends StatefulWidget {
@@ -169,7 +169,7 @@ class _SearchPageState extends State<SearchPage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const PostJobPage()),
+                MaterialPageRoute(builder: (context) => PostJobPage( currentUser: widget.currentUser)),
               );
             },
             backgroundColor: Color(0xFF2598D7),
