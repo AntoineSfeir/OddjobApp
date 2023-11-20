@@ -31,7 +31,7 @@ class _GetLocationState extends State<GetLocationWidget> {
   @override
   void initState() {
     super.initState();
-    getUserDocId(); // Call the method in initState
+    getUserDocId();
   }
 
   bool _loading = false;
@@ -47,10 +47,12 @@ class _GetLocationState extends State<GetLocationWidget> {
     try {
       String id = currentUserDocId ?? "";
       final locationResult = await location.getLocation();
-      GeoPoint geoPoint = GeoPoint(locationResult.latitude!, locationResult.longitude!);
+      GeoPoint geoPoint =
+          GeoPoint(locationResult.latitude!, locationResult.longitude!);
       await FirebaseFirestore.instance.collection('users').doc(id).set({
         'exactLocation': geoPoint,
-      },SetOptions(merge: true)).then(((value) => print("User Location Updated")));
+      }, SetOptions(merge: true)).then(
+          ((value) => print("User Location Updated")));
       setState(() {
         _location = locationResult;
         _loading = false;
