@@ -3,18 +3,14 @@
 <plist version="1.0">
 	<dict>
 	<key>UIBackgroundModes</key>
-	<string>location</string>
+	<array>
+        <string>location</string>
+    </array>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Allow us to get your location when using OddJob</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Allow us to get your location when using OddJob</string>
-		<key>LSApplicationQueriesSchemes</key>
-		<array>
-			<string>googlechromes</string>
-			<string>comgooglemaps</string>
-			<string>googlegmail</string>
-			<string>mailto</string>
-		</array>
+	
 		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 		<string>Always allow us to get your location when using OddJob</string>
 		<key>CADisableMinimumFrameDurationOnPhone</key>

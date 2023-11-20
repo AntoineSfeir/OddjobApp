@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/jobs/user.dart';
 import 'package:odd_job_app/pages/job_history_page.dart';
 
@@ -19,35 +18,14 @@ class _OtherProfileState extends State<OtherProfilePage> {
 
   Future<void> getProfileData() async {
     thisUser = widget.recieverUser;
+   thisUser.averageRating = double.parse(((thisUser.trustScore + thisUser.workQuality + thisUser.communication + thisUser.wouldHireAgain) / 4).toStringAsFixed(1));
   }
 
-  String? comRating;
-  String? workRating;
-  String? hireAgainRating;
-
-  Future<void> getProfileReviews() async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(thisUser.ID)
-        .collection('reviews') // Assuming 'reviews' is the subcollection
-        .get()
-        .then(
-          (snapshot) => snapshot.docs.forEach((document) {
-            setState(() {
-              comRating = document["communication"];
-              print(comRating);
-              workRating = document["workQuality"];
-              hireAgainRating = document["wouldHireAgain"];
-            });
-          }),
-        );
-  }
 
   @override
   void initState() {
     super.initState();
-    getProfileData();
-    getProfileReviews(); // Call the method when the widget is initialized
+    getProfileData();// Call the method when the widget is initialized
   }
 
   @override
@@ -122,9 +100,11 @@ class _OtherProfileState extends State<OtherProfilePage> {
                     ),
 
                     _ProfileRatingsAndReviews(
-                      communicationRating: comRating ?? "0",
-                      workQualityRating: workRating ?? "0",
-                      wouldHireAgainRating: hireAgainRating ?? "0",
+                      communicationRating: thisUser.communication,
+                      workQualityRating: thisUser.workQuality,
+                      wouldHireAgainRating: thisUser.wouldHireAgain,
+                      trustScore: thisUser.trustScore,
+                      avgRating: thisUser.averageRating,
                     ),
 
                     const SizedBox(height: 8.0),
@@ -274,14 +254,18 @@ class _TopPortion extends StatelessWidget {
 }
 
 class _ProfileRatingsAndReviews extends StatelessWidget {
-  final String communicationRating;
-  final String workQualityRating;
-  final String wouldHireAgainRating;
+  final double communicationRating;
+  final double workQualityRating;
+  final double wouldHireAgainRating;
+  final double trustScore;
+  final double avgRating;
 
   const _ProfileRatingsAndReviews({
     required this.communicationRating,
     required this.workQualityRating,
     required this.wouldHireAgainRating,
+    required this.trustScore,
+    required this.avgRating,
   });
 
   @override
@@ -302,6 +286,11 @@ class _ProfileRatingsAndReviews extends StatelessWidget {
                 .titleLarge
                 ?.copyWith(fontWeight: FontWeight.bold),
           ),
+           const SizedBox(height: 8.0),
+          _RatingCategory(
+            title: 'Overall Rating',
+            rating: avgRating,
+          ),
           const SizedBox(height: 8.0),
           _RatingCategory(
             title: 'Communication',
@@ -317,6 +306,11 @@ class _ProfileRatingsAndReviews extends StatelessWidget {
             title: 'Would Hire Again',
             rating: wouldHireAgainRating,
           ),
+          const SizedBox(height: 8.0),
+          _RatingCategory(
+            title: 'Trust Score',
+            rating: trustScore,
+          ),
         ],
       ),
     );
@@ -325,7 +319,7 @@ class _ProfileRatingsAndReviews extends StatelessWidget {
 
 class _RatingCategory extends StatelessWidget {
   final String title;
-  final String rating;
+  final double rating;
 
   const _RatingCategory({
     required this.title,
@@ -349,7 +343,7 @@ class _RatingCategory extends StatelessWidget {
             _buildStarIcon(context, rating),
             const SizedBox(width: 4.0),
             Text(
-              rating,
+              rating.toString(),
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ],
@@ -358,7 +352,7 @@ class _RatingCategory extends StatelessWidget {
     );
   }
 
-  Widget _buildStarIcon(BuildContext context, String rating) {
+  Widget _buildStarIcon(BuildContext context, double rating) {
     // Replace this with your own logic to build star icons based on the rating
     // For simplicity, this example uses a filled star icon
     return const Icon(

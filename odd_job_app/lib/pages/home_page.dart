@@ -438,7 +438,7 @@ class _HomePageState extends State<HomePage> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const PostJobPage()),
+              MaterialPageRoute(builder: (context) => PostJobPage(currentUser: currentUser)),
             );
           },
           backgroundColor: Color(0xFF2598D7),

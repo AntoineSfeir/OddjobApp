@@ -30,20 +30,15 @@ class _ProfileState extends State<ProfilePage> {
   int currentPageIndex = 3;
 
   final user = FirebaseAuth.instance.currentUser!;
-  String? username;
   String? currentUserDocId;
   File? _image; // Variable to store the selected image
-  int? jobsPosted;
-  int? jobsCompleted;
+ 
 
-  Future<void> getUsername() async {
+  Future<void> getUserDocId() async {
     await FirebaseFirestore.instance.collection('users').get().then(
           (snapshot) => snapshot.docs.forEach((document) {
             if (document["email"] == user.email) {
               setState(() {
-                username = document["username"];
-                jobsPosted = document["totalPostedJobs"];
-                jobsCompleted = document["totalCompletedJobs"];
                 currentUserDocId = document.reference.id;
               });
             }
@@ -137,7 +132,7 @@ class _ProfileState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    getUsername(); // Call the method in initState
+    getUserDocId(); // Call the method in initState
   }
 
   @override
@@ -188,8 +183,8 @@ class _ProfileState extends State<ProfilePage> {
                               : Image.network(
                                   avatarUrl ??
                                       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKurFbiK1YFmGY6LV3FwBqui2WOp7Kx7Jk7A&usqp=CAU",
-                                  width: 100,
-                                  height: 100,
+                                  width: 150,
+                                  height: 150,
                                   fit: BoxFit.cover,
                                 ),
                         ),
@@ -205,7 +200,7 @@ class _ProfileState extends State<ProfilePage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            username ?? "no name",
+                            widget.currentUser.username,
                             style: const TextStyle(
                               fontSize: 36,
                               fontWeight: FontWeight.bold,
@@ -229,8 +224,8 @@ class _ProfileState extends State<ProfilePage> {
                 ),
 
                 _ProfileInfoRow(
-                    numOfJobsPosted: jobsPosted ?? 0,
-                    numOfJobsCompleted: jobsCompleted ?? 0),
+                    numOfJobsPosted: widget.currentUser.jobsPosted,
+                    numOfJobsCompleted: widget.currentUser.jobsCompleted),
                 // Divider
                 Container(
                   margin: EdgeInsets.only(
@@ -262,29 +257,6 @@ class _ProfileState extends State<ProfilePage> {
                           width: 5,
                         ),
                         Text('Profile Info'),
-                      ],
-                    ),
-                  ),
-                ),
-
-                // Manage Address Info
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ManageLocationInfoPage()),
-                    );
-                  },
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: const Row(
-                      children: <Widget>[
-                        Icon(Icons.info_outline),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text('Manage Address Info'),
                       ],
                     ),
                   ),
@@ -331,6 +303,29 @@ class _ProfileState extends State<ProfilePage> {
                           width: 5,
                         ),
                         Text('Manage Payment Options'),
+                      ],
+                    ),
+                  ),
+                ),
+
+                  // Manage Address Info
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ManageLocationInfoPage()),
+                    );
+                  },
+                  child: Container(
+                    alignment: Alignment.centerLeft,
+                    child: const Row(
+                      children: <Widget>[
+                        Icon(Icons.location_pin),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text('Manage Location Settings'),
                       ],
                     ),
                   ),
