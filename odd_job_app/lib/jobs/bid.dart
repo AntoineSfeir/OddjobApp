@@ -6,7 +6,7 @@ class bid {
   late String amount;
   late Job jobThatWasBidOn;
   late String bidID;
-
+  late String jobFileBidID;
   bid({
     required this.bidder,
     required this.amount,
