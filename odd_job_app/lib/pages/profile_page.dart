@@ -129,6 +129,19 @@ class _ProfileState extends State<ProfilePage> {
     }
   }
 
+
+  Future<String?> getProfilePictureUrl(String documentId) async {
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref('profilePictures/$documentId.jpg');
+      final result = await ref.getDownloadURL();
+      return result;
+    } catch (e) {
+      // The file does not exist
+      return null;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -165,24 +178,44 @@ class _ProfileState extends State<ProfilePage> {
                           shape: BoxShape.circle,
                           color: Colors.blue, // Blue circle
                         ),
-                        child: ClipOval(
-                          child: _image != null
-                              ? Image.file(
-                                  _image!,
-                                  width: 150,
-                                  height: 150,
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.network(
-                                  avatarUrl ??
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKurFbiK1YFmGY6LV3FwBqui2WOp7Kx7Jk7A&usqp=CAU",
-                                  width: 150,
-                                  height: 150,
-                                  fit: BoxFit.cover,
-                                ),
-                        ),
-                      ),
-                    ),
+                        // child: ClipOval(
+                        //   child: _image != null
+                        //       ? Image.file(
+                        //           _image!,
+                        //           width: 150,
+                        //           height: 150,
+                        //           fit: BoxFit.cover,
+                        //         )
+                        //       : Image.network(
+                        //           avatarUrl ??
+                        //               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKurFbiK1YFmGY6LV3FwBqui2WOp7Kx7Jk7A&usqp=CAU",
+                        //           width: 150,
+                        //           height: 150,
+                        //           fit: BoxFit.cover,
+                        //         ),
+                        // ),
+                       child: FutureBuilder<String?>(
+      future: getProfilePictureUrl(currentUserDocId!),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError || snapshot.data == null) {
+          return CircleAvatar(
+            backgroundColor: Color(0xFFC9D0D4),
+          );
+        } else {
+          return Center(
+            child: CircleAvatar(
+              backgroundColor: Color(0xFFC9D0D4),
+              backgroundImage: NetworkImage(snapshot.data!),
+              radius: 50,
+            ),
+          );
+        }
+      },
+    ),
+  ),
+),
                     // Display username
                     Container(
                       margin: EdgeInsets.only(
