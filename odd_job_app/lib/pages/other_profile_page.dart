@@ -54,24 +54,45 @@ class _OtherProfileState extends State<OtherProfilePage> {
                   children: [
                     // Increased spacing
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        FloatingActionButton.extended(
-                          onPressed: () {},
-                          heroTag: 'Job Offer',
-                          elevation: 0,
-                          backgroundColor: Colors.green,
-                          label: const Text("Send Job Offer"),
-                          icon: const Icon(Icons.inbox),
-                        ),
-                        FloatingActionButton.extended(
-                          onPressed: () {},
-                          heroTag: 'mesage',
-                          elevation: 0,
-                          backgroundColor: Colors.red,
-                          label: const Text("Message"),
-                          icon: const Icon(Icons.message_rounded),
-                        ),
+
+Padding(
+  padding: const EdgeInsets.only(right: 15.0),
+  child: SizedBox(
+    width: 190,
+    child: FloatingActionButton.extended(
+      onPressed: () {},
+      heroTag: 'Job Offer',
+      elevation: 0,
+      backgroundColor: Color(0xFF2598D7),
+      label: Text(
+        "Send Job Offer",
+        style: TextStyle(
+          color: Colors.white, // Set the text color to white
+        ),
+      ),
+      icon: const Icon(Icons.inbox, color: Colors.white,),
+    ),
+  ),
+),
+
+
+
+SizedBox(
+  width: 190, // Adjusted width as needed
+  child: FloatingActionButton.extended(
+    onPressed: () {},
+    heroTag: 'mesage',
+    elevation: 0,
+    backgroundColor: Color(0xFF2598D7),
+    label: const Text("Message", style: TextStyle(
+          color: Colors.white, // Set the text color to white
+        ),),
+    icon: const Icon(Icons.message_rounded, color: Colors.white),
+  ),
+),
+
                       ],
                     ),
                     Container(
@@ -98,7 +119,7 @@ class _OtherProfileState extends State<OtherProfilePage> {
                       height: 2,
                       color: (Colors.grey), // Divider color
                     ),
-
+  const SizedBox(height: 16),
                     _ProfileRatingsAndReviews(
                       communicationRating: thisUser.communication,
                       workQualityRating: thisUser.workQuality,
@@ -107,20 +128,36 @@ class _OtherProfileState extends State<OtherProfilePage> {
                       avgRating: thisUser.averageRating,
                     ),
 
-                    const SizedBox(height: 8.0),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Navigate to the job history page
-                        // You need to replace 'JobHistoryPage' with the actual page you want to navigate to
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const JobHistoryPage(),
-                          ),
-                        );
-                      },
-                      child: const Text("View Job History"),
-                    ),
+                    const SizedBox(height: 16.0),
+                   ElevatedButton(
+  onPressed: () {
+    // Navigate to the job history page
+    // You need to replace 'JobHistoryPage' with the actual page you want to navigate to
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const JobHistoryPage(),
+      ),
+    );
+  },
+  style: ElevatedButton.styleFrom(
+    backgroundColor: const Color(0xFF1D465D), // Set the desired background color
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20.0), // Adjusted border radius
+    ),
+  ),
+  child: const Padding(
+    padding: EdgeInsets.all(12.0), // Adjusted padding
+   child: Text(
+  "View Job History",
+  style: TextStyle(
+    fontSize: 18.0,
+    color: Colors.white, // Set the text color to white
+  ),
+),
+  ),
+),
+
                   ],
                 ),
               ),
