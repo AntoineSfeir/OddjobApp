@@ -20,36 +20,185 @@ class _activeJobsViewTabState extends State<activeJobsViewTab> {
   @override
   void initState() {
     super.initState();
-    print("Trying Something");
+
     myJobs = widget.activeJobs;
     for (int i = 0; i < myJobs.length; i++) {
+      print("Working bool value ${myJobs[i].working}");
       if (myJobs[i].working) {
         jobsThatIAmWorking.add(myJobs[i]);
       } else if (!myJobs[i].working) {
         jobsThatIAmContracting.add(myJobs[i]);
       }
     }
-    print("MYJOBSLENGTH = ${jobsThatIAmWorking.length}");
+    print("${jobsThatIAmContracting.length} bitch");
+    print("${jobsThatIAmWorking.length} bitch1");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView.builder(
-        itemCount: myJobs.length,
-        itemBuilder: (context, index) {
-          return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                  elevation: 1,
-                  child: ExpansionTile(
-                    title: Text(
-                      myJobs[index].title,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  )));
-        },
+      body: ListView(
+        children: [
+          _buildContractExpansionTile("Contracts", jobsThatIAmContracting),
+          _buildWorkerExpansionTile("Working", jobsThatIAmWorking),
+        ],
       ),
     );
+  }
+
+  Widget _buildContractExpansionTile(String title, List<Job> jobs) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        elevation: 1,
+        child: ExpansionTile(
+          title: Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          children: _buildContractJobList(jobs),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildWorkerExpansionTile(String title, List<Job> jobs) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        elevation: 1,
+        child: ExpansionTile(
+          title: Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.bold),
+          ),
+          children: _buildWorkerJobList(jobs),
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _buildContractJobList(List<Job> jobs) {
+    return jobs.map((job) {
+      return Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Title: ${job.title}',
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Address: ${job.address}',
+              ),
+              Text(
+                'Deadline: ${computedTime.compute(job.deadline)}',
+              ),
+              Row(
+                children: [
+                  Text(
+                    'Worker: ${job.displayName}',
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.message),
+                    onPressed: () {
+                      // Handle the action when the message icon is clicked
+                      // For example, you can open a chat with the worker
+                      print(
+                          'Message icon clicked for worker: ${job.displayName}');
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Text(
+                    'Status: ',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 15),
+                    ),
+                    onPressed: () {
+                      // Handle the action when "Finished" is pressed
+                    },
+                    child: const Text('Finished'),
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 15),
+                    ),
+                    onPressed: () {
+                      // Handle the action when "Not Finished" is pressed
+                    },
+                    child: const Text('Not Finished'),
+                  ),
+                ],
+              ),
+              // Add other details or actions related to the job
+            ],
+          ),
+        ),
+      );
+    }).toList();
+  }
+
+  List<Widget> _buildWorkerJobList(List<Job> jobs) {
+    return jobs.map((job) {
+      return Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Title: ${job.title}',
+                style: const TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 8),
+              Text(
+                'Client: ${job.displayName}',
+              ),
+              Text(
+                'Address: ${job.address}',
+              ),
+              Text(
+                'Deadline: ${computedTime.compute(job.deadline)}',
+              ),
+              Text(
+                'Description: ${job.description}',
+              ),
+              Row(
+                children: [
+                  Text(
+                    'Job Finished? ',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 15),
+                    ),
+                    onPressed: () {},
+                    child: const Text('YES'),
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 15),
+                    ),
+                    onPressed: () {},
+                    child: const Text('NO'),
+                  ),
+                ],
+              ),
+              // Add other details or actions related to the job
+            ],
+          ),
+        ),
+      );
+    }).toList();
   }
 }

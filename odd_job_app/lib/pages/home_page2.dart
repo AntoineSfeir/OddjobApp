@@ -5,6 +5,7 @@ import 'package:odd_job_app/jobs/bid.dart';
 import 'package:odd_job_app/jobs/job.dart';
 import 'package:odd_job_app/jobs/post_job_page.dart';
 import 'package:odd_job_app/jobs/user.dart';
+import 'package:odd_job_app/pages/activeJobsTab.dart';
 import 'package:odd_job_app/pages/messages_page.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
 import 'package:odd_job_app/pages/search_page.dart';
@@ -24,7 +25,7 @@ class _HomePage2State extends State<HomePage2> {
   late user currentUser;
 
   List<Job> allJobsInDB = [];
-  //List<Job> allActiveJobs = [];
+  List<Job> allActiveJobs = [];
   List<Job> finalListForPostedJobsPanel = [];
   List<Job> allPostedJobs = [];
   List<bid> myBids = []; //bids that I have placed
@@ -68,16 +69,24 @@ class _HomePage2State extends State<HomePage2> {
   }
 
   Future sortJobs() async {
-    // await db
-    //     .collection('users')
-    //     .doc(currentUser.ID)
-    //     .collection('activeJobs')
-    //     .get()
-    //     .then((snapshot) => snapshot.docs.forEach((element) {
-    //           activeIDs.add(element['ID']);
-    //         }));
-
+    await db
+        .collection('users')
+        .doc(currentUser.ID)
+        .collection('ActiveJobs')
+        .get()
+        .then((snapshot) => snapshot.docs.forEach((element) {
+              for (int i = 0; i < allJobsInDB.length; i++) {
+                if (element['jobID'] == allJobsInDB[i].ID) {
+                  Job b = allJobsInDB[i];
+                  b.working = element['Working'];
+                  b.contractorID = element['contractorID'];
+                  b.workerID = element['workerID'];
+                  allActiveJobs.add(b);
+                }
+              }
+            }));
     //Grab all of my bids
+    print("Baby Active Jobs: ${allActiveJobs.length}");
     await db
         .collection('users')
         .doc(currentUser.ID)
@@ -241,13 +250,16 @@ class _HomePage2State extends State<HomePage2> {
                 },
                 body: TabBarView(
                   children: _tabs.map((tab) {
-                    if (tab.text != "Posted Jobs") {
-                      return Text('$tab.text');
-                    } else {
-                      print(finalListForPostedJobsPanel.length);
+                    if (tab.text == "Posted Jobs") {
                       return UsersPostedJobsView(
                         myJobs: finalListForPostedJobsPanel,
                       );
+                    } else if (tab.text == "Active Jobs") {
+                      return activeJobsViewTab(activeJobs: allActiveJobs);
+                    } else if (tab.text == "My Bid") {
+                      return Placeholder();
+                    } else {
+                      return Placeholder();
                     }
                   }).toList(),
                 ),
