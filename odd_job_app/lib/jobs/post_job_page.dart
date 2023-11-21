@@ -33,7 +33,7 @@ class _PostJobPageState extends State<PostJobPage> {
   final _jobStartingBidController = TextEditingController();
 
   late Timestamp jobTime;
-  String enterYourAddressHere = 'Enter your address here';
+  String enterYourAddressHere = 'Address';
   DateTime? _selectedDate = DateTime.now();
 
   //9999999999
@@ -389,19 +389,33 @@ Autocomplete<String> _buildJobTitleAutocomplete() {
                           //     hintText: 'Enter job title',
                           //   ),
                           // ),
-                          const SizedBox(height: 16),
-                          const Text(
-                            'Job Description:',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          TextFormField(
-                              controller: _jobDescriptionController,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'Enter job description',
-                              ),
-                              maxLines: 11),
-                          const SizedBox(height: 16),
+const SizedBox(height: 16),
+Column(
+  crossAxisAlignment: CrossAxisAlignment.center,
+  children: [
+    Text(
+      'Job Description:',
+      style: TextStyle(
+        fontSize: 34, // Set font size to 30pt
+        fontWeight: FontWeight.bold, // Set font weight to bold
+      ),
+    ),
+    const SizedBox(height: 8),
+    TextFormField(
+      controller: _jobDescriptionController,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        hintText: 'Enter job description',
+      ),
+      maxLines: 11,
+      style: TextStyle(
+        fontSize: 14, // Set font size to 18pt for the TextFormField
+      ),
+    ),
+  ],
+),
+const SizedBox(height: 16),
+
                           // Row(
                           //   children: [
                           //     const Text('Add Tags'),
@@ -419,103 +433,171 @@ Autocomplete<String> _buildJobTitleAutocomplete() {
                           //   ],
                           // ),
                           const SizedBox(height: 16),
+Center(
+  child: ElevatedButton(
+    onPressed: () {
+      _openSlidingPanel();
+    },
+    style: ButtonStyle(
+      backgroundColor: MaterialStateProperty.all<Color>(
+        const Color(0xFF2598D7),
+      ),
+      minimumSize: MaterialStateProperty.all<Size>(
+        Size(double.infinity, 50), // Adjust the height as needed
+      ),
+      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+        const EdgeInsets.symmetric(horizontal: 24),
+      ),
+      alignment: Alignment.center, // Center the text within the button
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(
+          Icons.location_on,
+          color: Colors.white,
+          size: 30, // Increased icon size
+        ),
+        const SizedBox(width: 8),
+        Container(
+          width: 200,
+          child: Text(
+            enterYourAddressHere,
+            textAlign: TextAlign.center, // Center the text within the container
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 24, // Increased font size
+            ),
+          ),
+        ),
+        const SizedBox(width: 24), // Add this to align with the icon of the TextButton beneath
+      ],
+    ),
+  ),
+),
 
-                          TextButton(
-                            onPressed: () {
-                              _openSlidingPanel();
-                            },
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  const Color(0xFFFFFF)),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Icon(
-                                  Icons
-                                      .location_on, // Use the appropriate address icon
-                                  color: Colors.black,
-                                ),
-                                Container(
-                                  width: 200,
-                                  child: Text(
-                                    enterYourAddressHere,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                ),
-                                Icon(
-                                  Icons
-                                      .arrow_forward, // Use the appropriate arrow icon
-                                  color: Colors.black,
-                                ),
-                              ],
-                            ),
-                          ),
+
+
+
+const SizedBox(height: 16),
+Center(
+  child: Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[
+      ElevatedButton(
+        onPressed: () async {
+          await _selectDeadLineDate(context);
+        },
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(
+            const Color(0xFF2598D7),
+          ),
+          minimumSize: MaterialStateProperty.all<Size>(
+            Size(double.infinity, 50), // Adjust the height as needed
+          ),
+          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+            const EdgeInsets.symmetric(horizontal: 24),
+          ),
+          alignment: Alignment.center, // Center the text within the button
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.calendar_today,
+              size: 30, // Increased icon size
+              color: Colors.white, // Set icon color to white
+              semanticLabel: 'Calendar',
+            ),
+            const SizedBox(width: 8),
+            const Text(
+              ' Deadline Date:',
+              style: TextStyle(
+                fontSize: 22, // Increased font size to match the other TextButton
+                color: Colors.white, // Set text color to white
+              ),
+            ),
+            Text(
+              _selectedDate != null
+                  ? ' ${_selectedDate!.toLocal().month}-${_selectedDate!.toLocal().day}-${_selectedDate!.year}'
+                  : ' Select a date',
+              style: const TextStyle(
+                fontSize: 22, // Increased font size to match the other TextButton
+                color: Colors.white, // Set text color to white
+              ),
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(height: 16),
+    ],
+  ),
+),
+
+
+
+
+
+
+
+                         const SizedBox(height: 16),
+Column(
+  mainAxisAlignment: MainAxisAlignment.center,
+  crossAxisAlignment: CrossAxisAlignment.center,
+  children: [
+    Text(
+      'Starting Bid',
+      style: TextStyle(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
+    const SizedBox(height: 10), // Reduce the height as needed
+    TextField(
+      keyboardType: TextInputType.number,
+      controller: _jobStartingBidController,
+      style: TextStyle(fontSize: 30), // Increase the font size
+      textAlign: TextAlign.center,
+      decoration: InputDecoration(
+        hintText: '\$0.00', // Initial placeholder, customize as needed
+        hintStyle: TextStyle(fontSize: 30, color: Colors.grey), // Increase the font size
+        border: OutlineInputBorder(
+          borderSide: BorderSide.none, // Make the border invisible
+        ),
+        contentPadding: EdgeInsets.symmetric(vertical: 9, horizontal: 12),
+        isDense: true,
+      ),
+    ),
+  ],
+),
+
+
+
+
 
                           const SizedBox(height: 16),
-                          Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    const Text(
-                                      'Deadline Date:',
-                                      style: TextStyle(fontSize: 18),
-                                    ),
-                                    Text(
-                                      _selectedDate != null
-                                          ? '${_selectedDate!.toLocal().month}-${_selectedDate!.toLocal().day}-${_selectedDate!.year}'
-                                          : 'Select a date',
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 16),
-                                    IconButton(
-                                      icon: const Icon(Icons.calendar_today),
-                                      onPressed: () async {
-                                        await _selectDeadLineDate(context);
-                                      },
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 16),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          Row(
-                            children: [
-                              const Text('Starting Bid'),
-                              const SizedBox(
-                                  width:
-                                      16), // Add spacing between the text and the TextFormField
-                              Expanded(
-                                child: TextFormField(
-                                  keyboardType: TextInputType.number,
-                                  controller: _jobStartingBidController,
-                                  decoration: const InputDecoration(
-                                    hintText: 'Enter a Number',
-                                    border: OutlineInputBorder(),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 16),
-                          ElevatedButton(
-                            onPressed: postJob,
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  const Color(0xFF1D465D)),
-                            ),
-                            child: const Text('Post Job'),
-                          )
+ElevatedButton(
+  onPressed: postJob,
+  style: ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF1D465D)),
+    minimumSize: MaterialStateProperty.all<Size>(
+      Size(double.infinity, 50), // Adjust the height as needed
+    ),
+    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+      const EdgeInsets.symmetric(horizontal: 24),
+    ),
+  ),
+  child: Text(
+    'Post Job',
+    style: TextStyle(
+      color: Colors.white,
+      fontSize: 18,
+      fontWeight: FontWeight.bold,
+    ),
+  ),
+)
+
                         ]);
                       })),
             ],
