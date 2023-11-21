@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobs/user.dart';
+import 'package:odd_job_app/pages/chat_page.dart';
 import 'package:odd_job_app/pages/job_history_page.dart';
 
 class OtherProfilePage extends StatefulWidget {
@@ -82,7 +83,17 @@ Padding(
 SizedBox(
   width: 190, // Adjusted width as needed
   child: FloatingActionButton.extended(
-    onPressed: () {},
+    onPressed: () {
+      Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChatPage(
+                recieverEmail: thisUser.email,
+                recieverUser: thisUser.username,
+              ),
+            ),
+          );
+    },
     heroTag: 'mesage',
     elevation: 0,
     backgroundColor: Color(0xFF2598D7),
