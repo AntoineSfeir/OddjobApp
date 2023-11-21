@@ -67,102 +67,116 @@ class _SearchPageState extends State<SearchPage> {
     super.initState();
   }
 
-  @override
+ @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          backgroundColor: Color(0xFFF8FBFD),
-          appBar: AppBar(
-            backgroundColor: Color(0xFF4F82A3),
-            title: const Text(
-              'Find a Job',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      'Search',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                expandedHeight: 55.0, // Set a fixed height
+                floating: false,
+                pinned: true,
+                backgroundColor: Color(0xFF4F82A3),
+                title: Text(
+                  'Find a Job',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 8.0),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          hintText: 'Type Here...',
-                          hintStyle: TextStyle(color: Colors.black),
-                          border: OutlineInputBorder(),
+                ),
+              ),
+            ];
+          },
+          body: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Search',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
-                        onChanged: (value) {
-                          setState(() {
-                            searchText = value;
-                          });
-                        },
                       ),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      'Sorting Method',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: DropdownButton<String>(
-                        value: selectedOption,
-                        onChanged: (String? newValue) {
-                          setState(() {
-                            selectedOption = newValue!;
-                            // You can update the job list based on the selected option
-                          });
-                        },
-                        items: <String>['Payment', 'Distance', 'Remaining Time']
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(
-                              value,
-                              style: TextStyle(color: Colors.black),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 8.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: 'Type Here...',
+                              hintStyle: TextStyle(color: Colors.black),
+                              border: OutlineInputBorder(),
                             ),
-                          );
-                        }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                searchText = value;
+                              });
+                            },
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
+                ),
               ),
-              Flexible(
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Sorting Method',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DropdownButton<String>(
+                            value: selectedOption,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedOption = newValue!;
+                              });
+                            },
+                            items: <String>[
+                              'Payment',
+                              'Distance',
+                              'Remaining Time'
+                            ].map<DropdownMenuItem<String>>(
+                              (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                );
+                              },
+                            ).toList(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
                     return FutureBuilder(
                       future: allJobs(),
                       builder: ((context, snapshot) {
@@ -175,7 +189,6 @@ class _SearchPageState extends State<SearchPage> {
                                     ))
                                 .toList();
 
-                            // in this section, check selectedOption to see how we sort it
                             if (selectedOption == 'Payment') {
                               jobCards.sort((a, b) => JobCard.sortByBid(a, b));
                             } else if (selectedOption == 'Distance') {
@@ -203,11 +216,12 @@ class _SearchPageState extends State<SearchPage> {
                       }),
                     );
                   },
-                  itemCount: 1,
+                  childCount: 1,
                 ),
               ),
             ],
           ),
+        ),
           bottomNavigationBar: BottomAppBar(
             color: Color(0xFF4F82A3),
             shape: const CircularNotchedRectangle(),
