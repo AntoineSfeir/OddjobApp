@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:odd_job_app/jobs/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:odd_job_app/pages/chat_page.dart';
-import 'package:odd_job_app/pages/home_page.dart';
+import 'package:odd_job_app/pages/home_page2.dart';
 import 'package:odd_job_app/pages/search_page.dart';
+import 'package:odd_job_app/chat/chat_service.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:odd_job_app/chat/chat_service.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class MessagesPage extends StatefulWidget {
@@ -26,10 +26,10 @@ class _MessagesPageState extends State<MessagesPage> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          backgroundColor: Color(0xFFF8FBFD),
+          backgroundColor: const Color(0xFFF8FBFD),
           appBar: AppBar(
             backgroundColor:
-                Color(0xFF4F82A3), // Set the same color as the bottom bar
+                const Color(0xFF4F82A3), // Set the same color as the bottom bar
             title: const Text(
               "Messages",
               style: TextStyle(
@@ -40,7 +40,7 @@ class _MessagesPageState extends State<MessagesPage> {
           ),
           body: buildUserList(),
           bottomNavigationBar: BottomAppBar(
-            color: Color(0xFF4F82A3),
+            color: const Color(0xFF4F82A3),
             shape: const CircularNotchedRectangle(),
             child: SizedBox(
               height: 60.0,
@@ -55,7 +55,7 @@ class _MessagesPageState extends State<MessagesPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const HomePage()),
+                              builder: (context) => const HomePage2()),
                         );
                       },
                     ),
@@ -127,21 +127,21 @@ class _MessagesPageState extends State<MessagesPage> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               // You can display a loading indicator here if needed
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             } else if (snapshot.hasError || snapshot.data == null) {
-              return CircleAvatar(
+              return const CircleAvatar(
                 backgroundColor: Color(0xFFC9D0D4),
               );
             } else {
               return CircleAvatar(
-                backgroundColor: Color(0xFFC9D0D4),
+                backgroundColor: const Color(0xFFC9D0D4),
                 backgroundImage: NetworkImage(snapshot.data!),
               );
             }
           },
         ),
         title: Text(data['firstName'] + " " + data['lastName'],
-        style: TextStyle( fontSize: 20)),
+        style: const TextStyle( fontSize: 20)),
         subtitle: FutureBuilder<String?>(
           future: _chatService.getMostRecentMessage(
             auth.currentUser!.email!,
@@ -149,9 +149,9 @@ class _MessagesPageState extends State<MessagesPage> {
           ),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return Text("Loading...", overflow: TextOverflow.ellipsis);
+              return const Text("Loading...", overflow: TextOverflow.ellipsis);
             } else if (snapshot.hasError || snapshot.data == null) {
-              return Text("Send a Message!", overflow: TextOverflow.ellipsis);
+              return const Text("Send a Message!", overflow: TextOverflow.ellipsis);
             } else {
               return Text(snapshot.data!, overflow: TextOverflow.ellipsis);
             }

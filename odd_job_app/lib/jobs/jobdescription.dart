@@ -57,11 +57,10 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-  title: const Text('Job Details'),
-  backgroundColor: const Color(0xFF4F83A2), // Set the desired color
-  elevation: 0, // Remove app bar shadow
-),
-
+        title: const Text('Job Details'),
+        backgroundColor: const Color(0xFF4F83A2), // Set the desired color
+        elevation: 0, // Remove app bar shadow
+      ),
       body: FutureBuilder(
         future: allJobs(),
         builder: (context, snapshot) {
@@ -109,44 +108,44 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                         },
                       ),
                     ),
-Padding(
-  padding: const EdgeInsets.all(16.0),
-  child: Align(
-    alignment: Alignment.topLeft,
-    child: ElevatedButton(
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                OtherProfilePage(recieverUser: thisUser),
-          ),
-        );
-      },
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF2598D7)),
-        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-        ),
-      ),
-      child: Text(
-        thisJob.displayName,
-        style: TextStyle(
-          fontSize: 24.0,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
-      ),
-    ),
-  ),
-),
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    OtherProfilePage(recieverUser: thisUser),
+                              ),
+                            );
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Color(0xFF2598D7)),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                            ),
+                          ),
+                          child: Text(
+                            thisJob.displayName,
+                            style: TextStyle(
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
 
+                    buildStarRating(avgUserRating),
 
-
-                    //buildStarRating(avgUserRating),
-                    buildStarRating(8),
 
                     Padding(
                       padding: const EdgeInsets.all(16.0),
@@ -154,7 +153,7 @@ Padding(
                         onTap: () {},
                         child: Text(
                           //"${(avgUserRating/2).round()}/5 stars based on ${5} ratings",
-                          "${(8/2).round()}/5 stars based on ${5} ratings",
+                          "${(avgUserRating/2).round()}/5 stars based on ${5} ratings",
                           style: const TextStyle(
                             fontSize: 24.0,
                             fontWeight: FontWeight.bold,
@@ -165,17 +164,18 @@ Padding(
                       ),
                     ),
                     Padding(
-  padding: const EdgeInsets.all(16.0),
-  child: Center(
-    child: Text(
-      "Time Remaining: " + computedTime.compute(thisJob.deadline),
-      style: const TextStyle(
-        fontSize: 24.0,
-        fontWeight: FontWeight.bold,
-      ),
-    ),
-  ),
-),
+                      padding: const EdgeInsets.all(16.0),
+                      child: Center(
+                        child: Text(
+                          "Time Remaining: " +
+                              computedTime.compute(thisJob.deadline),
+                          style: const TextStyle(
+                            fontSize: 24.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
 
                     const SizedBox(height: 16), // Increased spacing
                     Container(
@@ -220,46 +220,48 @@ Padding(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const SizedBox(height: 16.0), // Padding above
-Text(
-  "Current Bid: \$${thisJob.startingBid}",
-  style: const TextStyle(
-    fontWeight: FontWeight.bold,
-    fontSize: 24.0, // Adjusted font size
-  ),
-),
-const SizedBox(height: 16.0), // Padding below
+                          Text(
+                            "Current Bid: \$${thisJob.startingBid}",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24.0, // Adjusted font size
+                            ),
+                          ),
+                          const SizedBox(height: 16.0), // Padding below
 
                           const SizedBox(height: 16.0), // Increased spacing
-ElevatedButton(
-  onPressed: () {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => BidPage(
-          stringBid: thisJob.startingBid,
-          jobID: thisJob.ID,
-        ),
-      ),
-    );
-  },
- style: ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF1D465D)),
-    minimumSize: MaterialStateProperty.all<Size>(
-      Size(400, 50), // Adjust the height as needed
-    ),
-    padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-      const EdgeInsets.symmetric(horizontal: 24),
-    ),
-  ),
-  child: Text(
-    'Bid Now',
-    style: TextStyle(
-      color: Colors.white,
-      fontSize: 24.0,
-    ),
-  ),
-),
-
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => BidPage(
+                                    stringBid: thisJob.startingBid,
+                                    jobID: thisJob.ID,
+                                  ),
+                                ),
+                              );
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  const Color(0xFF1D465D)),
+                              minimumSize: MaterialStateProperty.all<Size>(
+                                const Size(
+                                    200, 50), // Adjust the height as needed
+                              ),
+                              padding:
+                                  MaterialStateProperty.all<EdgeInsetsGeometry>(
+                                const EdgeInsets.symmetric(horizontal: 24),
+                              ),
+                            ),
+                            child: const Text(
+                              'Bid Now',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24.0,
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -283,26 +285,26 @@ ElevatedButton(
     );
   }
 
-Widget buildStarRating(int userRating) {
-  List<Icon> stars = [];
-  userRating = (userRating / 2).round();
+  Widget buildStarRating(int userRating) {
+    List<Icon> stars = [];
+    userRating = (userRating / 2).round();
 
-  for (int i = 0; i < 5; i++) {
-    stars.add(
-      Icon(
-        Icons.star,
-        color: i < userRating ? Colors.yellow : Colors.grey,
-      ),
-    );
-  }
+    for (int i = 0; i < 5; i++) {
+      stars.add(
+        Icon(
+          Icons.star,
+          color: i < userRating ? Colors.yellow : Colors.grey,
+        ),
+      );
+    }
 
-  return Padding(
-    padding: const EdgeInsets.only(left: 15.0), // Adjust the left padding as needed
+    return Padding(
+      padding: const EdgeInsets.only(
+          left: 15.0), // Adjust the left padding as needed
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: stars,
       ),
-  );
-}
-
+    );
+  }
 }
