@@ -28,19 +28,28 @@ class _SearchPageState extends State<SearchPage> {
   List<Job> jo = [];
 
   Future allJobs() async {
-    if(!firstAllJOB){
-    await db
-        .collection('jobs')
-        .get()
-        .then((snapshot) => snapshot.docs.forEach((element) {
-              Job i = Job.fromSnapshot(element);
-              i.ID = element.id;
-              jo.add(i);
-            }));
-    firstAllJOB = true;
+    if (!firstAllJOB) {
+      await db
+          .collection('jobs')
+          .get()
+          .then((snapshot) => snapshot.docs.forEach((element) {
+                Job i = Job.fromSnapshot(element);
+                i.ID = element.id;
+                jo.add(i);
+              }));
+      firstAllJOB = true;
     }
     // final jobData = snapshot.docs.map((e) => Job.fromSnapshot(e)).toList();
     // jo = jobData;
+  }
+
+  List<Job> filteredJobs() {
+    if (searchText.isEmpty) {
+      return jo;
+    }
+    return jo.where((job) {
+      return job.title.toLowerCase().contains(searchText.toLowerCase());
+    }).toList();
   }
 
   final String cardBackground = '#1B475E';
@@ -49,7 +58,9 @@ class _SearchPageState extends State<SearchPage> {
       Color(int.parse(cardBackground.substring(1, 7), radix: 16) + 0xFF000000);
   late final Color moneyTextColor =
       Color(int.parse(moneyText.substring(1, 7), radix: 16) + 0xFF000000);
+
   String selectedOption = 'Payment'; // Default option
+  String searchText = '';
 
   @override
   void initState() {
@@ -74,29 +85,59 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ),
           body: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Container(
-                  color: Color(0xFF4F83A2),
-                  padding: EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Search...',
-                            hintStyle: TextStyle(color: Colors.black),
-                            border: OutlineInputBorder(),
-                          ),
-                          onChanged: (value) {
-                            // Handle text input
-                            // You can filter the jobs based on the entered text
-                          },
-                        ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      'Search',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
                       ),
-                      SizedBox(width: 8.0),
-                      DropdownButton<String>(
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 8.0),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Type Here...',
+                          hintStyle: TextStyle(color: Colors.black),
+                          border: OutlineInputBorder(),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            searchText = value;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      'Sorting Method',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: DropdownButton<String>(
                         value: selectedOption,
                         onChanged: (String? newValue) {
                           setState(() {
@@ -115,9 +156,9 @@ class _SearchPageState extends State<SearchPage> {
                           );
                         }).toList(),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
               Flexible(
                 child: ListView.builder(
@@ -127,14 +168,14 @@ class _SearchPageState extends State<SearchPage> {
                       builder: ((context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           if (jo.isNotEmpty) {
-                            List<JobCard> jobCards = jo
+                            List<JobCard> jobCards = filteredJobs()
                                 .map((job) => JobCard(
                                       job: job,
                                       currentUser: widget.currentUser,
                                     ))
                                 .toList();
 
-                            //in this section, check selectedOption to see how we sort it
+                            // in this section, check selectedOption to see how we sort it
                             if (selectedOption == 'Payment') {
                               jobCards.sort((a, b) => JobCard.sortByBid(a, b));
                             } else if (selectedOption == 'Distance') {
