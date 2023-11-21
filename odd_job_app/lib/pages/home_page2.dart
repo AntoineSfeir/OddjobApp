@@ -7,6 +7,7 @@ import 'package:odd_job_app/jobs/post_job_page.dart';
 import 'package:odd_job_app/jobs/user.dart';
 import 'package:odd_job_app/pages/activeJobsTab.dart';
 import 'package:odd_job_app/pages/messages_page.dart';
+import 'package:odd_job_app/pages/myBidsTab.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
 import 'package:odd_job_app/pages/search_page.dart';
 import 'package:odd_job_app/pages/user_posted_jobs_view.dart';
@@ -256,8 +257,9 @@ class _HomePage2State extends State<HomePage2> {
                       );
                     } else if (tab.text == "Active Jobs") {
                       return activeJobsViewTab(activeJobs: allActiveJobs);
-                    } else if (tab.text == "My Bid") {
-                      return Placeholder();
+                    } else if (tab.text == "My Bids") {
+                      //return Placeholder();
+                      return MyBidsViewTab(myBids: myBids);
                     } else {
                       return Placeholder();
                     }
