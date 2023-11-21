@@ -324,27 +324,27 @@ class _ProfileRatingsAndReviews extends StatelessWidget {
           const SizedBox(height: 8.0),
           _RatingCategory(
             title: 'Overall Rating',
-            rating: 7.5,//avgRating,
+            rating: avgRating,//avgRating,
           ),
           const SizedBox(height: 8.0),
           _RatingCategory(
             title: 'Communication',
-            rating: 5.6,//communicationRating,
+            rating: communicationRating,//communicationRating,
           ),
           const SizedBox(height: 8.0),
           _RatingCategory(
             title: 'Work Quality',
-            rating: 7.8,//workQualityRating,
+            rating: workQualityRating,//workQualityRating,
           ),
           const SizedBox(height: 8.0),
           _RatingCategory(
             title: 'Would Hire Again',
-            rating: 6.7,//wouldHireAgainRating,
+            rating: wouldHireAgainRating,//wouldHireAgainRating,
           ),
           const SizedBox(height: 8.0),
           _RatingCategory(
             title: 'Trust Score',
-            rating: 8.3,//trustScore,
+            rating: trustScore,//trustScore,
           ),
         ],
       ),

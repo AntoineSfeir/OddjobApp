@@ -144,8 +144,8 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                       ),
                     ),
 
-                    //buildStarRating(avgUserRating),
-                    buildStarRating(8),
+                    buildStarRating(avgUserRating),
+
 
                     Padding(
                       padding: const EdgeInsets.all(16.0),
@@ -153,7 +153,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                         onTap: () {},
                         child: Text(
                           //"${(avgUserRating/2).round()}/5 stars based on ${5} ratings",
-                          "${(8 / 2).round()}/5 stars based on ${5} ratings",
+                          "${(avgUserRating/2).round()}/5 stars based on ${5} ratings",
                           style: const TextStyle(
                             fontSize: 24.0,
                             fontWeight: FontWeight.bold,
