@@ -28,20 +28,29 @@ class _SearchPageState extends State<SearchPage> {
   List<Job> jo = [];
 
   Future allJobs() async {
-    if(!firstAllJOB){
-    await db
-        .collection('jobs')
-        .get()
-        .then((snapshot) => snapshot.docs.forEach((element) {
-              Job i = Job.fromSnapshot(element);
-              i.ID = element.id;
-              jo.add(i);
-            }));
-    firstAllJOB = true;
+    if (!firstAllJOB) {
+      await db
+          .collection('jobs')
+          .get()
+          .then((snapshot) => snapshot.docs.forEach((element) {
+                Job i = Job.fromSnapshot(element);
+                i.ID = element.id;
+                jo.add(i);
+              }));
+      firstAllJOB = true;
     }
     // final jobData = snapshot.docs.map((e) => Job.fromSnapshot(e)).toList();
     // jo = jobData;
   }
+
+  List<Job> filteredJobs() {
+  if (searchText.isEmpty) {
+    return jo;
+  }
+  return jo.where((job) {
+    return job.title.toLowerCase().contains(searchText.toLowerCase());
+  }).toList();
+}
 
   final String cardBackground = '#1B475E';
   final String moneyText = '#8BD5FF';
@@ -49,7 +58,9 @@ class _SearchPageState extends State<SearchPage> {
       Color(int.parse(cardBackground.substring(1, 7), radix: 16) + 0xFF000000);
   late final Color moneyTextColor =
       Color(int.parse(moneyText.substring(1, 7), radix: 16) + 0xFF000000);
+
   String selectedOption = 'Payment'; // Default option
+  String searchText = '';
 
   @override
   void initState() {
@@ -90,8 +101,9 @@ class _SearchPageState extends State<SearchPage> {
                             border: OutlineInputBorder(),
                           ),
                           onChanged: (value) {
-                            // Handle text input
-                            // You can filter the jobs based on the entered text
+                            setState(() {
+                              searchText = value;
+                            });
                           },
                         ),
                       ),
@@ -127,7 +139,7 @@ class _SearchPageState extends State<SearchPage> {
                       builder: ((context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           if (jo.isNotEmpty) {
-                            List<JobCard> jobCards = jo
+                            List<JobCard> jobCards = filteredJobs()
                                 .map((job) => JobCard(
                                       job: job,
                                       currentUser: widget.currentUser,
