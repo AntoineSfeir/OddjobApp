@@ -23,10 +23,12 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final db = FirebaseFirestore.instance;
 
+  bool firstAllJOB = false;
   List<String> docIDs = [];
   List<Job> jo = [];
 
   Future allJobs() async {
+    if(!firstAllJOB){
     await db
         .collection('jobs')
         .get()
@@ -35,6 +37,8 @@ class _SearchPageState extends State<SearchPage> {
               i.ID = element.id;
               jo.add(i);
             }));
+    firstAllJOB = true;
+    }
     // final jobData = snapshot.docs.map((e) => Job.fromSnapshot(e)).toList();
     // jo = jobData;
   }
@@ -129,13 +133,18 @@ class _SearchPageState extends State<SearchPage> {
                                       currentUser: widget.currentUser,
                                     ))
                                 .toList();
-                                
-                                //in this section, check selectedOption to see how we sort it
-                                //jobCards.sort((a,b) => JobCard.sortByBid(a, b));
-                                //jobCards.sort((a,b) => JobCard.sortByDistance(a, b));
-                                jobCards.sort((a,b) => JobCard.sortByTime(a, b));
 
-                            return Column(  
+                            //in this section, check selectedOption to see how we sort it
+                            if (selectedOption == 'Payment') {
+                              jobCards.sort((a, b) => JobCard.sortByBid(a, b));
+                            } else if (selectedOption == 'Distance') {
+                              jobCards
+                                  .sort((a, b) => JobCard.sortByDistance(a, b));
+                            } else {
+                              jobCards.sort((a, b) => JobCard.sortByTime(a, b));
+                            }
+
+                            return Column(
                               children: jobCards,
                             );
                           } else if (snapshot.hasError) {
