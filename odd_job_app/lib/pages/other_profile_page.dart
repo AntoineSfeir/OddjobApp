@@ -37,6 +37,7 @@ class _OtherProfileState extends State<OtherProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xFF4F83A2),
         title: Text(thisUser.username),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
