@@ -39,9 +39,12 @@ class _HomePage2State extends State<HomePage2> {
     finalListForPostedJobsPanel = allPostedJobs;
 
     for (int i = 0; i < finalListForPostedJobsPanel.length; i++) {
+//
       for (int j = 0; j < bidsOnMyJobs.length; j++) {
+//
         if (finalListForPostedJobsPanel[i].ID ==
             bidsOnMyJobs[j].jobThatWasBidOn.ID) {
+//
           finalListForPostedJobsPanel[i].bids.add(bidsOnMyJobs[j]);
         }
       }
@@ -142,8 +145,23 @@ class _HomePage2State extends State<HomePage2> {
                         bidder: otherUser,
                         amount: theirBidAmount,
                         jobThatWasBidOn: jobsIHavePosted[i]);
-                    b.bidID = element.id;
+
                     bidsOnMyJobs.add(b);
+                  }
+                }
+              }));
+    }
+
+    for (int i = 0; i < bidsOnMyJobs.length; i++) {
+      await db
+          .collection('users')
+          .doc(bidsOnMyJobs[i].bidder.ID)
+          .collection('currentBids')
+          .get()
+          .then((snapshot) => snapshot.docs.forEach((element) {
+                for (int j = 0; j < bidsOnMyJobs.length; j++) {
+                  if (element['jobID'] == bidsOnMyJobs[j].jobThatWasBidOn.ID) {
+                    bidsOnMyJobs[j].bidID = element.id;
                   }
                 }
               }));

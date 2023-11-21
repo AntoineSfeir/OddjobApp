@@ -79,6 +79,7 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
       'workerID': finalBid.bidder.ID,
       'contractorID': finalJob.posterID,
     });
+    print("ADDED TO ACTIVE ON ${finalJob.posterID}");
     //adds to active for the worker
     await FirebaseFirestore.instance
         .collection('users')
@@ -90,6 +91,7 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
       'workerID': finalBid.bidder.ID,
       'contractorID': finalJob.posterID,
     });
+    print("ADDED TO ACTIVE ON ${finalBid.bidder.ID}");
 
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => const BidClosedPage(),
