@@ -37,6 +37,7 @@ class _OtherProfileState extends State<OtherProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: const Color(0xFF4F83A2),
         title: Text(thisUser.username),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -266,7 +267,7 @@ class _TopPortion extends StatelessWidget {
                   image: DecorationImage(
                     fit: BoxFit.cover,
                     image: NetworkImage(
-                      'https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=1024x1024&w=is&k=20&c=-mUWsTSENkugJ3qs5covpaj-bhYpxXY-v9RDpzsw504=',
+                      'https://imgs.search.brave.com/IqQs8kKNxjcbV_FjEBeZKiINN8kNBEh4ryKs5eF_V2I/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTMz/MjEwMDkxOS92ZWN0/b3IvbWFuLWljb24t/YmxhY2staWNvbi1w/ZXJzb24tc3ltYm9s/LmpwZz9zPTYxMng2/MTImdz0wJms9MjAm/Yz1BVlZKa3Z4UVFD/dUJoYXdIclVoRFJU/Q2VOUTNKZ3QwSzF0/WGpKc0Z5MWVnPQ',
                     ),
                   ),
                 ),
@@ -323,27 +324,27 @@ class _ProfileRatingsAndReviews extends StatelessWidget {
           const SizedBox(height: 8.0),
           _RatingCategory(
             title: 'Overall Rating',
-            rating: avgRating,
+            rating: 7.5,//avgRating,
           ),
           const SizedBox(height: 8.0),
           _RatingCategory(
             title: 'Communication',
-            rating: communicationRating,
+            rating: 5.6,//communicationRating,
           ),
           const SizedBox(height: 8.0),
           _RatingCategory(
             title: 'Work Quality',
-            rating: workQualityRating,
+            rating: 7.8,//workQualityRating,
           ),
           const SizedBox(height: 8.0),
           _RatingCategory(
             title: 'Would Hire Again',
-            rating: wouldHireAgainRating,
+            rating: 6.7,//wouldHireAgainRating,
           ),
           const SizedBox(height: 8.0),
           _RatingCategory(
             title: 'Trust Score',
-            rating: trustScore,
+            rating: 8.3,//trustScore,
           ),
         ],
       ),
