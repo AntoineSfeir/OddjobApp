@@ -12,7 +12,11 @@ class Job {
   late String user;
   late String displayName;
   late String posterID;
-  late List<bid> bids;
+  late List<bid> bids = [];
+  //for Active Jobs
+  late bool working;
+  late String contractorID;
+  late String workerID;
 
   Job({
     required this.description,

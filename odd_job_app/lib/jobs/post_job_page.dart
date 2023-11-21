@@ -7,12 +7,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-
 // ignore_for_file: library_private_types_in_public_api
 
 class PostJobPage extends StatefulWidget {
   final user currentUser;
-  const PostJobPage({super.key, required this.currentUser });
+  const PostJobPage({super.key, required this.currentUser});
 
   @override
   State<PostJobPage> createState() => _PostJobPageState();
@@ -75,63 +74,65 @@ class _PostJobPageState extends State<PostJobPage> {
     'Construction'
   ];
 
-Autocomplete<String> _buildJobTitleAutocomplete() {
-  return Autocomplete<String>(
-    optionsBuilder: (TextEditingValue textEditingValue) {
-      return possibleJobs
-          .where((String option) =>
-              option.toLowerCase().contains(textEditingValue.text.toLowerCase()))
-          .toList();
-    },
-    onSelected: (String selectedJob) {
-      setState(() {
-        _jobTitleController.text = selectedJob;
-      });
-    },
-    fieldViewBuilder: (BuildContext context, TextEditingController textEditingController,
-        FocusNode focusNode, VoidCallback onFieldSubmitted) {
-      return TextFormField(
-        controller: textEditingController,
-        focusNode: focusNode,
-        onFieldSubmitted: (String value) {
-          onFieldSubmitted();
-        },
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: 'Enter job title',
-        ),
-      );
-    },
-    optionsViewBuilder: (BuildContext context, AutocompleteOnSelected<String> onSelected,
-        Iterable<String> options) {
-      return Align(
-        alignment: Alignment.topLeft,
-        child: Material(
-          elevation: 4.0,
-          child: SizedBox(
-            height: 200.0,
-            child: ListView.builder(
-              padding: EdgeInsets.all(8.0),
-              itemCount: options.length,
-              itemBuilder: (BuildContext context, int index) {
-                final String option = options.elementAt(index);
-                return GestureDetector(
-                  onTap: () {
-                    onSelected(option);
-                  },
-                  child: ListTile(
-                    title: Text(option),
-                  ),
-                );
-              },
+  Autocomplete<String> _buildJobTitleAutocomplete() {
+    return Autocomplete<String>(
+      optionsBuilder: (TextEditingValue textEditingValue) {
+        return possibleJobs
+            .where((String option) => option
+                .toLowerCase()
+                .contains(textEditingValue.text.toLowerCase()))
+            .toList();
+      },
+      onSelected: (String selectedJob) {
+        setState(() {
+          _jobTitleController.text = selectedJob;
+        });
+      },
+      fieldViewBuilder: (BuildContext context,
+          TextEditingController textEditingController,
+          FocusNode focusNode,
+          VoidCallback onFieldSubmitted) {
+        return TextFormField(
+          controller: textEditingController,
+          focusNode: focusNode,
+          onFieldSubmitted: (String value) {
+            onFieldSubmitted();
+          },
+          decoration: InputDecoration(
+            border: OutlineInputBorder(),
+            hintText: 'Enter job title',
+          ),
+        );
+      },
+      optionsViewBuilder: (BuildContext context,
+          AutocompleteOnSelected<String> onSelected, Iterable<String> options) {
+        return Align(
+          alignment: Alignment.topLeft,
+          child: Material(
+            elevation: 4.0,
+            child: SizedBox(
+              height: 200.0,
+              child: ListView.builder(
+                padding: EdgeInsets.all(8.0),
+                itemCount: options.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final String option = options.elementAt(index);
+                  return GestureDetector(
+                    onTap: () {
+                      onSelected(option);
+                    },
+                    child: ListTile(
+                      title: Text(option),
+                    ),
+                  );
+                },
+              ),
             ),
           ),
-        ),
-      );
-    },
-  );
-}
-
+        );
+      },
+    );
+  }
 
   Future allJobs(bool whichList) async {
     if (whichList == true) {

@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
   List<user> users = [];
   late user currentUser;
   late final Job Jobz;
-
+//
   Future sortJobs() async {
     // await db
     //     .collection('users')
@@ -51,7 +51,6 @@ class _HomePageState extends State<HomePage> {
     //     .then((snapshot) => snapshot.docs.forEach((element) {
     //           activeIDs.add(element['ID']);
     //         }));
-    print("BEFORE FIRST DB CALL");
     await db
         .collection('users')
         .doc(currentUser.ID)
@@ -77,11 +76,11 @@ class _HomePageState extends State<HomePage> {
                   bidder: thisUser,
                   amount: bidAmount,
                   jobThatWasBidOn: thisJob);
-
+              b.bidID = element.id;
               myBids.add(b);
             }));
     List<Job> jobsIHavePosted = [];
-    print("BEFORE SECOND DB CALL");
+
     await db
         .collection('users')
         .doc(currentUser.ID)
@@ -96,7 +95,7 @@ class _HomePageState extends State<HomePage> {
                 }
               }
             }));
-    print("BEFORE DB LOOP");
+
     for (int i = 0; i < jobsIHavePosted.length; i++) {
       await db
           .collection('jobs')
@@ -114,6 +113,7 @@ class _HomePageState extends State<HomePage> {
                         bidder: otherUser,
                         amount: theirBidAmount,
                         jobThatWasBidOn: jobsIHavePosted[i]);
+                    b.bidID = element.id;
                     bidsOnMyJobs.add(b);
                   }
                 }
@@ -123,6 +123,7 @@ class _HomePageState extends State<HomePage> {
     allPostedJobs = jobsIHavePosted;
   }
 
+//
   Future getCurrentUser() async {
     await db.collection('users').get().then(
           (snapshot) => snapshot.docs.forEach((element) {
@@ -139,6 +140,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+//
   Future allJobs() async {
     if (!firstLoad) {
       await getCurrentUser();
@@ -155,6 +157,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+//
   Future getDocID() async {
     await FirebaseFirestore.instance.collection('users').get().then(
           (snapshot) => snapshot.docs.forEach((document) {
@@ -438,7 +441,8 @@ class _HomePageState extends State<HomePage> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => PostJobPage(currentUser: currentUser)),
+              MaterialPageRoute(
+                  builder: (context) => PostJobPage(currentUser: currentUser)),
             );
           },
           backgroundColor: Color(0xFF2598D7),

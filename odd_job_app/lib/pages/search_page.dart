@@ -7,6 +7,7 @@ import 'package:odd_job_app/jobs/jobcard.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:odd_job_app/pages/home_page.dart';
 import 'package:odd_job_app/jobs/post_job_page.dart';
+import 'package:odd_job_app/pages/home_page2.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
 import 'package:odd_job_app/pages/messages_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -122,7 +123,7 @@ class _SearchPageState extends State<SearchPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const HomePage()),
+                            builder: (context) => const HomePage2()),
                       );
                     },
                   ),
@@ -169,7 +170,9 @@ class _SearchPageState extends State<SearchPage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PostJobPage( currentUser: widget.currentUser)),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        PostJobPage(currentUser: widget.currentUser)),
               );
             },
             backgroundColor: Color(0xFF2598D7),

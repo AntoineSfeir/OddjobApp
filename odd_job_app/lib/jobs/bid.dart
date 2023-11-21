@@ -6,9 +6,11 @@ class bid {
   late user bidder;
   late String amount;
   late Job jobThatWasBidOn;
+  late String bidID;
 
-  bid(
-      {required this.bidder,
-      required this.amount,
-      required this.jobThatWasBidOn});
+  bid({
+    required this.bidder,
+    required this.amount,
+    required this.jobThatWasBidOn,
+  });
 }
