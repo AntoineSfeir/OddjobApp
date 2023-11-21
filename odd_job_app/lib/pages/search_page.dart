@@ -24,20 +24,33 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   final db = FirebaseFirestore.instance;
 
+  bool firstAllJOB = false;
   List<String> docIDs = [];
   List<Job> jo = [];
 
   Future allJobs() async {
-    await db
-        .collection('jobs')
-        .get()
-        .then((snapshot) => snapshot.docs.forEach((element) {
-              Job i = Job.fromSnapshot(element);
-              i.ID = element.id;
-              jo.add(i);
-            }));
+    if (!firstAllJOB) {
+      await db
+          .collection('jobs')
+          .get()
+          .then((snapshot) => snapshot.docs.forEach((element) {
+                Job i = Job.fromSnapshot(element);
+                i.ID = element.id;
+                jo.add(i);
+              }));
+      firstAllJOB = true;
+    }
     // final jobData = snapshot.docs.map((e) => Job.fromSnapshot(e)).toList();
     // jo = jobData;
+  }
+
+  List<Job> filteredJobs() {
+    if (searchText.isEmpty) {
+      return jo;
+    }
+    return jo.where((job) {
+      return job.title.toLowerCase().contains(searchText.toLowerCase());
+    }).toList();
   }
 
   final String cardBackground = '#1B475E';
@@ -47,45 +60,147 @@ class _SearchPageState extends State<SearchPage> {
   late final Color moneyTextColor =
       Color(int.parse(moneyText.substring(1, 7), radix: 16) + 0xFF000000);
 
+  String selectedOption = 'Payment'; // Default option
+  String searchText = '';
+
   @override
   void initState() {
     super.initState();
   }
 
-  @override
+ @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          backgroundColor: Color(0xFFF8FBFD),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                AppBar(
-                  backgroundColor: Color(0xFF4F82A3),
-                  title: const Text('Find a Job',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold)),
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                expandedHeight: 55.0, // Set a fixed height
+                floating: false,
+                pinned: true,
+                backgroundColor: Color(0xFF4F82A3),
+                title: Text(
+                  'Find a Job',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                Flexible(
-                    child: ListView.builder(
-                  // shrinkWrap: true,
-                  itemBuilder: (context, index) {
+              ),
+            ];
+          },
+          body: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Search',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 4.0),
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: 'Type Here...',
+                              hintStyle: TextStyle(color: Colors.black),
+                              border: OutlineInputBorder(),
+                            ),
+                            onChanged: (value) {
+                              setState(() {
+                                searchText = value;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(8.0, 4.0, 16.0, 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Sorting Method',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: DropdownButton<String>(
+                            value: selectedOption,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedOption = newValue!;
+                              });
+                            },
+                            items: <String>[
+                              'Payment',
+                              'Distance',
+                              'Remaining Time'
+                            ].map<DropdownMenuItem<String>>(
+                              (String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                );
+                              },
+                            ).toList(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
                     return FutureBuilder(
                       future: allJobs(),
                       builder: ((context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           if (jo.isNotEmpty) {
+                            List<JobCard> jobCards = filteredJobs()
+                                .map((job) => JobCard(
+                                      job: job,
+                                      currentUser: widget.currentUser,
+                                    ))
+                                .toList();
+
+                            if (selectedOption == 'Payment') {
+                              jobCards.sort((a, b) => JobCard.sortByBid(a, b));
+                            } else if (selectedOption == 'Distance') {
+                              jobCards
+                                  .sort((a, b) => JobCard.sortByDistance(a, b));
+                            } else {
+                              jobCards.sort((a, b) => JobCard.sortByTime(a, b));
+                            }
+
                             return Column(
-                              children: jo
-                                  .map((Job) => JobCard(
-                                        job: Job,
-                                        currentUser: widget.currentUser,
-                                      ))
-                                  .toList(),
+                              children: jobCards,
                             );
                           } else if (snapshot.hasError) {
                             return Center(
@@ -102,11 +217,12 @@ class _SearchPageState extends State<SearchPage> {
                       }),
                     );
                   },
-                  itemCount: 1,
-                )),
-              ],
-            ),
+                  childCount: 1,
+                ),
+              ),
+            ],
           ),
+        ),
           bottomNavigationBar: BottomAppBar(
             color: Color(0xFF4F82A3),
             shape: const CircularNotchedRectangle(),

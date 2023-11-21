@@ -129,6 +129,19 @@ class _ProfileState extends State<ProfilePage> {
     }
   }
 
+
+  Future<String?> getProfilePictureUrl(String documentId) async {
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref('profilePictures/$documentId.jpg');
+      final result = await ref.getDownloadURL();
+      return result;
+    } catch (e) {
+      // The file does not exist
+      return null;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -148,13 +161,6 @@ class _ProfileState extends State<ProfilePage> {
               children: [
                 AppBar(
                   backgroundColor: Color(0xFF4F82A3),
-                  title: const Text(
-                    "Profile",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                 ),
                 // Profile Picture and Name
                 Row(
@@ -172,24 +178,44 @@ class _ProfileState extends State<ProfilePage> {
                           shape: BoxShape.circle,
                           color: Colors.blue, // Blue circle
                         ),
-                        child: ClipOval(
-                          child: _image != null
-                              ? Image.file(
-                                  _image!,
-                                  width: 150,
-                                  height: 150,
-                                  fit: BoxFit.cover,
-                                )
-                              : Image.network(
-                                  avatarUrl ??
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKurFbiK1YFmGY6LV3FwBqui2WOp7Kx7Jk7A&usqp=CAU",
-                                  width: 150,
-                                  height: 150,
-                                  fit: BoxFit.cover,
-                                ),
-                        ),
-                      ),
-                    ),
+                        // child: ClipOval(
+                        //   child: _image != null
+                        //       ? Image.file(
+                        //           _image!,
+                        //           width: 150,
+                        //           height: 150,
+                        //           fit: BoxFit.cover,
+                        //         )
+                        //       : Image.network(
+                        //           avatarUrl ??
+                        //               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKurFbiK1YFmGY6LV3FwBqui2WOp7Kx7Jk7A&usqp=CAU",
+                        //           width: 150,
+                        //           height: 150,
+                        //           fit: BoxFit.cover,
+                        //         ),
+                        // ),
+                       child: FutureBuilder<String?>(
+      future: getProfilePictureUrl(currentUserDocId!),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError || snapshot.data == null) {
+          return CircleAvatar(
+            backgroundColor: Color(0xFFC9D0D4),
+          );
+        } else {
+          return Center(
+            child: CircleAvatar(
+              backgroundColor: Color(0xFFC9D0D4),
+              backgroundImage: NetworkImage(snapshot.data!),
+              radius: 50,
+            ),
+          );
+        }
+      },
+    ),
+  ),
+),
                     // Display username
                     Container(
                       margin: EdgeInsets.only(
@@ -238,30 +264,36 @@ class _ProfileState extends State<ProfilePage> {
                 ),
                 // Options List
                 const SizedBox(height: 10),
-
+                SizedBox(height: 22.0),
                 // Manage Profile Information
                 TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ProfileInfoPage()),
-                    );
-                  },
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: const Row(
-                      children: <Widget>[
-                        Icon(Icons.person),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text('Profile Info'),
-                      ],
-                    ),
-                  ),
-                ),
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ProfileInfoPage()),
+    );
+  },
+  child: Container(
+    alignment: Alignment.centerLeft,
+    child: Row(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(right: 8.0), // Added padding
+          child: Icon(Icons.person, size: 20, color: Color(0xFF2598D7)),
+        ),
+        SizedBox(
+          width: 5,
+        ),
+        Text(
+          'Profile Info',
+          style: TextStyle(fontSize: 20, color: Color(0xFF2598D7)),
+        ),
+      ],
+    ),
+  ),
+),
 
+SizedBox(height: 22.0),
                 // Job history
                 TextButton(
                   onPressed: () {
@@ -275,16 +307,19 @@ class _ProfileState extends State<ProfilePage> {
                     alignment: Alignment.centerLeft,
                     child: const Row(
                       children: <Widget>[
-                        Icon(Icons.history),
+                                Padding(
+          padding: const EdgeInsets.only(right: 8.0), // Added padding
+          child: Icon(Icons.history, size: 20, color: Color(0xFF2598D7)),
+        ),
                         SizedBox(
                           width: 5,
                         ),
-                        Text('Job History'),
+                        Text('Job History', style: TextStyle(fontSize: 20, color: Color(0xFF2598D7)), ),
                       ],
                     ),
                   ),
                 ),
-
+SizedBox(height: 22.0),
                 // Payment option
                 TextButton(
                   onPressed: () {
@@ -298,16 +333,19 @@ class _ProfileState extends State<ProfilePage> {
                     alignment: Alignment.centerLeft,
                     child: const Row(
                       children: <Widget>[
-                        Icon(Icons.payment),
+                               Padding(
+          padding: const EdgeInsets.only(right: 8.0), // Added padding
+          child: Icon(Icons.payment, size: 20, color: Color(0xFF2598D7)),
+        ),
                         SizedBox(
                           width: 5,
                         ),
-                        Text('Manage Payment Options'),
+                        Text('Manage Payment Options', style: TextStyle(fontSize: 20, color: Color(0xFF2598D7)),),
                       ],
                     ),
                   ),
                 ),
-
+SizedBox(height: 22.0),
                   // Manage Address Info
                 TextButton(
                   onPressed: () {
@@ -321,16 +359,19 @@ class _ProfileState extends State<ProfilePage> {
                     alignment: Alignment.centerLeft,
                     child: const Row(
                       children: <Widget>[
-                        Icon(Icons.location_pin),
+                               Padding(
+          padding: const EdgeInsets.only(right: 8.0), // Added padding
+          child: Icon(Icons.location_pin, size: 20, color: Color(0xFF2598D7)),
+        ),
                         SizedBox(
                           width: 5,
                         ),
-                        Text('Manage Location Settings'),
+                        Text('Manage Location Settings', style: TextStyle(fontSize: 20, color: Color(0xFF2598D7)),),
                       ],
                     ),
                   ),
                 ),
-
+SizedBox(height: 22.0),
                 // About OddJob
                 TextButton(
                   onPressed: () {
@@ -344,16 +385,19 @@ class _ProfileState extends State<ProfilePage> {
                     alignment: Alignment.centerLeft,
                     child: const Row(
                       children: <Widget>[
-                        Icon(Icons.info),
+                                Padding(
+          padding: const EdgeInsets.only(right: 8.0), // Added padding
+          child: Icon(Icons.info, size: 20, color: Color(0xFF2598D7)),
+        ),
                         SizedBox(
                           width: 5,
                         ),
-                        Text('About OddJob'),
+                        Text('About OddJob', style: TextStyle(fontSize: 20, color: Color(0xFF2598D7),),),
                       ],
                     ),
                   ),
                 ),
-
+SizedBox(height: 22.0),
                 // logout button
                 TextButton(
                   onPressed: () {
@@ -367,11 +411,14 @@ class _ProfileState extends State<ProfilePage> {
                     alignment: Alignment.centerLeft,
                     child: const Row(
                       children: <Widget>[
-                        Icon(Icons.logout),
+                                Padding(
+          padding: const EdgeInsets.only(right: 8.0), // Added padding
+          child: Icon(Icons.logout, size: 20, color: Color(0xFF2598D7)),
+        ),
                         SizedBox(
                           width: 5,
                         ),
-                        Text('Logout'),
+                        Text('Logout', style: TextStyle(fontSize: 20, color: Color(0xFF2598D7),),),
                       ],
                     ),
                   ),
