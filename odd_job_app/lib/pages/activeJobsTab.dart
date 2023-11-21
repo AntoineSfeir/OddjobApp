@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:odd_job_app/jobs/bid.dart';
-import 'package:odd_job_app/jobs/compute_time_to_display.dart';
 import 'package:odd_job_app/jobs/job.dart';
+import 'package:odd_job_app/jobs/compute_time_to_display.dart';
 
 class activeJobsViewTab extends StatefulWidget {
   final List<Job> activeJobs;
