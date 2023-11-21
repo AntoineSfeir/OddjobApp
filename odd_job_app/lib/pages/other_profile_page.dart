@@ -19,14 +19,18 @@ class _OtherProfileState extends State<OtherProfilePage> {
 
   Future<void> getProfileData() async {
     thisUser = widget.recieverUser;
-   thisUser.averageRating = double.parse(((thisUser.trustScore + thisUser.workQuality + thisUser.communication + thisUser.wouldHireAgain) / 4).toStringAsFixed(1));
+    thisUser.averageRating = double.parse(((thisUser.trustScore +
+                thisUser.workQuality +
+                thisUser.communication +
+                thisUser.wouldHireAgain) /
+            4)
+        .toStringAsFixed(1));
   }
-
 
   @override
   void initState() {
     super.initState();
-    getProfileData();// Call the method when the widget is initialized
+    getProfileData(); // Call the method when the widget is initialized
   }
 
   @override
@@ -55,55 +59,36 @@ class _OtherProfileState extends State<OtherProfilePage> {
                   children: [
                     // Increased spacing
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-
-Padding(
-  padding: const EdgeInsets.only(right: 15.0),
-  child: SizedBox(
-    width: 190,
-    child: FloatingActionButton.extended(
-      onPressed: () {},
-      heroTag: 'Job Offer',
-      elevation: 0,
-      backgroundColor: Color(0xFF2598D7),
-      label: Text(
-        "Send Job Offer",
-        style: TextStyle(
-          color: Colors.white, // Set the text color to white
-        ),
-      ),
-      icon: const Icon(Icons.inbox, color: Colors.white,),
-    ),
-  ),
-),
-
-
-
-SizedBox(
-  width: 190, // Adjusted width as needed
-  child: FloatingActionButton.extended(
-    onPressed: () {
-      Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ChatPage(
-                recieverEmail: thisUser.email,
-                recieverUser: thisUser.username,
-              ),
-            ),
-          );
-    },
-    heroTag: 'mesage',
-    elevation: 0,
-    backgroundColor: Color(0xFF2598D7),
-    label: const Text("Message", style: TextStyle(
-          color: Colors.white, // Set the text color to white
-        ),),
-    icon: const Icon(Icons.message_rounded, color: Colors.white),
-  ),
-),
-
+                        SizedBox(
+                          width: 190, // Adjusted width as needed
+                          child: FloatingActionButton.extended(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ChatPage(
+                                    recieverEmail: thisUser.email,
+                                    recieverUser: thisUser.username,
+                                  ),
+                                ),
+                              );
+                            },
+                            heroTag: 'mesage',
+                            elevation: 0,
+                            backgroundColor: Color(0xFF2598D7),
+                            label: const Text(
+                              "Message",
+                              style: TextStyle(
+                                color:
+                                    Colors.white, // Set the text color to white
+                              ),
+                            ),
+                            icon: const Icon(Icons.message_rounded,
+                                color: Colors.white),
+                          ),
+                        ),
                       ],
                     ),
                     Container(
@@ -130,7 +115,7 @@ SizedBox(
                       height: 2,
                       color: (Colors.grey), // Divider color
                     ),
-  const SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     _ProfileRatingsAndReviews(
                       communicationRating: thisUser.communication,
                       workQualityRating: thisUser.workQuality,
@@ -140,35 +125,36 @@ SizedBox(
                     ),
 
                     const SizedBox(height: 16.0),
-                   ElevatedButton(
-  onPressed: () {
-    // Navigate to the job history page
-    // You need to replace 'JobHistoryPage' with the actual page you want to navigate to
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const JobHistoryPage(),
-      ),
-    );
-  },
-  style: ElevatedButton.styleFrom(
-    backgroundColor: const Color(0xFF1D465D), // Set the desired background color
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(20.0), // Adjusted border radius
-    ),
-  ),
-  child: const Padding(
-    padding: EdgeInsets.all(12.0), // Adjusted padding
-   child: Text(
-  "View Job History",
-  style: TextStyle(
-    fontSize: 18.0,
-    color: Colors.white, // Set the text color to white
-  ),
-),
-  ),
-),
-
+                    ElevatedButton(
+                      onPressed: () {
+                        // Navigate to the job history page
+                        // You need to replace 'JobHistoryPage' with the actual page you want to navigate to
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const JobHistoryPage(),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(
+                            0xFF1D465D), // Set the desired background color
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                              20.0), // Adjusted border radius
+                        ),
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(12.0), // Adjusted padding
+                        child: Text(
+                          "View Job History",
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            color: Colors.white, // Set the text color to white
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -334,7 +320,7 @@ class _ProfileRatingsAndReviews extends StatelessWidget {
                 .titleLarge
                 ?.copyWith(fontWeight: FontWeight.bold),
           ),
-           const SizedBox(height: 8.0),
+          const SizedBox(height: 8.0),
           _RatingCategory(
             title: 'Overall Rating',
             rating: avgRating,
