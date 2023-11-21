@@ -300,7 +300,7 @@ class _ProfileState extends State<ProfilePage> {
                   ),
                 ),
 
-                SizedBox(height: 22.0),
+                SizedBox(height: 10),
                 // Job history
                 TextButton(
                   onPressed: () {
