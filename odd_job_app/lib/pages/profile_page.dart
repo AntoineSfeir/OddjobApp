@@ -148,13 +148,6 @@ class _ProfileState extends State<ProfilePage> {
               children: [
                 AppBar(
                   backgroundColor: Color(0xFF4F82A3),
-                  title: const Text(
-                    "Profile",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                 ),
                 // Profile Picture and Name
                 Row(
@@ -238,30 +231,36 @@ class _ProfileState extends State<ProfilePage> {
                 ),
                 // Options List
                 const SizedBox(height: 10),
-
+                SizedBox(height: 22.0),
                 // Manage Profile Information
                 TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ProfileInfoPage()),
-                    );
-                  },
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: const Row(
-                      children: <Widget>[
-                        Icon(Icons.person),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text('Profile Info'),
-                      ],
-                    ),
-                  ),
-                ),
+  onPressed: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const ProfileInfoPage()),
+    );
+  },
+  child: Container(
+    alignment: Alignment.centerLeft,
+    child: Row(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(right: 8.0), // Added padding
+          child: Icon(Icons.person, size: 20, color: Color(0xFF2598D7)),
+        ),
+        SizedBox(
+          width: 5,
+        ),
+        Text(
+          'Profile Info',
+          style: TextStyle(fontSize: 20, color: Color(0xFF2598D7)),
+        ),
+      ],
+    ),
+  ),
+),
 
+SizedBox(height: 22.0),
                 // Job history
                 TextButton(
                   onPressed: () {
@@ -275,16 +274,19 @@ class _ProfileState extends State<ProfilePage> {
                     alignment: Alignment.centerLeft,
                     child: const Row(
                       children: <Widget>[
-                        Icon(Icons.history),
+                                Padding(
+          padding: const EdgeInsets.only(right: 8.0), // Added padding
+          child: Icon(Icons.history, size: 20, color: Color(0xFF2598D7)),
+        ),
                         SizedBox(
                           width: 5,
                         ),
-                        Text('Job History'),
+                        Text('Job History', style: TextStyle(fontSize: 20, color: Color(0xFF2598D7)), ),
                       ],
                     ),
                   ),
                 ),
-
+SizedBox(height: 22.0),
                 // Payment option
                 TextButton(
                   onPressed: () {
@@ -298,16 +300,19 @@ class _ProfileState extends State<ProfilePage> {
                     alignment: Alignment.centerLeft,
                     child: const Row(
                       children: <Widget>[
-                        Icon(Icons.payment),
+                               Padding(
+          padding: const EdgeInsets.only(right: 8.0), // Added padding
+          child: Icon(Icons.payment, size: 20, color: Color(0xFF2598D7)),
+        ),
                         SizedBox(
                           width: 5,
                         ),
-                        Text('Manage Payment Options'),
+                        Text('Manage Payment Options', style: TextStyle(fontSize: 20, color: Color(0xFF2598D7)),),
                       ],
                     ),
                   ),
                 ),
-
+SizedBox(height: 22.0),
                   // Manage Address Info
                 TextButton(
                   onPressed: () {
@@ -321,16 +326,19 @@ class _ProfileState extends State<ProfilePage> {
                     alignment: Alignment.centerLeft,
                     child: const Row(
                       children: <Widget>[
-                        Icon(Icons.location_pin),
+                               Padding(
+          padding: const EdgeInsets.only(right: 8.0), // Added padding
+          child: Icon(Icons.location_pin, size: 20, color: Color(0xFF2598D7)),
+        ),
                         SizedBox(
                           width: 5,
                         ),
-                        Text('Manage Location Settings'),
+                        Text('Manage Location Settings', style: TextStyle(fontSize: 20, color: Color(0xFF2598D7)),),
                       ],
                     ),
                   ),
                 ),
-
+SizedBox(height: 22.0),
                 // About OddJob
                 TextButton(
                   onPressed: () {
@@ -344,16 +352,19 @@ class _ProfileState extends State<ProfilePage> {
                     alignment: Alignment.centerLeft,
                     child: const Row(
                       children: <Widget>[
-                        Icon(Icons.info),
+                                Padding(
+          padding: const EdgeInsets.only(right: 8.0), // Added padding
+          child: Icon(Icons.info, size: 20, color: Color(0xFF2598D7)),
+        ),
                         SizedBox(
                           width: 5,
                         ),
-                        Text('About OddJob'),
+                        Text('About OddJob', style: TextStyle(fontSize: 20, color: Color(0xFF2598D7),),),
                       ],
                     ),
                   ),
                 ),
-
+SizedBox(height: 22.0),
                 // logout button
                 TextButton(
                   onPressed: () {
@@ -367,11 +378,14 @@ class _ProfileState extends State<ProfilePage> {
                     alignment: Alignment.centerLeft,
                     child: const Row(
                       children: <Widget>[
-                        Icon(Icons.logout),
+                                Padding(
+          padding: const EdgeInsets.only(right: 8.0), // Added padding
+          child: Icon(Icons.logout, size: 20, color: Color(0xFF2598D7)),
+        ),
                         SizedBox(
                           width: 5,
                         ),
-                        Text('Logout'),
+                        Text('Logout', style: TextStyle(fontSize: 20, color: Color(0xFF2598D7),),),
                       ],
                     ),
                   ),
