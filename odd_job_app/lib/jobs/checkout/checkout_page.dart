@@ -25,6 +25,7 @@ class CheckoutPage extends StatelessWidget {
       required this.payToName,
       this.displayNativePay = false,
       this.isApple = false,
+      this.isAndroid = false,
       this.onNativePay,
       this.displayCashPay = false,
       this.onCashPay,
@@ -62,6 +63,8 @@ class CheckoutPage extends StatelessWidget {
 
   /// is this the user on an apple based platform?
   final bool isApple;
+
+  final bool isAndroid;
 
   /// Provide a function that will be triggered once the user clicks on the
   /// native button. Can be left null if native option is not to be displayed
@@ -324,6 +327,23 @@ class CheckoutPage extends StatelessWidget {
                                   isApple
                                       ? 'assets/images/apple-32.png'
                                       : 'assets/images/G_mark_small.png',
+                                  package: 'checkout_screen_ui'),
+                            ),
+                            Text(
+                              'Pay',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: isAndroid
+                                      ? FontWeight.w500
+                                      : FontWeight.w400,
+                                  color: Colors.white),
+                            ),
+                             Container(
+                              margin: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                              height: 16,
+                              width: 16,
+                              child: Image.asset(
+                                'assets/images/G_mark_small.png',
                                   package: 'checkout_screen_ui'),
                             ),
                             Text(

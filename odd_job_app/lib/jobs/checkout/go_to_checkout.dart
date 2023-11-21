@@ -97,7 +97,9 @@ class _GoToCheckoutState extends State<GoToCheckout> {
       PriceItem(
           name: userToPay,
           quantity: 1,
-          totalPriceCents: int.parse(jobToCheckout.startingBid) * 100)
+          totalPriceCents: int.parse(jobToCheckout.startingBid) * 100),
+      PriceItem(name: 'Tax', quantity: 1, totalPriceCents: int.parse(jobToCheckout.startingBid)),
+      PriceItem(name: 'Fee', quantity: 1, totalPriceCents: int.parse(jobToCheckout.startingBid)) 
     ];
 
     /// REQUIRED: A name representing the receiver of the funds from user
@@ -113,6 +115,8 @@ class _GoToCheckoutState extends State<GoToCheckout> {
     /// this logic based on your app's needs and the platforms you are
     /// developing for.
     final _isApple = kIsWeb ? false : Platform.isIOS;
+
+    final _isAndroid = kIsWeb ? false : Platform.isAndroid;
 
     /// RECOMMENDED: widget to display at footer of page
     ///
