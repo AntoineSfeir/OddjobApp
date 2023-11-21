@@ -161,6 +161,11 @@ class _ProfileState extends State<ProfilePage> {
               children: [
                 AppBar(
                   backgroundColor: Color(0xFF4F82A3),
+                  title: const Text('Profile',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold)),
                 ),
                 // Profile Picture and Name
                 Row(
