@@ -219,7 +219,7 @@ Padding(
                         children: [
                           const SizedBox(height: 16.0), // Padding above
 Text(
-  "Current Bid: ${thisJob.startingBid}",
+  "Current Bid: \$${thisJob.startingBid}",
   style: const TextStyle(
     fontWeight: FontWeight.bold,
     fontSize: 24.0, // Adjusted font size
