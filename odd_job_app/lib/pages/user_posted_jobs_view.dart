@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobs/bid.dart';
-import 'package:odd_job_app/jobs/compute_time_to_display.dart';
 import 'package:odd_job_app/jobs/job.dart';
 import 'package:odd_job_app/pages/accept_job_page.dart';
 import 'package:odd_job_app/pages/other_profile_page.dart';
+import 'package:odd_job_app/jobs/compute_time_to_display.dart';
 
 class UsersPostedJobsView extends StatefulWidget {
   final List<Job> myJobs;
@@ -45,7 +45,7 @@ class _UsersPostedJobsViewState extends State<UsersPostedJobsView> {
                 ),
                 subtitle: Text(
                   computedTime.compute(myJobs[index].deadline),
-                  style: TextStyle(color: Colors.grey),
+                  style: const TextStyle(color: Colors.grey),
                 ),
                 children: [
                   Padding(
@@ -87,7 +87,7 @@ class _UsersPostedJobsViewState extends State<UsersPostedJobsView> {
                                                 )),
                                       );
                                     },
-                                    child: Text("${bid.bidder.username}")),
+                                    child: Text(bid.bidder.username)),
                                 ElevatedButton(
                                   onPressed: () {
                                     // Navigate to the accept job page
@@ -100,7 +100,7 @@ class _UsersPostedJobsViewState extends State<UsersPostedJobsView> {
                                       ),
                                     );
                                   },
-                                  child: Text('Accept Job'),
+                                  child: const Text('Accept Job'),
                                 ),
                               ],
                             );

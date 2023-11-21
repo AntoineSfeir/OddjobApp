@@ -1,18 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobs/bid.dart';
 import 'package:odd_job_app/jobs/job.dart';
-import 'package:odd_job_app/jobs/post_job_page.dart';
 import 'package:odd_job_app/jobs/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:odd_job_app/pages/search_page.dart';
+import 'package:odd_job_app/jobs/post_job_page.dart';
+import 'package:odd_job_app/pages/profile_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/pages/activeJobsTab.dart';
 import 'package:odd_job_app/pages/messages_page.dart';
-import 'package:odd_job_app/pages/profile_page.dart';
-import 'package:odd_job_app/pages/search_page.dart';
 import 'package:odd_job_app/pages/user_posted_jobs_view.dart';
 
 class HomePage2 extends StatefulWidget {
-  const HomePage2({Key? key}) : super(key: key);
+  const HomePage2({super.key});
 
   @override
   State<HomePage2> createState() => _HomePage2State();
@@ -257,9 +257,9 @@ class _HomePage2State extends State<HomePage2> {
                     } else if (tab.text == "Active Jobs") {
                       return activeJobsViewTab(activeJobs: allActiveJobs);
                     } else if (tab.text == "My Bid") {
-                      return Placeholder();
+                      return const Placeholder();
                     } else {
-                      return Placeholder();
+                      return const Placeholder();
                     }
                   }).toList(),
                 ),
@@ -272,7 +272,7 @@ class _HomePage2State extends State<HomePage2> {
           }),
         ),
         bottomNavigationBar: BottomAppBar(
-          color: Color(0xFF4F82A3),
+          color: const Color(0xFF4F82A3),
           shape: const CircularNotchedRectangle(),
           child: SizedBox(
             height: 60.0,
@@ -340,7 +340,7 @@ class _HomePage2State extends State<HomePage2> {
                   builder: (context) => PostJobPage(currentUser: currentUser)),
             );
           },
-          backgroundColor: Color(0xFF2598D7),
+          backgroundColor: const Color(0xFF2598D7),
           child: const Icon(Icons.add),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

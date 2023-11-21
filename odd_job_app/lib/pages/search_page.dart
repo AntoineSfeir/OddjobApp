@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobs/job.dart';
-import 'package:odd_job_app/jobs/job.dart';
 import 'package:odd_job_app/jobs/user.dart';
 import 'package:odd_job_app/jobs/jobcard.dart';
-import 'package:odd_job_app/jobs/jobcard.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:odd_job_app/pages/home_page.dart';
-import 'package:odd_job_app/jobs/post_job_page.dart';
 import 'package:odd_job_app/pages/home_page2.dart';
+import 'package:odd_job_app/jobs/post_job_page.dart';
 import 'package:odd_job_app/pages/profile_page.dart';
 import 'package:odd_job_app/pages/messages_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:odd_job_app/jobs/jobdescription.dart';
 
 class SearchPage extends StatefulWidget {
   final user currentUser;
@@ -76,7 +71,7 @@ class _SearchPageState extends State<SearchPage> {
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
-              SliverAppBar(
+              const SliverAppBar(
                 expandedHeight: 55.0, // Set a fixed height
                 floating: false,
                 pinned: true,
@@ -100,7 +95,7 @@ class _SearchPageState extends State<SearchPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         'Search',
                         style: TextStyle(
                           fontSize: 16,
@@ -112,7 +107,7 @@ class _SearchPageState extends State<SearchPage> {
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 4.0),
                           child: TextField(
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'Type Here...',
                               hintStyle: TextStyle(color: Colors.black),
                               border: OutlineInputBorder(),
@@ -135,7 +130,7 @@ class _SearchPageState extends State<SearchPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         'Sorting Method',
                         style: TextStyle(
                           fontSize: 16,
@@ -163,7 +158,7 @@ class _SearchPageState extends State<SearchPage> {
                                   value: value,
                                   child: Text(
                                     value,
-                                    style: TextStyle(color: Colors.black),
+                                    style: const TextStyle(color: Colors.black),
                                   ),
                                 );
                               },
@@ -224,7 +219,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ),
           bottomNavigationBar: BottomAppBar(
-            color: Color(0xFF4F82A3),
+            color: const Color(0xFF4F82A3),
             shape: const CircularNotchedRectangle(),
             child: SizedBox(
               height: 60.0,
@@ -291,7 +286,7 @@ class _SearchPageState extends State<SearchPage> {
                         PostJobPage(currentUser: widget.currentUser)),
               );
             },
-            backgroundColor: Color(0xFF2598D7),
+            backgroundColor: const Color(0xFF2598D7),
             child: const Icon(Icons.add),
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

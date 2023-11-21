@@ -12,7 +12,7 @@ import 'package:odd_job_app/jobs/afterpost_jobdescription.dart';
 import 'package:odd_job_app/jobs/currentbid_jobdescription.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -211,7 +211,7 @@ class _HomePageState extends State<HomePage> {
                 },
                 child: Text(
                   Job.title, // Replace with your actual property name
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
@@ -264,7 +264,7 @@ class _HomePageState extends State<HomePage> {
                 child: Text(
                   myBid.jobThatWasBidOn
                       .title, // Replace with your actual property name
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
@@ -309,7 +309,7 @@ class _HomePageState extends State<HomePage> {
                 },
                 child: Text(
                   Job.title, // Replace with your actual property name
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
@@ -326,9 +326,9 @@ class _HomePageState extends State<HomePage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Color(0xFFF8FBFD),
+        backgroundColor: const Color(0xFFF8FBFD),
         appBar: AppBar(
-          backgroundColor: Color(0xFF4F82A3),
+          backgroundColor: const Color(0xFF4F82A3),
           title: const Text(
             'HomePage',
             style: TextStyle(
@@ -376,7 +376,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         bottomNavigationBar: BottomAppBar(
-          color: Color(0xFF4F82A3),
+          color: const Color(0xFF4F82A3),
           shape: const CircularNotchedRectangle(),
           child: SizedBox(
             height: 60.0,
@@ -444,7 +444,7 @@ class _HomePageState extends State<HomePage> {
                   builder: (context) => PostJobPage(currentUser: currentUser)),
             );
           },
-          backgroundColor: Color(0xFF2598D7),
+          backgroundColor: const Color(0xFF2598D7),
           child: const Icon(Icons.add),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

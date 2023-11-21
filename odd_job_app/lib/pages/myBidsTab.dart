@@ -17,6 +17,7 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
   late final List<Job> myJobs;
   computeTime computedTime = computeTime();
 
+  @override
   void initState() {
     super.initState();
     myJobs = widget.myJobs;
@@ -24,6 +25,7 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
 
   @override
   void dispose() {
+    super.dispose();
     _bidController.dispose();
   }
 
@@ -46,7 +48,7 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
                 ),
                 subtitle: Text(
                   computedTime.compute(myJobs[index].deadline),
-                  style: TextStyle(color: Colors.grey),
+                  style: const TextStyle(color: Colors.grey),
                 ),
                 children: [
                   Padding(
@@ -83,7 +85,7 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
                                       child: TextFormField(
                                         controller: _bidController,
                                         keyboardType: TextInputType.number,
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           hintText: 'Edit your bid',
                                         ),
                                         onTap: () {},
@@ -93,7 +95,7 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
                                   onPressed: () {
                                     // Navigate to the accept job page
                                   },
-                                  child: Text('Change Bid'),
+                                  child: const Text('Change Bid'),
                                 ),
                               ],
                             );

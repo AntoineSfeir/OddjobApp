@@ -1,9 +1,9 @@
 import "package:flutter/material.dart";
+import "package:odd_job_app/jobs/user.dart";
 import "package:firebase_auth/firebase_auth.dart";
 import "package:odd_job_app/chat/chat_service.dart";
 import "package:cloud_firestore/cloud_firestore.dart";
 import "package:odd_job_app/chat/message_bubble.dart";
-import "package:odd_job_app/jobs/user.dart";
 import "package:odd_job_app/pages/other_profile_page.dart";
 
 class ChatPage extends StatefulWidget {
@@ -66,7 +66,7 @@ class _ChatPageState extends State<ChatPage> {
         backgroundColor: Colors.grey[300],
         appBar: AppBar(
           backgroundColor:
-                Color(0xFF4F82A3),
+                const Color(0xFF4F82A3),
           title: Text(widget.recieverUser),
           actions: [
             IconButton(

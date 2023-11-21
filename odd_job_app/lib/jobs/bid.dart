@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobs/job.dart';
 import 'package:odd_job_app/jobs/user.dart';
 

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class AfterPostEditJobDescription extends StatefulWidget {
-  const AfterPostEditJobDescription({Key? key}) : super(key: key);
+  const AfterPostEditJobDescription({super.key});
 
   @override
   State<AfterPostEditJobDescription> createState() =>

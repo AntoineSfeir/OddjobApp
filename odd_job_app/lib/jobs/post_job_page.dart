@@ -98,7 +98,7 @@ class _PostJobPageState extends State<PostJobPage> {
           onFieldSubmitted: (String value) {
             onFieldSubmitted();
           },
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: OutlineInputBorder(),
             hintText: 'Enter job title',
           ),
@@ -113,7 +113,7 @@ class _PostJobPageState extends State<PostJobPage> {
             child: SizedBox(
               height: 200.0,
               child: ListView.builder(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 itemCount: options.length,
                 itemBuilder: (BuildContext context, int index) {
                   final String option = options.elementAt(index);
@@ -250,7 +250,7 @@ class _PostJobPageState extends State<PostJobPage> {
   Future addJobToUserCollection(user current) async {
     await allJobs(false);
     await compareLists();
-    print("JOB ID = " + jobID);
+    print("JOB ID = $jobID");
     user thisUser = current;
     print("USER ID = ${thisUser.ID}");
     CollectionReference postedJobs = FirebaseFirestore.instance
@@ -355,7 +355,7 @@ class _PostJobPageState extends State<PostJobPage> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        backgroundColor: Color(0xFF4F82A3),
+        backgroundColor: const Color(0xFF4F82A3),
         title: const Text('Post a Job',
             style: TextStyle(
                 color: Colors.white,
@@ -395,7 +395,7 @@ const SizedBox(height: 16),
 Column(
   crossAxisAlignment: CrossAxisAlignment.center,
   children: [
-    Text(
+    const Text(
       'Job Description:',
       style: TextStyle(
         fontSize: 34, // Set font size to 30pt
@@ -405,12 +405,12 @@ Column(
     const SizedBox(height: 8),
     TextFormField(
       controller: _jobDescriptionController,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         border: OutlineInputBorder(),
         hintText: 'Enter job description',
       ),
       maxLines: 11,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 14, // Set font size to 18pt for the TextFormField
       ),
     ),
@@ -445,7 +445,7 @@ Center(
         const Color(0xFF2598D7),
       ),
       minimumSize: MaterialStateProperty.all<Size>(
-        Size(double.infinity, 50), // Adjust the height as needed
+        const Size(double.infinity, 50), // Adjust the height as needed
       ),
       padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
         const EdgeInsets.symmetric(horizontal: 24),
@@ -455,19 +455,19 @@ Center(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Icon(
+        const Icon(
           Icons.location_on,
           color: Colors.white,
           size: 30, // Increased icon size
         ),
         const SizedBox(width: 8),
-        Container(
+        SizedBox(
           width: 200,
           child: Text(
             enterYourAddressHere,
             textAlign: TextAlign.center, // Center the text within the container
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 24, // Increased font size
             ),
@@ -496,7 +496,7 @@ Center(
             const Color(0xFF2598D7),
           ),
           minimumSize: MaterialStateProperty.all<Size>(
-            Size(double.infinity, 50), // Adjust the height as needed
+            const Size(double.infinity, 50), // Adjust the height as needed
           ),
           padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
             const EdgeInsets.symmetric(horizontal: 24),
@@ -506,7 +506,7 @@ Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
+            const Icon(
               Icons.calendar_today,
               size: 30, // Increased icon size
               color: Colors.white, // Set icon color to white
@@ -548,7 +548,7 @@ Column(
   mainAxisAlignment: MainAxisAlignment.center,
   crossAxisAlignment: CrossAxisAlignment.center,
   children: [
-    Text(
+    const Text(
       'Starting Bid',
       style: TextStyle(
         fontSize: 24,
@@ -559,9 +559,9 @@ Column(
     TextField(
       keyboardType: TextInputType.number,
       controller: _jobStartingBidController,
-      style: TextStyle(fontSize: 30), // Increase the font size
+      style: const TextStyle(fontSize: 30), // Increase the font size
       textAlign: TextAlign.center,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         hintText: '\$0.00', // Initial placeholder, customize as needed
         hintStyle: TextStyle(fontSize: 30, color: Colors.grey), // Increase the font size
         border: OutlineInputBorder(
@@ -584,13 +584,13 @@ ElevatedButton(
   style: ButtonStyle(
     backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF1D465D)),
     minimumSize: MaterialStateProperty.all<Size>(
-      Size(double.infinity, 50), // Adjust the height as needed
+      const Size(double.infinity, 50), // Adjust the height as needed
     ),
     padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
       const EdgeInsets.symmetric(horizontal: 24),
     ),
   ),
-  child: Text(
+  child: const Text(
     'Post Job',
     style: TextStyle(
       color: Colors.white,

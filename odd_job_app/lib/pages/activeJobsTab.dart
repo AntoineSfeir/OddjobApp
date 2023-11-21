@@ -89,7 +89,7 @@ class _activeJobsViewTabState extends State<activeJobsViewTab> {
                 'Title: ${job.title}',
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 'Address: ${job.address}',
               ),
@@ -102,7 +102,7 @@ class _activeJobsViewTabState extends State<activeJobsViewTab> {
                     'Worker: ${job.displayName}',
                   ),
                   IconButton(
-                    icon: Icon(Icons.message),
+                    icon: const Icon(Icons.message),
                     onPressed: () {
                       // Handle the action when the message icon is clicked
                       // For example, you can open a chat with the worker
@@ -114,7 +114,7 @@ class _activeJobsViewTabState extends State<activeJobsViewTab> {
               ),
               Row(
                 children: [
-                  Text(
+                  const Text(
                     'Status: ',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
@@ -158,7 +158,7 @@ class _activeJobsViewTabState extends State<activeJobsViewTab> {
                 'Title: ${job.title}',
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 'Client: ${job.displayName}',
               ),
@@ -173,7 +173,7 @@ class _activeJobsViewTabState extends State<activeJobsViewTab> {
               ),
               Row(
                 children: [
-                  Text(
+                  const Text(
                     'Job Finished? ',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),

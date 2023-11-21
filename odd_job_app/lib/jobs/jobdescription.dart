@@ -124,7 +124,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                           },
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
-                                Color(0xFF2598D7)),
+                                const Color(0xFF2598D7)),
                             shape: MaterialStateProperty.all<
                                 RoundedRectangleBorder>(
                               RoundedRectangleBorder(
@@ -134,7 +134,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                           ),
                           child: Text(
                             thisJob.displayName,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 24.0,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -167,8 +167,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                       padding: const EdgeInsets.all(16.0),
                       child: Center(
                         child: Text(
-                          "Time Remaining: " +
-                              computedTime.compute(thisJob.deadline),
+                          "Time Remaining: ${computedTime.compute(thisJob.deadline)}",
                           style: const TextStyle(
                             fontSize: 24.0,
                             fontWeight: FontWeight.bold,

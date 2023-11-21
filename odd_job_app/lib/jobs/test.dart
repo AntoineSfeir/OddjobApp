@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Select a Value'),
+          title: const Text('Select a Value'),
           content: Container(
             width: double.maxFinite,
             height: 200,
@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     SizedBox(
                       height: 150,
                       child: SingleChildScrollView(
@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   });
                                 },
                                 child: Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 8),
+                                  padding: const EdgeInsets.symmetric(vertical: 8),
                                   child: Text(
                                     value.toString(),
                                     style: TextStyle(
@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       print(value)); // Replace this line with your logic
                 });
               },
-              child: Text('Select'),
+              child: const Text('Select'),
             ),
           ],
         );
@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Value Selector'),
+        title: const Text('Value Selector'),
       ),
       body: Center(
         child: Column(
@@ -115,14 +115,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 _showValueSelectorDialog();
               },
               child: Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   border: Border.all(),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Text(
                   'Place a bid: ${selectedValues[0]}${selectedValues[1]}${selectedValues[2]}${selectedValues[3]}',
-                  style: TextStyle(fontSize: 18),
+                  style: const TextStyle(fontSize: 18),
                 ),
               ),
             ),

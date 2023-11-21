@@ -1,19 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:odd_job_app/jobs/bid.dart';
-import 'package:odd_job_app/jobs/bid_page.dart';
-import 'package:odd_job_app/jobs/compute_time_to_display.dart';
-import 'package:odd_job_app/jobs/geolocation/compute_distance.dart';
 import 'package:odd_job_app/jobs/job.dart';
 import 'package:odd_job_app/jobs/user.dart';
+import 'package:odd_job_app/jobs/bid_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/pages/other_profile_page.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:odd_job_app/jobs/compute_time_to_display.dart';
+import 'package:odd_job_app/jobs/geolocation/compute_distance.dart';
 
 class CurrentBidJobDescription extends StatefulWidget {
   final bid thisBid;
 
-  const CurrentBidJobDescription({Key? key, required this.thisBid})
-      : super(key: key);
+  const CurrentBidJobDescription({super.key, required this.thisBid});
 
   @override
   State<CurrentBidJobDescription> createState() => _CurrentBidJobDescription();
@@ -38,6 +37,7 @@ class _CurrentBidJobDescription extends State<CurrentBidJobDescription> {
     l = LatLng(thisJob.longlat.latitude, thisJob.longlat.longitude);
   }
 
+  @override
   void dispose() {
     bidController.dispose();
     super.dispose();
@@ -69,7 +69,7 @@ class _CurrentBidJobDescription extends State<CurrentBidJobDescription> {
                 children: <Widget>[
                   Container(
                     height: 165,
-                    margin: EdgeInsets.all(16),
+                    margin: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
@@ -77,7 +77,7 @@ class _CurrentBidJobDescription extends State<CurrentBidJobDescription> {
                           color: Colors.grey.withOpacity(0.5),
                           spreadRadius: 3,
                           blurRadius: 7,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         ),
                       ],
                     ),
@@ -92,7 +92,7 @@ class _CurrentBidJobDescription extends State<CurrentBidJobDescription> {
                         onMapCreated: (GoogleMapController controller) {
                           _mapController = controller;
                           _markers.add(Marker(
-                            markerId: MarkerId('jobMarker'),
+                            markerId: const MarkerId('jobMarker'),
                             visible: true,
                             position: l,
                             infoWindow: InfoWindow(
@@ -129,7 +129,7 @@ class _CurrentBidJobDescription extends State<CurrentBidJobDescription> {
                     ),
                   ),
                   const Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: EdgeInsets.all(16.0),
                     child: Row(
                       children: <Widget>[
                         Icon(Icons.star, color: Colors.yellow),
@@ -141,7 +141,7 @@ class _CurrentBidJobDescription extends State<CurrentBidJobDescription> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: GestureDetector(
                       onTap: () {},
                       child: const Text(
@@ -156,9 +156,9 @@ class _CurrentBidJobDescription extends State<CurrentBidJobDescription> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      "Expires in " + computedTime.compute(thisJob.deadline),
+                      "Expires in ${computedTime.compute(thisJob.deadline)}",
                       style: const TextStyle(
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold,
@@ -167,8 +167,8 @@ class _CurrentBidJobDescription extends State<CurrentBidJobDescription> {
                   ),
                   const SizedBox(height: 16),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 16.0),
-                    padding: EdgeInsets.all(16.0),
+                    margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                    padding: const EdgeInsets.all(16.0),
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.black,
@@ -181,20 +181,20 @@ class _CurrentBidJobDescription extends State<CurrentBidJobDescription> {
                       children: [
                         Text(
                           thisJob.title,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16.0,
                           ),
                         ),
                         const SizedBox(height: 8.0),
-                        Divider(
+                        const Divider(
                           color: Colors.black,
                           thickness: 1.0,
                         ),
                         const SizedBox(height: 8.0),
                         Text(
                           thisJob.description,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 16.0,
                           ),
@@ -209,7 +209,7 @@ class _CurrentBidJobDescription extends State<CurrentBidJobDescription> {
                       children: [
                         Text(
                           "Current Bid: ${thisJob.startingBid}",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20.0,
                           ),
@@ -225,7 +225,7 @@ class _CurrentBidJobDescription extends State<CurrentBidJobDescription> {
                                   borderRadius: BorderRadius.circular(20.0),
                                 ),
                               ),
-                              child: Padding(
+                              child: const Padding(
                                 padding: EdgeInsets.all(12.0),
                                 child: Text(
                                   "Cancel Bid",
@@ -244,10 +244,10 @@ class _CurrentBidJobDescription extends State<CurrentBidJobDescription> {
                                 );
                               },
                             ),
-                            SizedBox(width: 10),
+                            const SizedBox(width: 10),
                             TextFormField(
                               keyboardType: TextInputType.number,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 hintText: 'Change Your Bid',
                               ),
                               controller: bidController,

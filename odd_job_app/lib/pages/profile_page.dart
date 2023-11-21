@@ -4,7 +4,6 @@ import 'package:odd_job_app/jobs/user.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:odd_job_app/auth/main_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:odd_job_app/pages/home_page.dart';
 import 'package:odd_job_app/pages/home_page2.dart';
 import 'package:odd_job_app/pages/search_page.dart';
 import 'package:odd_job_app/pages/messages_page.dart';
@@ -430,7 +429,7 @@ class _ProfileState extends State<ProfilePage> {
                     child: const Row(
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.only(
+                          padding: EdgeInsets.only(
                               right: 8.0), // Added padding
                           child: Icon(Icons.logout,
                               size: 18, color: Color(0xFF2598D7)),

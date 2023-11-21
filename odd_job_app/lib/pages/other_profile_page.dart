@@ -78,7 +78,7 @@ class _OtherProfileState extends State<OtherProfilePage> {
                             },
                             heroTag: 'mesage',
                             elevation: 0,
-                            backgroundColor: Color(0xFF2598D7),
+                            backgroundColor: const Color(0xFF2598D7),
                             label: const Text(
                               "Message",
                               style: TextStyle(

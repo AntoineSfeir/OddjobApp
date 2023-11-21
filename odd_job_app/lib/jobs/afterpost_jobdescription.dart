@@ -1,14 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:odd_job_app/jobs/afterpost_editjobdescription.dart';
-import 'package:odd_job_app/jobs/bid_page.dart';
-import 'package:odd_job_app/jobs/compute_time_to_display.dart';
-import 'package:odd_job_app/jobs/geolocation/compute_distance.dart';
 import 'package:odd_job_app/jobs/job.dart';
-import 'package:odd_job_app/jobs/post_job_page.dart';
 import 'package:odd_job_app/jobs/user.dart';
+import 'package:odd_job_app/jobs/bid_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/pages/other_profile_page.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:odd_job_app/jobs/compute_time_to_display.dart';
+import 'package:odd_job_app/jobs/afterpost_editjobdescription.dart';
+import 'package:odd_job_app/jobs/geolocation/compute_distance.dart';
 
 class AfterPostJobDescription extends StatefulWidget {
   final Job thisJob;
@@ -70,7 +69,7 @@ class _AfterPostJobDescription extends State<AfterPostJobDescription> {
                   children: <Widget>[
                     Container(
                       height: 165, // Adjusted height
-                      margin: EdgeInsets.all(16),
+                      margin: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16),
                         boxShadow: [
@@ -78,7 +77,7 @@ class _AfterPostJobDescription extends State<AfterPostJobDescription> {
                             color: Colors.grey.withOpacity(0.5),
                             spreadRadius: 3,
                             blurRadius: 7,
-                            offset: Offset(0, 3),
+                            offset: const Offset(0, 3),
                           ),
                         ],
                       ),
@@ -92,7 +91,7 @@ class _AfterPostJobDescription extends State<AfterPostJobDescription> {
                         onMapCreated: (GoogleMapController controller) {
                           _mapController = controller;
                           _markers.add(Marker(
-                            markerId: MarkerId('jobMarker'),
+                            markerId: const MarkerId('jobMarker'),
                             visible: true,
                             position: l,
                             infoWindow: InfoWindow(
@@ -128,7 +127,7 @@ class _AfterPostJobDescription extends State<AfterPostJobDescription> {
                       ),
                     ),
                     const Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: EdgeInsets.all(16.0),
                       child: Row(
                         children: <Widget>[
                           Icon(Icons.star, color: Colors.yellow),
@@ -140,7 +139,7 @@ class _AfterPostJobDescription extends State<AfterPostJobDescription> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: GestureDetector(
                         onTap: () {},
                         child: const Text(
@@ -155,9 +154,9 @@ class _AfterPostJobDescription extends State<AfterPostJobDescription> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: Text(
-                        "Expires in " + computedTime.compute(thisJob.deadline),
+                        "Expires in ${computedTime.compute(thisJob.deadline)}",
                         style: const TextStyle(
                           fontSize: 24.0,
                           fontWeight: FontWeight.bold,
@@ -166,8 +165,8 @@ class _AfterPostJobDescription extends State<AfterPostJobDescription> {
                     ),
                     const SizedBox(height: 16), // Increased spacing
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 16.0),
-                      padding: EdgeInsets.all(16.0),
+                      margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                      padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
                         border: Border.all(
                           color: Colors.black,
@@ -180,20 +179,20 @@ class _AfterPostJobDescription extends State<AfterPostJobDescription> {
                         children: [
                           Text(
                             thisJob.title,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16.0,
                             ),
                           ),
                           const SizedBox(height: 8.0),
-                          Divider(
+                          const Divider(
                             color: Colors.black,
                             thickness: 1.0,
                           ),
                           const SizedBox(height: 8.0),
                           Text(
                             thisJob.description,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 16.0,
                             ),
@@ -208,7 +207,7 @@ class _AfterPostJobDescription extends State<AfterPostJobDescription> {
                         children: [
                           Text(
                             "Current Bid: ${thisJob.startingBid}",
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20.0, // Adjusted font size
                             ),
@@ -225,7 +224,7 @@ class _AfterPostJobDescription extends State<AfterPostJobDescription> {
                                     borderRadius: BorderRadius.circular(20.0),
                                   ),
                                 ),
-                                child: Padding(
+                                child: const Padding(
                                   padding: EdgeInsets.all(12.0),
                                   child: Text(
                                     "Delete the Job",
@@ -244,7 +243,7 @@ class _AfterPostJobDescription extends State<AfterPostJobDescription> {
                                   );
                                 },
                               ),
-                              SizedBox(width: 10),
+                              const SizedBox(width: 10),
                               ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.amber,
@@ -252,7 +251,7 @@ class _AfterPostJobDescription extends State<AfterPostJobDescription> {
                                     borderRadius: BorderRadius.circular(20.0),
                                   ),
                                 ),
-                                child: Padding(
+                                child: const Padding(
                                   padding: EdgeInsets.all(12.0),
                                   child: Text(
                                     "Edit the Job",
