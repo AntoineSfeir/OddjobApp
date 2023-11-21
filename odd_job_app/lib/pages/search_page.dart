@@ -95,7 +95,7 @@ class _SearchPageState extends State<SearchPage> {
             slivers: [
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -109,7 +109,7 @@ class _SearchPageState extends State<SearchPage> {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 8.0),
+                          padding: const EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 4.0),
                           child: TextField(
                             decoration: InputDecoration(
                               hintText: 'Type Here...',
@@ -130,7 +130,7 @@ class _SearchPageState extends State<SearchPage> {
               ),
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.fromLTRB(8.0, 4.0, 16.0, 8.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
