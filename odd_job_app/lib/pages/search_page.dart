@@ -44,13 +44,13 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   List<Job> filteredJobs() {
-  if (searchText.isEmpty) {
-    return jo;
+    if (searchText.isEmpty) {
+      return jo;
+    }
+    return jo.where((job) {
+      return job.title.toLowerCase().contains(searchText.toLowerCase());
+    }).toList();
   }
-  return jo.where((job) {
-    return job.title.toLowerCase().contains(searchText.toLowerCase());
-  }).toList();
-}
 
   final String cardBackground = '#1B475E';
   final String moneyText = '#8BD5FF';
@@ -85,30 +85,59 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ),
           body: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Container(
-                  color: Color(0xFF4F83A2),
-                  padding: EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Search...',
-                            hintStyle: TextStyle(color: Colors.black),
-                            border: OutlineInputBorder(),
-                          ),
-                          onChanged: (value) {
-                            setState(() {
-                              searchText = value;
-                            });
-                          },
-                        ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      'Search',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
                       ),
-                      SizedBox(width: 8.0),
-                      DropdownButton<String>(
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 8.0),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: 'Type Here...',
+                          hintStyle: TextStyle(color: Colors.black),
+                          border: OutlineInputBorder(),
+                        ),
+                        onChanged: (value) {
+                          setState(() {
+                            searchText = value;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      'Sorting Method',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: DropdownButton<String>(
                         value: selectedOption,
                         onChanged: (String? newValue) {
                           setState(() {
@@ -127,9 +156,9 @@ class _SearchPageState extends State<SearchPage> {
                           );
                         }).toList(),
                       ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
               Flexible(
                 child: ListView.builder(
@@ -146,7 +175,7 @@ class _SearchPageState extends State<SearchPage> {
                                     ))
                                 .toList();
 
-                            //in this section, check selectedOption to see how we sort it
+                            // in this section, check selectedOption to see how we sort it
                             if (selectedOption == 'Payment') {
                               jobCards.sort((a, b) => JobCard.sortByBid(a, b));
                             } else if (selectedOption == 'Distance') {
