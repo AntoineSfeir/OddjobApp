@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobs/job.dart';
 import 'package:odd_job_app/jobs/jobdescription.dart';
@@ -24,7 +25,41 @@ class JobCard extends StatelessWidget {
   late final Color moneyTextColor =
       Color(int.parse(moneyText.substring(1, 7), radix: 16) + 0xFF000000);
 
-  JobCard({super.key, required this.job, required this.currentUser});
+
+  //used for sortByDistance
+  static ComputeDistance? _computedDistance;
+  static user? _currentUser;
+
+  JobCard({Key? key, required this.job, required this.currentUser}) : super(key: key) {
+    _computedDistance = ComputeDistance();
+    _currentUser = currentUser;
+  }
+
+  static int sortByBid(JobCard a, JobCard b) {
+    int cardA = int.parse(a.job.startingBid);
+    int cardB = int.parse(b.job.startingBid);
+    return cardA.compareTo(cardB);
+  }
+
+  static int sortByDistance(JobCard a, JobCard b) {
+    if (_computedDistance == null || _currentUser == null) {
+      // Handle the case when _computedDistance or _currentUser is not set
+      return 0;
+    }
+
+    double distanceA = double.parse(_computedDistance!.compute(_currentUser!.currentLocation, a.job.longlat));
+    double distanceB = double.parse(_computedDistance!.compute(_currentUser!.currentLocation, b.job.longlat));
+    return distanceA.compareTo(distanceB);
+  }
+
+  static int sortByTime(JobCard a, JobCard b) {
+    Timestamp local = Timestamp.now();
+    Duration timeRemainingA = a.job.deadline.toDate().difference(local.toDate());
+  Duration timeRemainingB = b.job.deadline.toDate().difference(local.toDate());
+  return timeRemainingA.compareTo(timeRemainingB);
+  }
+
+
 
   @override
   Widget build(BuildContext context) {

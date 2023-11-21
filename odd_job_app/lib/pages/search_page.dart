@@ -45,6 +45,7 @@ class _SearchPageState extends State<SearchPage> {
       Color(int.parse(cardBackground.substring(1, 7), radix: 16) + 0xFF000000);
   late final Color moneyTextColor =
       Color(int.parse(moneyText.substring(1, 7), radix: 16) + 0xFF000000);
+  String selectedOption = 'Payment'; // Default option
 
   @override
   void initState() {
@@ -57,34 +58,85 @@ class _SearchPageState extends State<SearchPage> {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           backgroundColor: Color(0xFFF8FBFD),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                AppBar(
-                  backgroundColor: Color(0xFF4F82A3),
-                  title: const Text('Find a Job',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold)),
+          appBar: AppBar(
+            backgroundColor: Color(0xFF4F82A3),
+            title: const Text(
+              'Find a Job',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          body: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Container(
+                  color: Color(0xFF4F83A2),
+                  padding: EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: 'Search...',
+                            hintStyle: TextStyle(color: Colors.black),
+                            border: OutlineInputBorder(),
+                          ),
+                          onChanged: (value) {
+                            // Handle text input
+                            // You can filter the jobs based on the entered text
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 8.0),
+                      DropdownButton<String>(
+                        value: selectedOption,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            selectedOption = newValue!;
+                            // You can update the job list based on the selected option
+                          });
+                        },
+                        items: <String>['Payment', 'Distance', 'Remaining Time']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
                 ),
-                Flexible(
-                    child: ListView.builder(
-                  // shrinkWrap: true,
+              ),
+              Flexible(
+                child: ListView.builder(
                   itemBuilder: (context, index) {
                     return FutureBuilder(
                       future: allJobs(),
                       builder: ((context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
                           if (jo.isNotEmpty) {
-                            return Column(
-                              children: jo
-                                  .map((Job) => JobCard(
-                                        job: Job,
-                                        currentUser: widget.currentUser,
-                                      ))
-                                  .toList(),
+                            List<JobCard> jobCards = jo
+                                .map((job) => JobCard(
+                                      job: job,
+                                      currentUser: widget.currentUser,
+                                    ))
+                                .toList();
+                                
+                                //in this section, check selectedOption to see how we sort it
+                                //jobCards.sort((a,b) => JobCard.sortByBid(a, b));
+                                //jobCards.sort((a,b) => JobCard.sortByDistance(a, b));
+                                jobCards.sort((a,b) => JobCard.sortByTime(a, b));
+
+                            return Column(  
+                              children: jobCards,
                             );
                           } else if (snapshot.hasError) {
                             return Center(
@@ -102,9 +154,9 @@ class _SearchPageState extends State<SearchPage> {
                     );
                   },
                   itemCount: 1,
-                )),
-              ],
-            ),
+                ),
+              ),
+            ],
           ),
           bottomNavigationBar: BottomAppBar(
             color: Color(0xFF4F82A3),
@@ -169,7 +221,9 @@ class _SearchPageState extends State<SearchPage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => PostJobPage( currentUser: widget.currentUser)),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        PostJobPage(currentUser: widget.currentUser)),
               );
             },
             backgroundColor: Color(0xFF2598D7),
