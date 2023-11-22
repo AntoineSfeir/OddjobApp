@@ -346,7 +346,7 @@ class _HomePage2State extends State<HomePage2> {
                   builder: (context) => PostJobPage(currentUser: currentUser)),
             );
           },
-          backgroundColor: const Color(0xFF2598D7),
+          backgroundColor: Color.fromARGB(255, 28, 185, 83),
           child: const Icon(Icons.add),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

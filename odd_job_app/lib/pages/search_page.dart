@@ -278,19 +278,19 @@ class _SearchPageState extends State<SearchPage> {
               ),
             ),
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        PostJobPage(currentUser: widget.currentUser)),
-              );
-            },
-            backgroundColor: const Color(0xFF2598D7),
-            child: const Icon(Icons.add),
-          ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+          // floatingActionButton: FloatingActionButton(
+          //   onPressed: () {
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (context) =>
+          //               PostJobPage(currentUser: widget.currentUser)),
+          //     );
+          //   },
+          //   backgroundColor: const Color(0xFF2598D7),
+          //   child: const Icon(Icons.add),
+          // ),
+          // floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         ));
   }
 }
