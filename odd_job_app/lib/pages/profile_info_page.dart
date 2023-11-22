@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:odd_job_app/jobs/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProfileInfoPage extends StatefulWidget {
-  const ProfileInfoPage({super.key});
+  final user currentUser;
+  
+  const ProfileInfoPage({super.key, required this.currentUser});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -11,45 +14,12 @@ class ProfileInfoPage extends StatefulWidget {
 }
 
 class _ProfileInfoPageState extends State<ProfileInfoPage> {
-  final user = FirebaseAuth.instance.currentUser!;
-
-  String? username;
-  String? firstName;
-  String? lastName;
-  String? dob;
-  String? address;
-  String? city;
-  String? state;
-  String? zip;
-  
-  Future<void> getUserData() async {
-    // Check if user is not null before accessing its properties
-    if (user.email != null) {
-      // get the current job's docIDs
-      await FirebaseFirestore.instance.collection('users').get().then(
-            // ignore: avoid_function_literals_in_foreach_calls
-            (snapshot) => snapshot.docs.forEach((document) {
-              if (document["email"] == user.email) {
-                setState(() {
-                  username = document["username"];
-                  firstName = document["firstName"];
-                  lastName = document["lastName"];
-                  dob = document["dob"];
-                  address = document["address"];
-                  city = document["city"];
-                  state = document["state"];
-                  zip = document["zip"];
-                });
-              }
-            }),
-          );
-    }
-  }
+late final user thisUser;
 
   @override
   void initState() {
     super.initState();
-    getUserData(); // Call the method in initState
+    thisUser = widget.currentUser;
   }
 
   @override
@@ -71,14 +41,14 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ProfileInfoItem(title: "Username", value: username),
-              ProfileInfoItem(title: "First Name", value: firstName),
-              ProfileInfoItem(title: "Last Name", value: lastName),
-              ProfileInfoItem(title: "Date of Birth", value: dob),
-              ProfileInfoItem(title: "Address", value: address),
-              ProfileInfoItem(title: "City", value: city),
-              ProfileInfoItem(title: "State", value: state),
-              ProfileInfoItem(title: "Zip Code", value: zip),
+              ProfileInfoItem(title: "Username", value: thisUser.username),
+              ProfileInfoItem(title: "First Name", value: thisUser.firstName),
+              ProfileInfoItem(title: "Last Name", value: thisUser.lastName),
+              ProfileInfoItem(title: "Date of Birth", value: thisUser.dob),
+              ProfileInfoItem(title: "Address", value: thisUser.address),
+              ProfileInfoItem(title: "City", value: thisUser.city),
+              ProfileInfoItem(title: "State", value: thisUser.State),
+              ProfileInfoItem(title: "Zip Code", value: thisUser.zip),
             ],
           ),
         ),

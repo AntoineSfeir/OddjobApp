@@ -65,6 +65,9 @@ class _HomePage2State extends State<HomePage2> {
     for (int i = 0; i < users.length; i++) {
       if (users[i].email == userEmail) {
         currentUser = users[i];
+        print("Current Username: ${currentUser.username}");
+        print("Current User first name: ${currentUser.firstName}");
+        print("Current User last name: ${currentUser.lastName}");
       }
     }
   }

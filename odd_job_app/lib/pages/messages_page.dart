@@ -133,6 +133,7 @@ class _MessagesPageState extends State<MessagesPage> {
                 backgroundColor: Color(0xFFC9D0D4),
               );
             } else {
+              print(data['firstName']);
               return CircleAvatar(
                 backgroundColor: const Color(0xFFC9D0D4),
                 backgroundImage: NetworkImage(snapshot.data!),
@@ -140,8 +141,8 @@ class _MessagesPageState extends State<MessagesPage> {
             }
           },
         ),
-        title: Text(data['firstName'] + " " + data['lastName'],
-        style: const TextStyle( fontSize: 20)),
+       title: Text(data['firstName'] + " " + data['lastName'],
+       style: const TextStyle( fontSize: 20)),
         subtitle: FutureBuilder<String?>(
           future: _chatService.getMostRecentMessage(
             auth.currentUser!.email!,

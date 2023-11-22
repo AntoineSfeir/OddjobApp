@@ -132,41 +132,56 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  Widget buildMessageInput() {
-  return Row(
-    children: [
-      Expanded(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 8.0, bottom: 8.0, top: 8.0, right: 8.0),
-          child: Stack(
-            children: [
-              TextField(
-                controller: _messageController,
-                maxLines: null,
-                decoration: InputDecoration(
-                  hintText: 'Enter Message',
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+Widget buildMessageInput() {
+  return Container(
+    padding: const EdgeInsets.all(8.0),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.5),
+          spreadRadius: 2,
+          blurRadius: 5,
+          offset: const Offset(0, 3),
+        ),
+      ],
+    ),
+    child: Row(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 8.0, bottom: 20.0, right: 8.0),
+            child: Stack(
+              children: [
+                TextField(
+                  controller: _messageController,
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    hintText: 'Enter Message',
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                   ),
                 ),
-              ),
-              Positioned(
-                right: 0,
-                bottom: 0,
-                child: IconButton(
-                  onPressed: () {
-                    sendMessage();
-                    _messageController.clear(); // Clear the text after sending
-                  },
-                  icon: const Icon(Icons.arrow_upward),
+                Positioned(
+                  right: 0,
+                  bottom: 0,
+                  child: IconButton(
+                    onPressed: () {
+                      sendMessage();
+                      _messageController.clear(); // Clear the text after sending
+                    },
+                    icon: const Icon(Icons.arrow_upward),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-    ],
+      ],
+    ),
   );
 }
+
 }

@@ -27,21 +27,16 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfileState extends State<ProfilePage> {
   int currentPageIndex = 3;
+  late final user thisUser;
 
-  final user = FirebaseAuth.instance.currentUser!;
-  String? currentUserDocId;
-  File? _image; // Variable to store the selected image
+  final AuthUser = FirebaseAuth.instance.currentUser!;
+  late final String currentUserDocId;
+  late File _image; // Variable to store the selected image
 
-  Future<void> getUserDocId() async {
-    await FirebaseFirestore.instance.collection('users').get().then(
-          (snapshot) => snapshot.docs.forEach((document) {
-            if (document["email"] == user.email) {
-              setState(() {
-                currentUserDocId = document.reference.id;
-              });
-            }
-          }),
-        );
+  @override
+  void initState() {
+    super.initState();
+    thisUser = widget.currentUser;// Call the method in initState
   }
 
   // Function to open the image picker
@@ -58,7 +53,7 @@ class _ProfileState extends State<ProfilePage> {
           });
 
           // Upload the selected image
-          await _uploadImage(_image!);
+          await _uploadImage(_image);
         } else {
           // Display an error message if the selected file is not of type JPEG
           // ignore: use_build_context_synchronously
@@ -113,7 +108,7 @@ class _ProfileState extends State<ProfilePage> {
       // Update the user profile with the new avatar URL
       await FirebaseFirestore.instance
           .collection('users')
-          .doc(currentUserDocId)
+          .doc(thisUser.ID)
           .update({'avatarUrl': avatarUrl});
     } on FirebaseFirestore catch (e) {
       // ignore: use_build_context_synchronously
@@ -140,17 +135,11 @@ class _ProfileState extends State<ProfilePage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    getUserDocId(); // Call the method in initState
-  }
-
-  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.grey[200],
         body: Stack(
           children: [
             Column(
@@ -181,11 +170,12 @@ class _ProfileState extends State<ProfilePage> {
                           color: Colors.blue, // Blue circle
                         ),
                         child: FutureBuilder<String?>(
-                          future: getProfilePictureUrl(currentUserDocId!),
+                          future: getProfilePictureUrl(thisUser.ID),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return const Center(child: CircularProgressIndicator());
+                              return const Center(
+                                  child: CircularProgressIndicator());
                             } else if (snapshot.hasError ||
                                 snapshot.data == null) {
                               return const CircleAvatar(
@@ -258,7 +248,7 @@ class _ProfileState extends State<ProfilePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const ProfileInfoPage()),
+                          builder: (context) => ProfileInfoPage(currentUser: thisUser)),
                     );
                   },
                   child: Container(
@@ -266,8 +256,7 @@ class _ProfileState extends State<ProfilePage> {
                     child: const Row(
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(
-                              right: 8.0), // Added padding
+                          padding: EdgeInsets.only(right: 8.0), // Added padding
                           child: Icon(Icons.person,
                               size: 20, color: Color(0xFF2598D7)),
                         ),
@@ -299,8 +288,7 @@ class _ProfileState extends State<ProfilePage> {
                     child: const Row(
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(
-                              right: 8.0), // Added padding
+                          padding: EdgeInsets.only(right: 8.0), // Added padding
                           child: Icon(Icons.history,
                               size: 20, color: Color(0xFF2598D7)),
                         ),
@@ -331,8 +319,7 @@ class _ProfileState extends State<ProfilePage> {
                     child: const Row(
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(
-                              right: 8.0), // Added padding
+                          padding: EdgeInsets.only(right: 8.0), // Added padding
                           child: Icon(Icons.payment,
                               size: 20, color: Color(0xFF2598D7)),
                         ),
@@ -363,8 +350,7 @@ class _ProfileState extends State<ProfilePage> {
                     child: const Row(
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(
-                              right: 8.0), // Added padding
+                          padding: EdgeInsets.only(right: 8.0), // Added padding
                           child: Icon(Icons.location_pin,
                               size: 20, color: Color(0xFF2598D7)),
                         ),
@@ -395,8 +381,7 @@ class _ProfileState extends State<ProfilePage> {
                     child: const Row(
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(
-                              right: 8.0), // Added padding
+                          padding: EdgeInsets.only(right: 8.0), // Added padding
                           child: Icon(Icons.info,
                               size: 20, color: Color(0xFF2598D7)),
                         ),

@@ -25,7 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _stateController = TextEditingController();
   final _zipCodeController = TextEditingController();
   DateTime? _selectedDate = DateTime.now();
-
+  late User newUser;
   String? _selectedState;
 
   List<String> states = [
@@ -105,6 +105,7 @@ class _RegisterPageState extends State<RegisterPage> {
         password: _passwordController.text.trim(),
       );
       addUserDetails(
+        _usernameController.text.trim(),
         _firstNameController.text.trim(),
         _lastNameController.text.trim(),
         _emailController.text.trim(),
@@ -113,7 +114,6 @@ class _RegisterPageState extends State<RegisterPage> {
         _cityController.text.trim(),
         _stateController.text.trim(),
         _zipCodeController.text.trim(),
-        _usernameController.text.trim(),
       );
     } else {
       showDialog(
@@ -229,7 +229,6 @@ class _RegisterPageState extends State<RegisterPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: TextField(
-                  obscureText: true,
                   controller: _usernameController,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
@@ -250,10 +249,9 @@ class _RegisterPageState extends State<RegisterPage> {
               const SizedBox(height: 10),
 
               // first name text field
-             Padding(
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: TextField(
-                  obscureText: true,
                   controller: _firstNameController,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
@@ -277,7 +275,6 @@ class _RegisterPageState extends State<RegisterPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: TextField(
-                  obscureText: true,
                   controller: _lastNameController,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
@@ -328,9 +325,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 children: [
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 25.0,
-                          right: 5.0), 
+                      padding: const EdgeInsets.only(left: 25.0, right: 5.0),
                       child: Container(
                         decoration: BoxDecoration(
                           color: Colors.grey[200],
@@ -464,7 +459,6 @@ class _RegisterPageState extends State<RegisterPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: TextField(
-                  obscureText: true,
                   controller: _emailController,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
