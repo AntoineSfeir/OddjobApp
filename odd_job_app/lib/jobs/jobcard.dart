@@ -1,10 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobs/job.dart';
+import 'package:odd_job_app/jobs/user.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/jobs/jobdescription.dart';
 import 'package:odd_job_app/jobs/compute_time_to_display.dart';
 import 'package:odd_job_app/jobs/geolocation/compute_distance.dart';
-import 'package:odd_job_app/jobs/user.dart';
 
 //import 'package:geolocator/geolocator.dart';
 
@@ -59,9 +59,7 @@ class JobCard extends StatelessWidget {
   return timeRemainingA.compareTo(timeRemainingB);
   }
 
-
-
-  @override
+ @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Navigator.push(
@@ -74,8 +72,7 @@ class JobCard extends StatelessWidget {
         color: cardBackgroundColor,
         margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
         shape: RoundedRectangleBorder(
-          borderRadius:
-              BorderRadius.circular(15.0), // Adjust the radius as needed
+          borderRadius: BorderRadius.circular(15.0),
         ),
         child: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -93,18 +90,18 @@ class JobCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 25,
+                height: 12, // Adjusted height for better spacing
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  const Text(
+                  Text(
                     'Current Bid',
                     textAlign: TextAlign.left,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 18, // Adjusted font size
                     ),
                   ),
                   Row(
@@ -114,6 +111,7 @@ class JobCard extends StatelessWidget {
                         style: TextStyle(
                           color: moneyTextColor,
                           fontWeight: FontWeight.bold,
+                          fontSize: 18, // Adjusted font size
                         ),
                       ),
                       Text(
@@ -122,7 +120,7 @@ class JobCard extends StatelessWidget {
                         style: TextStyle(
                           color: moneyTextColor,
                           fontWeight: FontWeight.bold,
-                          fontSize: 30,
+                          fontSize: 24, // Adjusted font size
                         ),
                       ),
                     ],
@@ -130,12 +128,10 @@ class JobCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 10,
+                height: 8, // Adjusted height for better spacing
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                // set current user geo location
                 children: <Widget>[
                   Text(
                     '${computedDistance.compute(currentUser.currentLocation, job.longlat)} miles',
@@ -143,7 +139,7 @@ class JobCard extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 18, // Adjusted font size
                     ),
                   ),
                   Text(
@@ -152,7 +148,7 @@ class JobCard extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 18, // Adjusted font size
                     ),
                   ),
                 ],
