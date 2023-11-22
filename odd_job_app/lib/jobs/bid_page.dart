@@ -5,7 +5,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // ignore_for_file: unused_import
 
-
 class BidPage extends StatefulWidget {
   final String stringBid;
 
@@ -70,6 +69,10 @@ class _BidPageState extends State<BidPage> {
         .then((value) => print("job put in userPosted"))
         .catchError(
             (error) => print("Failed to put job in UserPoster: $error"));
+
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => const BidPostedSuccessfullyPage(),
+    ));
   }
 
   @override
@@ -134,5 +137,113 @@ class _BidPageState extends State<BidPage> {
         ),
       ),
     );
+  }
+}
+
+class BidPostedSuccessfullyPage extends StatelessWidget {
+  const BidPostedSuccessfullyPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'Bids',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      body: const Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Animated Check Mark
+            AnimatedCheckMark(),
+
+            // Success Message
+            SizedBox(height: 16),
+            Text(
+              'Your bid has been successfully placed!',
+              style: TextStyle(fontSize: 18),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AnimatedCheckMark extends StatefulWidget {
+  const AnimatedCheckMark({super.key});
+
+  @override
+  _AnimatedCheckMarkState createState() => _AnimatedCheckMarkState();
+}
+
+class _AnimatedCheckMarkState extends State<AnimatedCheckMark>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _opacityAnimation;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Animation Controller
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+
+    // Opacity Animation
+    _opacityAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: const Interval(0.7, 1.0, curve: Curves.easeOut),
+    ));
+
+    // Scale Animation
+    _scaleAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: const Interval(0.0, 0.7, curve: Curves.easeOutBack),
+    ));
+
+    // Start the animation
+    _controller.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Opacity(
+          opacity: _opacityAnimation.value,
+          child: Transform.scale(
+            scale: _scaleAnimation.value,
+            child: const Icon(
+              Icons.check_circle,
+              color: Colors.green,
+              size: 100,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
