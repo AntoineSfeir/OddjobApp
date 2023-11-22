@@ -13,7 +13,7 @@ class MyBidsViewTab extends StatefulWidget {
 }
 
 class _MyBidsViewTabState extends State<MyBidsViewTab> {
-  final _bidController = TextEditingController();
+  List<TextEditingController> _bidControllers = [];
 
   late final List<bid> myJobs;
   computeTime computedTime = computeTime();
@@ -22,31 +22,36 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
   void initState() {
     super.initState();
     myJobs = widget.myBids;
+        _bidControllers = List.generate(myJobs.length, (index) => TextEditingController());
   }
 
   @override
   void dispose() {
     super.dispose();
-    _bidController.dispose();
-  }
 
-  Future changeBid(bid myBid) async {
+      for (TextEditingController controller in _bidControllers) {
+      controller.dispose();
+    }
+  }
+  // Function to update the bid in Firestore
+  Future changeBid(bid myBid, TextEditingController bidController) async {
     await FirebaseFirestore.instance
         .collection('users')
         .doc(myBid.bidder.ID)
         .collection('currentBids')
         .doc(myBid.bidID)
         .set({
-      'bidAmount': _bidController.text.trim(),
-      'jobID': myBid.jobThatWasBidOn.ID
+      'bidAmount': bidController.text.trim(),
+      'jobID': myBid.jobThatWasBidOn.ID,
     });
     print("JOBID : ${myBid.jobThatWasBidOn.ID}");
-    print("BIDAMOUNT : ${_bidController.text.trim()}");
+    print("BIDAMOUNT : ${bidController.text.trim()}");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       body: ListView.builder(
         itemCount: myJobs.length,
         itemBuilder: (context, index) {
@@ -108,7 +113,7 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
                                     children: [
                                       Expanded(
                                         child: TextFormField(
-                                          controller: _bidController,
+                                          controller: _bidControllers[index],
                                           keyboardType: TextInputType.number,
                                           decoration: InputDecoration(
                                             hintText: 'Edit your bid',
@@ -118,7 +123,7 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
                                       ),
                                       ElevatedButton(
                                         onPressed: () {
-                                          changeBid(thebid);
+                                          changeBid(thebid, _bidControllers[index]);
                                           // Navigate to the accept job page
                                         },
                                         child: Text('Change Bid'),

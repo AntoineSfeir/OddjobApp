@@ -150,14 +150,14 @@ class _ProfileState extends State<ProfilePage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Color(0xFFF8FBFD),
+          backgroundColor: Colors.grey[200],
         body: Stack(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AppBar(
-                  backgroundColor: Color(0xFF4F82A3),
+                  backgroundColor: const Color(0xFF4F82A3),
                   title: const Text('Profile',
                       style: TextStyle(
                           color: Colors.white,
@@ -180,37 +180,21 @@ class _ProfileState extends State<ProfilePage> {
                           shape: BoxShape.circle,
                           color: Colors.blue, // Blue circle
                         ),
-                        // child: ClipOval(
-                        //   child: _image != null
-                        //       ? Image.file(
-                        //           _image!,
-                        //           width: 150,
-                        //           height: 150,
-                        //           fit: BoxFit.cover,
-                        //         )
-                        //       : Image.network(
-                        //           avatarUrl ??
-                        //               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKurFbiK1YFmGY6LV3FwBqui2WOp7Kx7Jk7A&usqp=CAU",
-                        //           width: 150,
-                        //           height: 150,
-                        //           fit: BoxFit.cover,
-                        //         ),
-                        // ),
                         child: FutureBuilder<String?>(
                           future: getProfilePictureUrl(currentUserDocId!),
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return Center(child: CircularProgressIndicator());
+                              return const Center(child: CircularProgressIndicator());
                             } else if (snapshot.hasError ||
                                 snapshot.data == null) {
-                              return CircleAvatar(
+                              return const CircleAvatar(
                                 backgroundColor: Color(0xFFC9D0D4),
                               );
                             } else {
                               return Center(
                                 child: CircleAvatar(
-                                  backgroundColor: Color(0xFFC9D0D4),
+                                  backgroundColor: const Color(0xFFC9D0D4),
                                   backgroundImage: NetworkImage(snapshot.data!),
                                   radius: 50,
                                 ),
@@ -279,10 +263,10 @@ class _ProfileState extends State<ProfilePage> {
                   },
                   child: Container(
                     alignment: Alignment.centerLeft,
-                    child: Row(
+                    child: const Row(
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.only(
+                          padding: EdgeInsets.only(
                               right: 8.0), // Added padding
                           child: Icon(Icons.person,
                               size: 20, color: Color(0xFF2598D7)),
@@ -300,7 +284,7 @@ class _ProfileState extends State<ProfilePage> {
                   ),
                 ),
 
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 // Job history
                 TextButton(
                   onPressed: () {
@@ -315,7 +299,7 @@ class _ProfileState extends State<ProfilePage> {
                     child: const Row(
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.only(
+                          padding: EdgeInsets.only(
                               right: 8.0), // Added padding
                           child: Icon(Icons.history,
                               size: 20, color: Color(0xFF2598D7)),
@@ -332,7 +316,7 @@ class _ProfileState extends State<ProfilePage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 // Payment option
                 TextButton(
                   onPressed: () {
@@ -347,7 +331,7 @@ class _ProfileState extends State<ProfilePage> {
                     child: const Row(
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.only(
+                          padding: EdgeInsets.only(
                               right: 8.0), // Added padding
                           child: Icon(Icons.payment,
                               size: 20, color: Color(0xFF2598D7)),
@@ -364,7 +348,7 @@ class _ProfileState extends State<ProfilePage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 // Manage Address Info
                 TextButton(
                   onPressed: () {
@@ -379,7 +363,7 @@ class _ProfileState extends State<ProfilePage> {
                     child: const Row(
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.only(
+                          padding: EdgeInsets.only(
                               right: 8.0), // Added padding
                           child: Icon(Icons.location_pin,
                               size: 20, color: Color(0xFF2598D7)),
@@ -396,7 +380,7 @@ class _ProfileState extends State<ProfilePage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 // About OddJob
                 TextButton(
                   onPressed: () {
@@ -411,7 +395,7 @@ class _ProfileState extends State<ProfilePage> {
                     child: const Row(
                       children: <Widget>[
                         Padding(
-                          padding: const EdgeInsets.only(
+                          padding: EdgeInsets.only(
                               right: 8.0), // Added padding
                           child: Icon(Icons.info,
                               size: 20, color: Color(0xFF2598D7)),
@@ -430,7 +414,7 @@ class _ProfileState extends State<ProfilePage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 16.0),
+                const SizedBox(height: 16.0),
                 // logout button
                 TextButton(
                   onPressed: () {
@@ -447,7 +431,7 @@ class _ProfileState extends State<ProfilePage> {
                         Padding(
                           padding: EdgeInsets.only(right: 8.0), // Added padding
                           child: Icon(Icons.logout,
-                              size: 18, color: Color(0xFF2598D7)),
+                              size: 20, color: Color(0xFF2598D7)),
                         ),
                         SizedBox(
                           width: 5,
@@ -468,7 +452,7 @@ class _ProfileState extends State<ProfilePage> {
           ],
         ),
         bottomNavigationBar: BottomAppBar(
-          color: Color(0xFF4F82A3),
+          color: const Color(0xFF4F82A3),
           shape: const CircularNotchedRectangle(),
           child: SizedBox(
             height: 60.0,

@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobs/bid.dart';
 import 'package:odd_job_app/jobs/job.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AcceptJobPage extends StatefulWidget {
   final bid thisBid;
@@ -101,6 +101,7 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: const Text("Accept Job"),
       ),
@@ -110,7 +111,13 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildRow("Job Description", ""),
+                    Text(
+                      'Job Description',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
                   const SizedBox(height: 4),
                   _buildRow("", finalBid.jobThatWasBidOn.description),
                   const SizedBox(height: 12),
@@ -144,28 +151,34 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
   }
 
   Widget _buildRow(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 8.0),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          label,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+        Flexible(
+          child: Container(
+            child: Text(
+              value,
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.black,
+              ),
             ),
           ),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 16,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
+
 }
 
 class BidClosedPage extends StatelessWidget {

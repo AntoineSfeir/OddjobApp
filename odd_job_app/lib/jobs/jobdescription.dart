@@ -55,6 +55,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
 @override
 Widget build(BuildContext context) {
   return Scaffold(
+    backgroundColor: Colors.grey[200],
     appBar: AppBar(
       title: const Text('Job Details'),
       backgroundColor: const Color(0xFF4F83A2),
@@ -83,28 +84,31 @@ Widget build(BuildContext context) {
                         ),
                       ],
                     ),
-                    child: GoogleMap(
-                      initialCameraPosition:
-                          CameraPosition(target: l, zoom: 18),
-                      mapType: MapType.normal,
-                      myLocationButtonEnabled: true,
-                      compassEnabled: true,
-                      markers: _markers,
-                      onMapCreated: (GoogleMapController controller) {
-                        _mapController = controller;
-                        _markers.add(Marker(
-                          markerId: const MarkerId('jobMarker'),
-                          visible: true,
-                          position: l,
-                          infoWindow: InfoWindow(
-                            title:
-                                '${computedDistance.compute(thisJob.longlat, thisJob.longlat).toString()} miles',
-                          ),
-                        ));
-                        _mapController.animateCamera(
-                          CameraUpdate.newLatLng(l),
-                        );
-                      },
+                    child: SizedBox(
+                      height: 100,
+                      child: GoogleMap(
+                        initialCameraPosition:
+                            CameraPosition(target: l, zoom: 18),
+                        mapType: MapType.normal,
+                        myLocationButtonEnabled: true,
+                        compassEnabled: true,
+                        markers: _markers,
+                        onMapCreated: (GoogleMapController controller) {
+                          _mapController = controller;
+                          _markers.add(Marker(
+                            markerId: const MarkerId('jobMarker'),
+                            visible: true,
+                            position: l,
+                            infoWindow: InfoWindow(
+                              title:
+                                  '${computedDistance.compute(thisJob.longlat, thisJob.longlat).toString()} miles',
+                            ),
+                          ));
+                          _mapController.animateCamera(
+                            CameraUpdate.newLatLng(l),
+                          );
+                        },
+                      ),
                     ),
                   ),
                   Padding(
@@ -241,7 +245,7 @@ Widget build(BuildContext context) {
                             ),
                             padding:
                                 MaterialStateProperty.all<EdgeInsetsGeometry>(
-                              const EdgeInsets.symmetric(horizontal: 24),
+                              const EdgeInsets.symmetric(horizontal: 24, vertical:12),
                             ),
                           ),
                           child: const Text(
@@ -252,6 +256,7 @@ Widget build(BuildContext context) {
                             ),
                           ),
                         ),
+                        SizedBox(height: 16.0),
                       ],
                     ),
                   ),
