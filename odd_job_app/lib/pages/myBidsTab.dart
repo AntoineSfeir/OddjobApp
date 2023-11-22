@@ -22,17 +22,19 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
   void initState() {
     super.initState();
     myJobs = widget.myBids;
-        _bidControllers = List.generate(myJobs.length, (index) => TextEditingController());
+    _bidControllers =
+        List.generate(myJobs.length, (index) => TextEditingController());
   }
 
   @override
   void dispose() {
     super.dispose();
 
-      for (TextEditingController controller in _bidControllers) {
+    for (TextEditingController controller in _bidControllers) {
       controller.dispose();
     }
   }
+
   // Function to update the bid in Firestore
   Future changeBid(bid myBid, TextEditingController bidController) async {
     await FirebaseFirestore.instance
@@ -95,10 +97,14 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
                               children: [
                                 Row(
                                   children: [
-                                    const Icon(Icons.monetization_on),
+                                    const Icon(
+                                      Icons.monetization_on_outlined,
+                                      color: Colors
+                                          .green, // Set the desired color
+                                    ),
                                     const SizedBox(width: 4),
                                     Text(
-                                      ' Current Bid Amount: ${thebid.amount}',
+                                      ' Current Bid: ${thebid.amount}',
                                       style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -106,27 +112,45 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
                                   ],
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(
-                                      left:
-                                          24), // Adjust the left padding as needed
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical:
+                                          8), // Adjust the left padding as needed
                                   child: Row(
                                     children: [
                                       Expanded(
                                         child: TextFormField(
                                           controller: _bidControllers[index],
                                           keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
+                                          decoration: const InputDecoration(
                                             hintText: 'Edit your bid',
                                           ),
                                           onTap: () {},
                                         ),
                                       ),
+                                      const SizedBox(width: 20),
                                       ElevatedButton(
                                         onPressed: () {
-                                          changeBid(thebid, _bidControllers[index]);
+                                          changeBid(
+                                              thebid, _bidControllers[index]);
                                           // Navigate to the accept job page
                                         },
-                                        child: Text('Change Bid'),
+                                        style: ButtonStyle(
+                                          padding: MaterialStateProperty.all<
+                                              EdgeInsetsGeometry>(
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 12, vertical: 8),
+                                          ),
+                                          minimumSize:
+                                              MaterialStateProperty.all<Size>(
+                                            const Size(100,
+                                                36), // Adjust the size as needed
+                                          ),
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                            Colors.green),
+                                        ),
+                                        child: const Text('Change Bid'),
                                       ),
                                     ],
                                   ),

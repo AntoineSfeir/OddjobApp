@@ -76,7 +76,7 @@ class _SearchPageState extends State<SearchPage> {
                 expandedHeight: 55.0, // Set a fixed height
                 floating: false,
                 pinned: true,
-                backgroundColor: Color(0xFF4F82A3),
+                backgroundColor: Colors.indigo,
                 title: Text(
                   'Find a Job',
                   style: TextStyle(
@@ -220,7 +220,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ),
           bottomNavigationBar: BottomAppBar(
-            color: const Color(0xFF4F82A3),
+            color: Colors.indigo,
             shape: const CircularNotchedRectangle(),
             child: SizedBox(
               height: 60.0,

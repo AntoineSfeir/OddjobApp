@@ -36,7 +36,7 @@ class _ProfileState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    thisUser = widget.currentUser;// Call the method in initState
+    thisUser = widget.currentUser; // Call the method in initState
   }
 
   // Function to open the image picker
@@ -143,10 +143,10 @@ class _ProfileState extends State<ProfilePage> {
         body: Stack(
           children: [
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 AppBar(
-                  backgroundColor: const Color(0xFF4F82A3),
+                  backgroundColor: Colors.indigo,
                   title: const Text('Profile',
                       style: TextStyle(
                           color: Colors.white,
@@ -154,6 +154,7 @@ class _ProfileState extends State<ProfilePage> {
                           fontWeight: FontWeight.bold)),
                 ),
                 // Profile Picture and Name
+                
                 Row(
                   children: [
                     GestureDetector(
@@ -208,6 +209,7 @@ class _ProfileState extends State<ProfilePage> {
                             style: const TextStyle(
                               fontSize: 36,
                               fontWeight: FontWeight.bold,
+                              color: Colors.black,
                             ),
                           ),
                         ],
@@ -216,57 +218,55 @@ class _ProfileState extends State<ProfilePage> {
                   ],
                 ),
 
-                // Divider
-                Container(
-                  margin: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0,
-                    top: MediaQuery.of(context).size.height * 0.02,
-                    right: MediaQuery.of(context).size.width * 0,
-                  ),
-                  height: 2,
-                  color: (Colors.grey), // Divider color
-                ),
+                const SizedBox(height: 10),
 
                 _ProfileInfoRow(
                     numOfJobsPosted: widget.currentUser.jobsPosted,
                     numOfJobsCompleted: widget.currentUser.jobsCompleted),
                 // Divider
                 Container(
-                  margin: EdgeInsets.only(
-                    left: MediaQuery.of(context).size.width * 0,
-                    top: MediaQuery.of(context).size.height * 0.009,
-                    right: MediaQuery.of(context).size.width * 0,
-                  ),
                   height: 2,
-                  color: (Colors.grey), // Divider color
+                  color: Colors.grey,
+                  margin:
+                      EdgeInsets.symmetric(vertical: 10.0), // Adjusted margin
                 ),
                 // Options List
                 const SizedBox(height: 10),
                 // Manage Profile Information
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ProfileInfoPage(currentUser: thisUser)),
-                    );
-                  },
-                  child: Container(
-                    alignment: Alignment.centerLeft,
+                SizedBox(
+                  width: MediaQuery.of(context).size.width *
+                      0.8, // Adjust the factor as needed
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ProfileInfoPage(currentUser: thisUser),
+                        ),
+                      );
+                    },
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 12.0),
+                      backgroundColor: Colors.white,
+                      elevation: 3.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
                     child: const Row(
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(right: 8.0), // Added padding
+                          padding: EdgeInsets.only(right: 8.0),
                           child: Icon(Icons.person,
-                              size: 20, color: Color(0xFF2598D7)),
+                              size: 20, color: Color.fromARGB(255, 0, 0, 0)),
                         ),
-                        SizedBox(
-                          width: 5,
-                        ),
+                        SizedBox(width: 5),
                         Text(
                           'Profile Info',
                           style:
-                              TextStyle(fontSize: 20, color: Color(0xFF2598D7)),
+                              TextStyle(fontSize: 20, color: Color.fromARGB(255, 0, 0, 0)),
                         ),
                       ],
                     ),
@@ -275,160 +275,230 @@ class _ProfileState extends State<ProfilePage> {
 
                 const SizedBox(height: 10),
                 // Job history
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const JobHistoryPage()),
-                    );
-                  },
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: const Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(right: 8.0), // Added padding
-                          child: Icon(Icons.history,
-                              size: 20, color: Color(0xFF2598D7)),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          'Job History',
-                          style:
-                              TextStyle(fontSize: 20, color: Color(0xFF2598D7)),
-                        ),
-                      ],
+                SizedBox(
+                  width: MediaQuery.of(context).size.width *
+                      0.8, // Adjust the factor as needed
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const JobHistoryPage()),
+                      );
+                    },
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 12.0),
+                      backgroundColor: Colors.white,
+                      elevation: 3.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: const Row(
+                        children: <Widget>[
+                          Padding(
+                            padding:
+                                EdgeInsets.only(right: 8.0), // Added padding
+                            child: Icon(Icons.history,
+                                size: 20, color: Color.fromARGB(255, 0, 0, 0)),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'Job History',
+                            style: TextStyle(
+                                fontSize: 20, color: Color.fromARGB(255, 0, 0, 0)),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 16.0),
+                const SizedBox(height: 10.0),
                 // Payment option
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const PaymentOptionsPage()),
-                    );
-                  },
-                  child: Container(
-                    alignment: Alignment.centerLeft,
+                SizedBox(
+                  width: MediaQuery.of(context).size.width *
+                      0.8, // Adjust the factor as needed
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const PaymentOptionsPage(),
+                        ),
+                      );
+                    },
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 12.0),
+                      backgroundColor: Colors.white,
+                      elevation: 3.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
                     child: const Row(
                       children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(right: 8.0), // Added padding
-                          child: Icon(Icons.payment,
-                              size: 20, color: Color(0xFF2598D7)),
+                        Icon(
+                          Icons.payment,
+                          size: 20,
+                          color: Color.fromARGB(255, 0, 0, 0),
                         ),
-                        SizedBox(
-                          width: 5,
-                        ),
+                        SizedBox(width: 12.0),
                         Text(
                           'Manage Payment Options',
-                          style:
-                              TextStyle(fontSize: 20, color: Color(0xFF2598D7)),
+                          style: TextStyle(
+                            fontSize: 20,
+                            color:  Color.fromARGB(255, 0, 0, 0),
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(height: 16.0),
+
+                const SizedBox(height: 10.0),
                 // Manage Address Info
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ManageLocationInfoPage()),
-                    );
-                  },
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: const Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(right: 8.0), // Added padding
-                          child: Icon(Icons.location_pin,
-                              size: 20, color: Color(0xFF2598D7)),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          'Manage Location Settings',
-                          style:
-                              TextStyle(fontSize: 20, color: Color(0xFF2598D7)),
-                        ),
-                      ],
+                SizedBox(
+                  width: MediaQuery.of(context).size.width *
+                      0.8, // Adjust the factor as needed
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const ManageLocationInfoPage()),
+                      );
+                    },
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 12.0),
+                      backgroundColor: Colors.white,
+                      elevation: 3.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: const Row(
+                        children: <Widget>[
+                          Padding(
+                            padding:
+                                EdgeInsets.only(right: 8.0), // Added padding
+                            child: Icon(Icons.location_pin,
+                                size: 20, color:  Color.fromARGB(255, 0, 0, 0)),
+                          ),
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'Manage Location Settings',
+                            style: TextStyle(
+                                fontSize: 20, color:  Color.fromARGB(255, 0, 0, 0)),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 16.0),
+                const SizedBox(height: 10.0),
                 // About OddJob
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const AboutOddJobPage()),
-                    );
-                  },
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: const Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(right: 8.0), // Added padding
-                          child: Icon(Icons.info,
-                              size: 20, color: Color(0xFF2598D7)),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          'About OddJob',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Color(0xFF2598D7),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width *
+                      0.8, // Adjust the factor as needed
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AboutOddJobPage()),
+                      );
+                    },
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 12.0),
+                      backgroundColor: Colors.white,
+                      elevation: 3.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: const Row(
+                        children: <Widget>[
+                          Padding(
+                            padding:
+                                EdgeInsets.only(right: 8.0), // Added padding
+                            child: Icon(Icons.info,
+                                size: 20, color:  Color.fromARGB(255, 0, 0, 0)),
                           ),
-                        ),
-                      ],
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'About OddJob',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color:  Color.fromARGB(255, 0, 0, 0),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 16.0),
+                const SizedBox(height: 10.0),
                 // logout button
-                TextButton(
-                  onPressed: () {
-                    FirebaseAuth.instance.signOut();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const MainPage()),
-                    );
-                  },
-                  child: Container(
-                    alignment: Alignment.centerLeft,
-                    child: const Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(right: 8.0), // Added padding
-                          child: Icon(Icons.logout,
-                              size: 20, color: Color(0xFF2598D7)),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          'Logout',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Color(0xFF2598D7),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width *
+                      0.8, // Adjust the factor as needed
+                  child: TextButton(
+                    onPressed: () {
+                      FirebaseAuth.instance.signOut();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const MainPage()),
+                      );
+                    },
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 12.0, horizontal: 12.0),
+                      backgroundColor: Colors.white,
+                      elevation: 3.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                    ),
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      child: const Row(
+                        children: <Widget>[
+                          Padding(
+                            padding:
+                                EdgeInsets.only(right: 8.0), // Added padding
+                            child: Icon(Icons.logout,
+                                size: 20, color:  Color.fromARGB(255, 0, 0, 0)),
                           ),
-                        ),
-                      ],
+                          SizedBox(
+                            width: 5,
+                          ),
+                          Text(
+                            'Logout',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Color.fromARGB(255, 0, 0, 0),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -437,7 +507,7 @@ class _ProfileState extends State<ProfilePage> {
           ],
         ),
         bottomNavigationBar: BottomAppBar(
-          color: const Color(0xFF4F82A3),
+          color: Colors.indigo,
           shape: const CircularNotchedRectangle(),
           child: SizedBox(
             height: 60.0,

@@ -16,6 +16,7 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
+       backgroundColor: Colors.indigo,
         title: const Text(
           "Payment Options",
           style: TextStyle(

@@ -368,7 +368,7 @@ class _PostJobPageState extends State<PostJobPage> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        backgroundColor: const Color(0xFF4F82A3),
+        backgroundColor: Colors.indigo,
         title: const Text(
           'Post a Job',
           style: TextStyle(

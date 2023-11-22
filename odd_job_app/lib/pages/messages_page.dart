@@ -29,7 +29,7 @@ class _MessagesPageState extends State<MessagesPage> {
             backgroundColor: Colors.grey[100],
           appBar: AppBar(
             backgroundColor:
-                const Color(0xFF4F82A3), // Set the same color as the bottom bar
+                Colors.indigo, // Set the same color as the bottom bar
             title: const Text(
               "Messages",
               style: TextStyle(
@@ -40,7 +40,7 @@ class _MessagesPageState extends State<MessagesPage> {
           ),
           body: buildUserList(),
           bottomNavigationBar: BottomAppBar(
-            color: const Color(0xFF4F82A3),
+            color: Colors.indigo,
             shape: const CircularNotchedRectangle(),
             child: SizedBox(
               height: 60.0,

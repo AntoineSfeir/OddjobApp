@@ -13,6 +13,7 @@ class _CreditCardPageState extends State<CreditCardPage> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
+        backgroundColor: Colors.indigo,
         title: const Text(
           "Credit Card Details",
           style: TextStyle(

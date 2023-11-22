@@ -94,8 +94,9 @@ class _GoToCheckoutState extends State<GoToCheckout> {
     /// simple demo array of [PriceItem]s used to make the demo work. The total
     /// price is automatically added later.
     final List<PriceItem> _priceItems = [
+      
       PriceItem(
-          name: userToPay,
+          name: jobToCheckout.title,
           quantity: 1,
           totalPriceCents: int.parse(jobToCheckout.startingBid) * 100),
       PriceItem(name: 'Tax', quantity: 1, totalPriceCents: int.parse(jobToCheckout.startingBid)),

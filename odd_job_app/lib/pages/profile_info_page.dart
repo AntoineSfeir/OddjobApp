@@ -27,6 +27,7 @@ late final user thisUser;
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
+        backgroundColor: Colors.indigo,
         title: const Text(
           "Profile Information",
           style: TextStyle(

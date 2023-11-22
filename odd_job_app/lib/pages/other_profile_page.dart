@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobs/user.dart';
 import 'package:odd_job_app/pages/chat_page.dart';
 import 'package:odd_job_app/pages/job_history_page.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class OtherProfilePage extends StatefulWidget {
   final user recieverUser;
@@ -36,8 +37,9 @@ class _OtherProfileState extends State<OtherProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        backgroundColor: const Color(0xFF4F83A2),
+        backgroundColor: Colors.indigo,
         title: Text(thisUser.username),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -63,7 +65,7 @@ class _OtherProfileState extends State<OtherProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
-                          width: 190, // Adjusted width as needed
+                          width: 160, // Adjusted width as needed
                           child: FloatingActionButton.extended(
                             onPressed: () {
                               Navigator.push(
@@ -78,7 +80,7 @@ class _OtherProfileState extends State<OtherProfilePage> {
                             },
                             heroTag: 'mesage',
                             elevation: 0,
-                            backgroundColor: const Color(0xFF2598D7),
+                            backgroundColor: Colors.green,
                             label: const Text(
                               "Message",
                               style: TextStyle(
@@ -138,8 +140,7 @@ class _OtherProfileState extends State<OtherProfilePage> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(
-                            0xFF1D465D), // Set the desired background color
+                        backgroundColor: Colors.blue, // Set the desired background color
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
                               20.0), // Adjusted border radius
@@ -309,13 +310,14 @@ class _ProfileRatingsAndReviews extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
-        color: Colors.grey[200],
+        color: Colors.indigo[100],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             'Ratings and Reviews',
+            
             style: Theme.of(context)
                 .textTheme
                 .titleLarge
@@ -387,13 +389,13 @@ class _RatingCategory extends StatelessWidget {
     );
   }
 
-  Widget _buildStarIcon(BuildContext context, double rating) {
-    // Replace this with your own logic to build star icons based on the rating
-    // For simplicity, this example uses a filled star icon
-    return const Icon(
-      Icons.star,
-      color: Colors.yellow,
-      size: 20.0,
-    );
-  }
+Widget _buildStarIcon(BuildContext context, double rating) {
+  return const Icon(
+    // Custom star icon, for example, using the FontAwesome icons
+    FontAwesomeIcons.solidStar,
+    color: Colors.yellow,
+    size: 20.0,
+  );
+}
+
 }

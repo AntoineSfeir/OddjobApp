@@ -58,7 +58,7 @@ Widget build(BuildContext context) {
     backgroundColor: Colors.grey[200],
     appBar: AppBar(
       title: const Text('Job Details'),
-      backgroundColor: const Color(0xFF4F83A2),
+      backgroundColor: Colors.indigo,
       elevation: 0,
     ),
     body: FutureBuilder(
@@ -127,7 +127,7 @@ Widget build(BuildContext context) {
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
-                              const Color(0xFF2598D7)),
+                              Colors.indigo),
                           shape: MaterialStateProperty.all<
                               RoundedRectangleBorder>(
                             RoundedRectangleBorder(
@@ -154,7 +154,7 @@ Widget build(BuildContext context) {
                       child: Text(
                         "${(avgUserRating / 2).round()}/5 stars based on ${5} ratings",
                         style: const TextStyle(
-                          fontSize: 24.0,
+                          fontSize: 20.0,
                           fontWeight: FontWeight.bold,
                           color: Colors.blue,
                           decoration: TextDecoration.underline,
@@ -163,7 +163,7 @@ Widget build(BuildContext context) {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(10.0),
                     child: Center(
                       child: Text(
                         "Time Remaining: ${computedTime.compute(thisJob.deadline)}",
@@ -210,56 +210,61 @@ Widget build(BuildContext context) {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const SizedBox(height: 16.0),
-                        Text(
-                          "Current Bid: \$${thisJob.startingBid}",
-                          style: const TextStyle(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 16.0),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BidPage(
-                                  stringBid: thisJob.startingBid,
-                                  jobID: thisJob.ID,
-                                ),
-                              ),
-                            );
-                          },
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                const Color(0xFF1D465D)),
-                            minimumSize: MaterialStateProperty.all<Size>(
-                              const Size(
-                                  200, 50), // Adjust the height as needed
-                            ),
-                            padding:
-                                MaterialStateProperty.all<EdgeInsetsGeometry>(
-                              const EdgeInsets.symmetric(horizontal: 24, vertical:12),
-                            ),
-                          ),
-                          child: const Text(
-                            'Bid Now',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 16.0),
-                      ],
-                    ),
-                  ),
+                  const SizedBox(height: 10),
+                 Center(
+  child: Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      const SizedBox(height: 10.0),
+      Text(
+        "Current Bid: \$${thisJob.startingBid}",
+        style: const TextStyle(
+          fontSize: 24.0,
+          fontWeight: FontWeight.bold,
+          color: Colors.blue, // Adjust the color
+        ),
+      ),
+      const SizedBox(height: 16.0),
+      ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => BidPage(
+                stringBid: thisJob.startingBid,
+                jobID: thisJob.ID,
+              ),
+            ),
+          );
+        },
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+          minimumSize: MaterialStateProperty.all<Size>(
+            const Size(200, 50), // Adjust the height as needed
+          ),
+          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+            const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          ),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25.0), // Adjust the radius
+            ),
+          ),
+        ),
+        child: const Text(
+          'Bid Now',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      const SizedBox(height: 16.0),
+    ],
+  ),
+),
+
                 ],
               ),
             );

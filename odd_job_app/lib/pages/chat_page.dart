@@ -66,7 +66,7 @@ class _ChatPageState extends State<ChatPage> {
         backgroundColor: Colors.grey[300],
         appBar: AppBar(
           backgroundColor:
-                const Color(0xFF4F82A3),
+                Colors.indigo,
           title: Text(widget.recieverUser),
           actions: [
             IconButton(
