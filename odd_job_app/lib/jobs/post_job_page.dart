@@ -365,258 +365,270 @@ class _PostJobPageState extends State<PostJobPage> {
   }
 
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[200],
-      appBar: AppBar(
-        backgroundColor: Colors.indigo,
-        title: const Text(
-          'Post a Job',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Colors.grey[200],
+        appBar: AppBar(
+          backgroundColor: Colors.indigo,
+          title: const Text(
+            'Post a Job',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-      ),
-      body: SingleChildScrollView(
-        child: SlidingUpPanel(
-          backdropEnabled: true,
-          defaultPanelState: PanelState.CLOSED,
-          maxHeight: MediaQuery.of(context).size.height - 100,
-          minHeight: 0,
-          controller: _panelController,
-          panel: SearchLocationScreen(onVariableChanged: handleVariableChange),
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Flexible(
-                  child: ListView.builder(
-                    itemCount: 1,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          const Text(
-                            'Job Title:',
-                            style: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold),
-                          ),
-                          _buildJobTitleAutocomplete(),
-                          const SizedBox(height: 16),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const Text(
-                                'Job Description:',
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
+        body: SingleChildScrollView(
+          child: SlidingUpPanel(
+            backdropEnabled: true,
+            defaultPanelState: PanelState.CLOSED,
+            maxHeight: MediaQuery.of(context).size.height - 100,
+            minHeight: 0,
+            controller: _panelController,
+            panel:
+                SearchLocationScreen(onVariableChanged: handleVariableChange),
+            body: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Flexible(
+                    child: ListView.builder(
+                      itemCount: 1,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            const Text(
+                              'Job Title:',
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            _buildJobTitleAutocomplete(),
+                            const SizedBox(height: 16),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'Job Description:',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                TextFormField(
+                                  controller: _jobDescriptionController,
+                                  maxLines: 11,
+                                  style: const TextStyle(
+                                      fontSize: 16), // Adjust the font size
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          12), // Adjust the border radius
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      borderSide: const BorderSide(
+                                          color: Colors.blue,
+                                          width:
+                                              2), // Adjust the border color and width
+                                    ),
+                                    hintText: 'Enter job description',
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 16,
+                                        horizontal: 12), // Adjust padding
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            Center(
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  _openSlidingPanel();
+                                },
+                                style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all<Color>(
+                                          Color.fromARGB(255, 11, 160, 68)),
+                                  minimumSize: MaterialStateProperty.all<Size>(
+                                      const Size(double.infinity, 50)),
+                                  padding: MaterialStateProperty.all<
+                                      EdgeInsetsGeometry>(
+                                    const EdgeInsets.symmetric(horizontal: 24),
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.location_on,
+                                      color: Colors.white,
+                                      size: 30,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    SizedBox(
+                                      width: 200,
+                                      child: Text(
+                                        enterYourAddressHere,
+                                        textAlign: TextAlign.center,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 16),
+                                  ],
                                 ),
                               ),
-                              const SizedBox(height: 8),
-                              TextFormField(
-                                controller: _jobDescriptionController,
-                                maxLines: 11,
-                                style: const TextStyle(
-                                    fontSize: 16), // Adjust the font size
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(
-                                        12), // Adjust the border radius
+                            ),
+                            const SizedBox(height: 16),
+                            Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      await _selectDeadLineDate(context);
+                                    },
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all<Color>(
+                                              const Color(0xFF2598D7)),
+                                      minimumSize:
+                                          MaterialStateProperty.all<Size>(
+                                              const Size(double.infinity, 50)),
+                                      padding: MaterialStateProperty.all<
+                                          EdgeInsetsGeometry>(
+                                        const EdgeInsets.symmetric(
+                                            horizontal: 24),
+                                      ),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const Icon(
+                                          Icons.calendar_today,
+                                          size: 30,
+                                          color: Colors.white,
+                                          semanticLabel: 'Calendar',
+                                        ),
+                                        const SizedBox(width: 8),
+                                        const Text(
+                                          ' Deadline Date:',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        Text(
+                                          _selectedDate != null
+                                              ? ' ${_selectedDate!.toLocal().month}-${_selectedDate!.toLocal().day}-${_selectedDate!.year}'
+                                              : ' Select a date',
+                                          style: const TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                    borderSide: const BorderSide(
-                                        color: Colors.blue,
-                                        width:
-                                            2), // Adjust the border color and width
-                                  ),
-                                  hintText: 'Enter job description',
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 16,
-                                      horizontal: 12), // Adjust padding
-                                ),
+                                  const SizedBox(height: 16),
+                                ],
                               ),
-                            ],
-                          ),
-                          const SizedBox(height: 16),
-                          Center(
-                            child: ElevatedButton(
-                              onPressed: () {
-                                _openSlidingPanel();
-                              },
+                            ),
+                            const SizedBox(height: 16),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  'Starting Bid',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                TextField(
+                                  keyboardType: TextInputType.number,
+                                  controller: _jobStartingBidController,
+                                  style: const TextStyle(
+                                      fontSize: 30, color: Colors.black),
+                                  textAlign: TextAlign.center,
+                                  decoration: InputDecoration(
+                                    hintText: '0.00',
+                                    hintStyle: const TextStyle(
+                                        fontSize: 30, color: Colors.grey),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      borderSide: const BorderSide(
+                                          color: Colors.indigoAccent, width: 2),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                      borderSide: const BorderSide(
+                                          color: Colors.indigoAccent, width: 2),
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        vertical: 9,
+                                        horizontal:
+                                            8), // Adjust horizontal padding
+                                    isDense: true,
+                                    prefixText: '\$',
+                                    prefixStyle: const TextStyle(
+                                        fontSize: 30, color: Colors.green),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+                            ElevatedButton(
+                              onPressed: postJob,
                               style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
-                                        Color.fromARGB(255, 11, 160, 68)),
+                                  Color.fromARGB(255, 12, 15, 189),
+                                ),
                                 minimumSize: MaterialStateProperty.all<Size>(
-                                    const Size(double.infinity, 50)),
+                                  const Size(double.infinity, 50),
+                                ),
                                 padding: MaterialStateProperty.all<
                                     EdgeInsetsGeometry>(
                                   const EdgeInsets.symmetric(horizontal: 24),
                                 ),
                               ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Icon(
-                                    Icons.location_on,
-                                    color: Colors.white,
-                                    size: 30,
-                                  ),
-                                  const SizedBox(width: 8),
-                                  SizedBox(
-                                    width: 200,
-                                    child: Text(
-                                      enterYourAddressHere,
-                                      textAlign: TextAlign.center,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                ],
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    await _selectDeadLineDate(context);
-                                  },
-                                  style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all<Color>(
-                                            const Color(0xFF2598D7)),
-                                    minimumSize:
-                                        MaterialStateProperty.all<Size>(
-                                            const Size(double.infinity, 50)),
-                                    padding: MaterialStateProperty.all<
-                                        EdgeInsetsGeometry>(
-                                      const EdgeInsets.symmetric(
-                                          horizontal: 24),
-                                    ),
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(
-                                        Icons.calendar_today,
-                                        size: 30,
-                                        color: Colors.white,
-                                        semanticLabel: 'Calendar',
-                                      ),
-                                      const SizedBox(width: 8),
-                                      const Text(
-                                        ' Deadline Date:',
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      Text(
-                                        _selectedDate != null
-                                            ? ' ${_selectedDate!.toLocal().month}-${_selectedDate!.toLocal().day}-${_selectedDate!.year}'
-                                            : ' Select a date',
-                                        style: const TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              const Text(
-                                'Starting Bid',
+                              child: const Text(
+                                'Post Job',
                                 style: TextStyle(
-                                  fontSize: 24,
+                                  color: Colors.white,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(height: 10),
-                              TextField(
-                                keyboardType: TextInputType.number,
-                                controller: _jobStartingBidController,
-                                style: const TextStyle(
-                                    fontSize: 30, color: Colors.black),
-                                textAlign: TextAlign.center,
-                                decoration: InputDecoration(
-                                  hintText: '0.00',
-                                  hintStyle: const TextStyle(
-                                      fontSize: 30, color: Colors.grey),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    borderSide: const BorderSide(
-                                        color: Colors.indigoAccent, width: 2),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    borderSide: const BorderSide(
-                                        color: Colors.indigoAccent, width: 2),
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 9,
-                                      horizontal:
-                                          8), // Adjust horizontal padding
-                                  isDense: true,
-                                  prefixText: '\$',
-                                  prefixStyle: const TextStyle(
-                                      fontSize: 30, color: Colors.green),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 16),
-                          ElevatedButton(
-                            onPressed: postJob,
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                Color.fromARGB(255, 12, 15, 189),
-                              ),
-                              minimumSize: MaterialStateProperty.all<Size>(
-                                const Size(double.infinity, 50),
-                              ),
-                              padding:
-                                  MaterialStateProperty.all<EdgeInsetsGeometry>(
-                                const EdgeInsets.symmetric(horizontal: 24),
-                              ),
                             ),
-                            child: const Text(
-                              'Post Job',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
+                          ],
+                        );
+                      },
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
