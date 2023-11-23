@@ -52,121 +52,130 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[200],
-      body: ListView.builder(
-        itemCount: myJobs.length,
-        itemBuilder: (context, index) {
-          List<bid> bidsForJob = myJobs;
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Colors.grey[200],
+        body: ListView.builder(
+          itemCount: myJobs.length,
+          itemBuilder: (context, index) {
+            List<bid> bidsForJob = myJobs;
 
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Card(
-              elevation: 3,
-              child: ExpansionTile(
-                title: Text(
-                  myJobs[index].jobThatWasBidOn.title,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-                subtitle: Text(
-                  computedTime.compute(myJobs[index].jobThatWasBidOn.deadline),
-                  style: const TextStyle(color: Colors.grey),
-                ),
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 8),
-                        const Text(
-                          'Job Description:',
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          myJobs[index].jobThatWasBidOn.description,
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                        const SizedBox(height: 12),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: bidsForJob.map((thebid) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.monetization_on_outlined,
-                                      color: Colors
-                                          .green, // Set the desired color
-                                    ),
-                                    const SizedBox(width: 4),
-                                    Text(
-                                      ' Current Bid: ${thebid.amount}',
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical:
-                                          8), // Adjust the left padding as needed
-                                  child: Row(
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Card(
+                elevation: 3,
+                child: ExpansionTile(
+                  title: Text(
+                    myJobs[index].jobThatWasBidOn.title,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(
+                    computedTime
+                        .compute(myJobs[index].jobThatWasBidOn.deadline),
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const SizedBox(height: 8),
+                          const Text(
+                            'Job Description:',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            myJobs[index].jobThatWasBidOn.description,
+                            style: TextStyle(color: Colors.grey[700]),
+                          ),
+                          const SizedBox(height: 12),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: bidsForJob.map((thebid) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
                                     children: [
-                                      Expanded(
-                                        child: TextFormField(
-                                          controller: _bidControllers[index],
-                                          keyboardType: TextInputType.number,
-                                          decoration: const InputDecoration(
-                                            hintText: 'Edit your bid',
-                                          ),
-                                          onTap: () {},
-                                        ),
+                                      const Icon(
+                                        Icons.monetization_on_outlined,
+                                        color: Colors
+                                            .green, // Set the desired color
                                       ),
-                                      const SizedBox(width: 20),
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          changeBid(
-                                              thebid, _bidControllers[index]);
-                                          // Navigate to the accept job page
-                                        },
-                                        style: ButtonStyle(
-                                          padding: MaterialStateProperty.all<
-                                              EdgeInsetsGeometry>(
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 12, vertical: 8),
-                                          ),
-                                          minimumSize:
-                                              MaterialStateProperty.all<Size>(
-                                            const Size(100,
-                                                36), // Adjust the size as needed
-                                          ),
-                                          backgroundColor:
-                                              MaterialStateProperty.all<Color>(
-                                            Colors.green),
+                                      const SizedBox(width: 4),
+                                      Text(
+                                        ' Current Bid: ${thebid.amount}',
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                        child: const Text('Change Bid'),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
-                            );
-                          }).toList(),
-                        ),
-                      ],
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                        vertical:
+                                            8), // Adjust the left padding as needed
+                                    child: Row(
+                                      children: [
+                                        Expanded(
+                                          child: TextFormField(
+                                            controller: _bidControllers[index],
+                                            keyboardType: TextInputType.number,
+                                            decoration: const InputDecoration(
+                                              hintText: 'Edit your bid',
+                                            ),
+                                            onTap: () {},
+                                          ),
+                                        ),
+                                        const SizedBox(width: 20),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            changeBid(
+                                                thebid, _bidControllers[index]);
+                                            // Navigate to the accept job page
+                                          },
+                                          style: ButtonStyle(
+                                            padding: MaterialStateProperty.all<
+                                                EdgeInsetsGeometry>(
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 12, vertical: 8),
+                                            ),
+                                            minimumSize:
+                                                MaterialStateProperty.all<Size>(
+                                              const Size(100,
+                                                  36), // Adjust the size as needed
+                                            ),
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                    Color>(Colors.green),
+                                          ),
+                                          child: const Text('Change Bid'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }).toList(),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
