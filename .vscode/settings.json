@@ -1,6 +1,6 @@
 {
     "cmake.configureOnOpen": true,
     "java.compile.nullAnalysis.mode": "automatic",
-    "cmake.sourceDirectory": "C:/Users/antoi/Documents/GitHub/OddjobApp/odd_job_app/linux",
+    "cmake.sourceDirectory": "/Users/antoinesfeir/Documents/code/GitHub/OddjobApp/odd_job_app/linux",
     "java.configuration.updateBuildConfiguration": "interactive"
 }

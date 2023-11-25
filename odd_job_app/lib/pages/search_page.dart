@@ -225,57 +225,55 @@ class _SearchPageState extends State<SearchPage> {
             child: SizedBox(
               height: 60.0,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.home),
-                    color: const Color.fromARGB(255, 248, 248, 248),
-                    iconSize: 40.0,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomePage2()),
-                      );
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.search),
-                    color: const Color.fromARGB(255, 238, 239, 239),
-                    iconSize: 40.0,
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    //alignment: ,
-                    icon: const Icon(Icons.chat),
-                    color: Colors.white,
-                    iconSize: 40.0,
-                    onPressed: () {
-                      Navigator.push(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.home),
+                      color: const Color.fromARGB(255, 248, 248, 248),
+                      iconSize: 40.0,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage2()),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.search),
+                      color: const Color.fromARGB(255, 238, 239, 239),
+                      iconSize: 40.0,
+                      onPressed: () {
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.chat),
+                      color: Colors.white,
+                      iconSize: 40.0,
+                      onPressed: () {
+                        Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => MessagesPage(
                                   currentUser: widget.currentUser,
                                 )),
                       );
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.person),
-                    color: Colors.white,
-                    iconSize: 40.0,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                ProfilePage(currentUser: widget.currentUser)),
-                      );
-                    },
-                  ),
-                  const SizedBox(width: 40.0),
-                ],
-              ),
+                      },
+                    ),
+                    IconButton(
+                        icon: const Icon(Icons.person),
+                        color: const Color.fromARGB(255, 238, 239, 239),
+                        iconSize: 40.0,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfilePage(
+                                      currentUser: widget.currentUser,
+                                    )),
+                          );
+                        }),
+                  ]),
             ),
           ),
           // floatingActionButton: FloatingActionButton(
