@@ -139,14 +139,14 @@ class _ProfileState extends State<ProfilePage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.grey[300],
         body: Stack(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 AppBar(
-                  backgroundColor: Colors.indigo,
+                  backgroundColor: Colors.black,
                   title: const Text('Profile',
                       style: TextStyle(
                           color: Colors.white,
@@ -455,59 +455,12 @@ class _ProfileState extends State<ProfilePage> {
                   ),
                 ),
                 const SizedBox(height: 10.0),
-                // logout button
-                SizedBox(
-                  width: MediaQuery.of(context).size.width *
-                      0.8, // Adjust the factor as needed
-                  child: TextButton(
-                    onPressed: () {
-                      FirebaseAuth.instance.signOut();
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const MainPage()),
-                      );
-                    },
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 12.0, horizontal: 12.0),
-                      backgroundColor: Colors.white,
-                      elevation: 3.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                    ),
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      child: const Row(
-                        children: <Widget>[
-                          Padding(
-                            padding:
-                                EdgeInsets.only(right: 8.0), // Added padding
-                            child: Icon(Icons.logout,
-                                size: 20, color:  Color.fromARGB(255, 0, 0, 0)),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            'Logout',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Color.fromARGB(255, 0, 0, 0),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
               ],
             ),
           ],
         ),
         bottomNavigationBar: BottomAppBar(
-          color: Colors.indigo,
+          color: Colors.black,
           shape: const CircularNotchedRectangle(),
           child: SizedBox(
             height: 60.0,
@@ -516,7 +469,7 @@ class _ProfileState extends State<ProfilePage> {
                 children: [
                   IconButton(
                       icon: const Icon(Icons.home),
-                      color: const Color.fromARGB(255, 248, 248, 248),
+                      color: Colors.white,
                       iconSize: 40.0,
                       onPressed: () {
                         Navigator.push(
@@ -527,7 +480,7 @@ class _ProfileState extends State<ProfilePage> {
                       }),
                   IconButton(
                     icon: const Icon(Icons.search),
-                    color: const Color.fromARGB(255, 238, 239, 239),
+                    color: Colors.white,
                     iconSize: 40.0,
                     onPressed: () {
                       Navigator.push(
@@ -554,7 +507,7 @@ class _ProfileState extends State<ProfilePage> {
                   ),
                   IconButton(
                       icon: const Icon(Icons.person),
-                      color: const Color.fromARGB(255, 238, 239, 239),
+                      color: Colors.white,
                       iconSize: 40.0,
                       onPressed: () {})
                 ]),
@@ -607,7 +560,7 @@ class _ProfileInfoRow extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 500),
         decoration: BoxDecoration(
-          color: Colors.blue, // Change the color as needed
+          color: Colors.indigo, // Change the color as needed
           borderRadius: BorderRadius.circular(12),
         ),
         child: Padding(

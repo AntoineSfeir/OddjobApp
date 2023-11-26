@@ -101,9 +101,9 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.black,
         title: const Text("Accept Job"),
       ),
       body: calculated
@@ -112,9 +112,9 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Job Description',
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),

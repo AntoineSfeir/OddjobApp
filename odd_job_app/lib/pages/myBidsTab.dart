@@ -60,7 +60,7 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
         }
       },
       child: Scaffold(
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.grey[300],
         body: ListView.builder(
           itemCount: myJobs.length,
           itemBuilder: (context, index) {

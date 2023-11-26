@@ -29,7 +29,7 @@ class _UsersPostedJobsViewState extends State<UsersPostedJobsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.grey[300],
       body: ListView.builder(
         itemCount: myJobs.length,
         itemBuilder: (context, index) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobs/user.dart';
+import 'package:odd_job_app/auth/main_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -27,15 +28,27 @@ late final user thisUser;
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        backgroundColor: Colors.indigo,
-        title: const Text(
-          "Profile Information",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+          backgroundColor: Colors.black,
+          title: const Text(
+            "Account Information",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MainPage()),
+                );
+              },
+            ),
+          ],
         ),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(

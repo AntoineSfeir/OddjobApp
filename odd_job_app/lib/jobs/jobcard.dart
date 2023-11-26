@@ -141,7 +141,7 @@ class JobCard extends StatelessWidget {
                     '${computedDistance.compute(currentUser.currentLocation, job.longlat)} miles',
                     textAlign: TextAlign.left,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: Colors.lightBlueAccent,
                       fontWeight: FontWeight.bold,
                       fontSize: 18, // Adjusted font size
                     ),

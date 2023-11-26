@@ -39,7 +39,7 @@ class _OtherProfileState extends State<OtherProfilePage> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.black,
         title: Text(thisUser.username),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -208,7 +208,7 @@ class _ProfileInfoRow extends StatelessWidget {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 500),
         decoration: BoxDecoration(
-          color: Colors.blue, // Change the color as needed
+          color: Colors.indigo, // Change the color as needed
           borderRadius: BorderRadius.circular(12),
         ),
         child: Padding(
