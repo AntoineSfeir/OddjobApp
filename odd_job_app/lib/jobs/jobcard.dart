@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/jobs/jobdescription.dart';
 import 'package:odd_job_app/jobs/compute_time_to_display.dart';
 import 'package:odd_job_app/jobs/geolocation/compute_distance.dart';
+import 'package:odd_job_app/oddjob_colors.dart';
 
 //import 'package:geolocator/geolocator.dart';
 
@@ -18,22 +19,23 @@ class JobCard extends StatelessWidget {
   late final user currentUser;
   ComputeDistance computedDistance = ComputeDistance();
   computeTime computedTime = computeTime();
-  
+  OddJobColors myColors = new OddJobColors();
+
   // final String cardBackground = '#1B475E';
   // final String moneyText = '#8BD5FF';
-    final String cardBackground = '#1C2833';
+  final String cardBackground = '#1C2833';
   final String moneyText = '#2ECC71';
   late final Color cardBackgroundColor =
       Color(int.parse(cardBackground.substring(1, 7), radix: 16) + 0xFF000000);
   late final Color moneyTextColor =
       Color(int.parse(moneyText.substring(1, 7), radix: 16) + 0xFF000000);
 
-
   //used for sortByDistance
   static ComputeDistance? _computedDistance;
   static user? _currentUser;
 
-  JobCard({Key? key, required this.job, required this.currentUser}) : super(key: key) {
+  JobCard({Key? key, required this.job, required this.currentUser})
+      : super(key: key) {
     _computedDistance = ComputeDistance();
     _currentUser = currentUser;
   }
@@ -50,19 +52,23 @@ class JobCard extends StatelessWidget {
       return 0;
     }
 
-    double distanceA = double.parse(_computedDistance!.compute(_currentUser!.currentLocation, a.job.longlat));
-    double distanceB = double.parse(_computedDistance!.compute(_currentUser!.currentLocation, b.job.longlat));
+    double distanceA = double.parse(_computedDistance!
+        .compute(_currentUser!.currentLocation, a.job.longlat));
+    double distanceB = double.parse(_computedDistance!
+        .compute(_currentUser!.currentLocation, b.job.longlat));
     return distanceA.compareTo(distanceB);
   }
 
   static int sortByTime(JobCard a, JobCard b) {
     Timestamp local = Timestamp.now();
-    Duration timeRemainingA = a.job.deadline.toDate().difference(local.toDate());
-  Duration timeRemainingB = b.job.deadline.toDate().difference(local.toDate());
-  return timeRemainingA.compareTo(timeRemainingB);
+    Duration timeRemainingA =
+        a.job.deadline.toDate().difference(local.toDate());
+    Duration timeRemainingB =
+        b.job.deadline.toDate().difference(local.toDate());
+    return timeRemainingA.compareTo(timeRemainingB);
   }
 
- @override
+  @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Navigator.push(
@@ -73,7 +79,7 @@ class JobCard extends StatelessWidget {
       ),
       child: Card(
         elevation: 5, // Adjust the elevation as needed
-        color: cardBackgroundColor,
+        color: myColors.darkBlueColor,
         margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
@@ -87,8 +93,8 @@ class JobCard extends StatelessWidget {
                 job.title,
                 overflow: TextOverflow.ellipsis,
                 textAlign: TextAlign.left,
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: myColors.whittishColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
                 ),
@@ -99,11 +105,11 @@ class JobCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  const Text(
+                  Text(
                     'Current Bid',
                     textAlign: TextAlign.left,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: myColors.whittishColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 18, // Adjusted font size
                     ),
@@ -115,7 +121,7 @@ class JobCard extends StatelessWidget {
                         style: TextStyle(
                           color: moneyTextColor,
                           fontWeight: FontWeight.bold,
-                          fontSize: 18, // Adjusted font size
+                          fontSize: 24, // Adjusted font size
                         ),
                       ),
                       Text(
@@ -141,7 +147,7 @@ class JobCard extends StatelessWidget {
                     '${computedDistance.compute(currentUser.currentLocation, job.longlat)} miles',
                     textAlign: TextAlign.left,
                     style: const TextStyle(
-                      color: Colors.lightBlueAccent,
+                      color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 18, // Adjusted font size
                     ),

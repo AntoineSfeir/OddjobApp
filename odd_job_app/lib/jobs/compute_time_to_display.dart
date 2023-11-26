@@ -16,7 +16,7 @@ class computeTime {
     if (deadLine.compareTo(currentTime) == 0) {
       computedTime = 'TIMES ARE EQUAL';
     } else if (deadLine.compareTo(currentTime) < 0) {
-      computedTime = 'DEADLINE HAS PASSED';
+      computedTime = 'EXPIRED';
     } else if (deadLine.compareTo(currentTime) > 0) {
       deadLineDate = deadLine.toDate();
       difference = deadLineDate.difference(current);
