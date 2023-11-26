@@ -100,7 +100,7 @@ class _SearchPageState extends State<SearchPage> {
                         Expanded(
                           child: Padding(
                             padding:
-                                const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
+                                const EdgeInsets.fromLTRB(12.0, 8.0, 8.0, 4.0),
                             child: TextField(
                               decoration: InputDecoration(
                                 hintText: 'Search',
@@ -224,7 +224,7 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.search),
-                      color: Colors.white,
+                      color: Colors.grey,
                       iconSize: 40.0,
                       onPressed: () {},
                     ),

@@ -507,7 +507,7 @@ class _ProfileState extends State<ProfilePage> {
                   ),
                   IconButton(
                       icon: const Icon(Icons.person),
-                      color: Colors.white,
+                      color: Colors.grey,
                       iconSize: 40.0,
                       onPressed: () {})
                 ]),
