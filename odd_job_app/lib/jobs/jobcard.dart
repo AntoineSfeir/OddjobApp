@@ -41,7 +41,7 @@ class JobCard extends StatelessWidget {
   static int sortByBid(JobCard a, JobCard b) {
     int cardA = int.parse(a.job.startingBid);
     int cardB = int.parse(b.job.startingBid);
-    return cardA.compareTo(cardB);
+    return -1 * cardA.compareTo(cardB);
   }
 
   static int sortByDistance(JobCard a, JobCard b) {

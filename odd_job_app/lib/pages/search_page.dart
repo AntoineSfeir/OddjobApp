@@ -55,7 +55,7 @@ class _SearchPageState extends State<SearchPage> {
   late final Color moneyTextColor =
       Color(int.parse(moneyText.substring(1, 7), radix: 16) + 0xFF000000);
 
-  String selectedOption = 'Payment'; // Default option
+  String selectedOption = 'Distance'; // Default option
   String searchText = '';
 
   @override
@@ -132,12 +132,12 @@ class _SearchPageState extends State<SearchPage> {
                             itemBuilder: (BuildContext context) {
                               return <PopupMenuEntry<String>>[
                                 PopupMenuItem<String>(
-                                  value: 'Payment',
-                                  child: Text('Payment'),
-                                ),
-                                PopupMenuItem<String>(
                                   value: 'Distance',
                                   child: Text('Distance'),
+                                ),
+                                PopupMenuItem<String>(
+                                  value: 'Payment',
+                                  child: Text('Payment'),
                                 ),
                                 PopupMenuItem<String>(
                                   value: 'Remaining Time',
