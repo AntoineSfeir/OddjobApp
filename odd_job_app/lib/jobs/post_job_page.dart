@@ -374,9 +374,9 @@ class _PostJobPageState extends State<PostJobPage> {
         }
       },
       child: Scaffold(
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.grey[300],
         appBar: AppBar(
-          backgroundColor: Colors.indigo,
+          backgroundColor: Colors.black,
           title: const Text(
             'Post a Job',
             style: TextStyle(
@@ -603,7 +603,7 @@ class _PostJobPageState extends State<PostJobPage> {
                               style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
-                                  Color.fromARGB(255, 12, 15, 189),
+                                  const Color.fromARGB(255, 56, 83, 236),
                                 ),
                                 minimumSize: MaterialStateProperty.all<Size>(
                                   const Size(double.infinity, 50),

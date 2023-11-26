@@ -226,7 +226,7 @@ class _HomePage2State extends State<HomePage2> {
                       floating: false,
                       pinned: true,
                       stretch: true,
-                      backgroundColor: Colors.indigo,
+                      backgroundColor: Colors.black,
                       flexibleSpace: FlexibleSpaceBar(
                           centerTitle: true,
                           collapseMode: CollapseMode.parallax,
@@ -278,7 +278,7 @@ class _HomePage2State extends State<HomePage2> {
           }),
         ),
         bottomNavigationBar: BottomAppBar(
-          color: Colors.indigo,
+          color: Colors.black,
           shape: const CircularNotchedRectangle(),
           child: SizedBox(
             height: 60.0,
@@ -287,13 +287,13 @@ class _HomePage2State extends State<HomePage2> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.home),
-                  color: const Color.fromARGB(255, 248, 248, 248),
+                  color: Colors.white,
                   iconSize: 40.0,
                   onPressed: () {},
                 ),
                 IconButton(
                   icon: const Icon(Icons.search),
-                  color: const Color.fromARGB(255, 238, 239, 239),
+                  color: Colors.white,
                   iconSize: 40.0,
                   onPressed: () {
                     Navigator.push(

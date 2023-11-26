@@ -27,7 +27,7 @@ class _ManageLocationInfoPageState extends State<ManageLocationInfoPage> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
-         backgroundColor: Colors.indigo,
+         backgroundColor: Colors.black,
         title: const Text("Manage Location Info"),
       ),
       body: SingleChildScrollView(
