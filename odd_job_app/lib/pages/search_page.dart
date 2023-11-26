@@ -63,163 +63,145 @@ class _SearchPageState extends State<SearchPage> {
     super.initState();
   }
 
- @override
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.grey[300],
-        body: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              const SliverAppBar(
-                expandedHeight: 55.0, // Set a fixed height
-                floating: false,
-                pinned: true,
-                backgroundColor: Colors.black,
-                title: Text(
-                  'Find a Job',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          backgroundColor: Colors.grey[300],
+          body: NestedScrollView(
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                const SliverAppBar(
+                  expandedHeight: 55.0, // Set a fixed height
+                  floating: false,
+                  pinned: true,
+                  backgroundColor: Colors.black,
+                  title: Text(
+                    'Find a Job',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-            ];
-          },
-          body: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Search',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(8.0, 8.0, 16.0, 4.0),
-                          child: TextField(
-                            decoration: const InputDecoration(
-                              hintText: 'Type Here...',
-                              hintStyle: TextStyle(color: Colors.black),
-                              fillColor: Colors.white,
-                              border: OutlineInputBorder(),
-                            ),
-                            onChanged: (value) {
-                              setState(() {
-                                searchText = value;
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(8.0, 4.0, 16.0, 8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Sorting Method',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: DropdownButton<String>(
-                            value: selectedOption,
-                            onChanged: (String? newValue) {
-                              setState(() {
-                                selectedOption = newValue!;
-                              });
-                            },
-                            items: <String>[
-                              'Payment',
-                              'Distance',
-                              'Remaining Time'
-                            ].map<DropdownMenuItem<String>>(
-                              (String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: const TextStyle(color: Colors.black),
-                                  ),
-                                );
+              ];
+            },
+            body: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 4.0),
+                            child: TextField(
+                              decoration: InputDecoration(
+                                hintText: 'Search',
+                                hintStyle: TextStyle(color: Colors.black),
+                                fillColor: Colors.white,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      10.0), // Adjust the radius as needed
+                                ),
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  searchText = value;
+                                });
                               },
-                            ).toList(),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: PopupMenuButton<String>(
+                            icon:
+                                Icon(Icons.list, color: Colors.black, size: 30),
+                            onSelected: (String newValue) {
+                              setState(() {
+                                selectedOption = newValue;
+                              });
+                            },
+                            itemBuilder: (BuildContext context) {
+                              return <PopupMenuEntry<String>>[
+                                PopupMenuItem<String>(
+                                  value: 'Payment',
+                                  child: Text('Payment'),
+                                ),
+                                PopupMenuItem<String>(
+                                  value: 'Distance',
+                                  child: Text('Distance'),
+                                ),
+                                PopupMenuItem<String>(
+                                  value: 'Remaining Time',
+                                  child: Text('Remaining Time'),
+                                ),
+                              ];
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return FutureBuilder(
-                      future: allJobs(),
-                      builder: ((context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.done) {
-                          if (jo.isNotEmpty) {
-                            List<JobCard> jobCards = filteredJobs()
-                                .map((job) => JobCard(
-                                      job: job,
-                                      currentUser: widget.currentUser,
-                                    ))
-                                .toList();
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (BuildContext context, int index) {
+                      return FutureBuilder(
+                        future: allJobs(),
+                        builder: ((context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            if (jo.isNotEmpty) {
+                              List<JobCard> jobCards = filteredJobs()
+                                  .map((job) => JobCard(
+                                        job: job,
+                                        currentUser: widget.currentUser,
+                                      ))
+                                  .toList();
 
-                            if (selectedOption == 'Payment') {
-                              jobCards.sort((a, b) => JobCard.sortByBid(a, b));
-                            } else if (selectedOption == 'Distance') {
-                              jobCards
-                                  .sort((a, b) => JobCard.sortByDistance(a, b));
+                              if (selectedOption == 'Payment') {
+                                jobCards
+                                    .sort((a, b) => JobCard.sortByBid(a, b));
+                              } else if (selectedOption == 'Distance') {
+                                jobCards.sort(
+                                    (a, b) => JobCard.sortByDistance(a, b));
+                              } else {
+                                jobCards
+                                    .sort((a, b) => JobCard.sortByTime(a, b));
+                              }
+
+                              return Column(
+                                children: jobCards,
+                              );
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                child: Text(snapshot.error.toString()),
+                              );
                             } else {
-                              jobCards.sort((a, b) => JobCard.sortByTime(a, b));
+                              return const Text('Something went wrong');
                             }
-
-                            return Column(
-                              children: jobCards,
-                            );
-                          } else if (snapshot.hasError) {
-                            return Center(
-                              child: Text(snapshot.error.toString()),
-                            );
                           } else {
-                            return const Text('Something went wrong');
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
                           }
-                        } else {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                      }),
-                    );
-                  },
-                  childCount: 1,
+                        }),
+                      );
+                    },
+                    childCount: 1,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
           bottomNavigationBar: BottomAppBar(
             color: Colors.black,
             shape: const CircularNotchedRectangle(),
@@ -242,23 +224,22 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.search),
-                      color:  Colors.white,
+                      color: Colors.white,
                       iconSize: 40.0,
-                      onPressed: () {
-                      },
+                      onPressed: () {},
                     ),
                     IconButton(
                       icon: const Icon(Icons.chat),
-                      color:  Colors.white,
+                      color: Colors.white,
                       iconSize: 40.0,
                       onPressed: () {
                         Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MessagesPage(
-                                  currentUser: widget.currentUser,
-                                )),
-                      );
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MessagesPage(
+                                    currentUser: widget.currentUser,
+                                  )),
+                        );
                       },
                     ),
                     IconButton(
