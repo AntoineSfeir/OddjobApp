@@ -29,7 +29,7 @@ class _UsersPostedJobsViewState extends State<UsersPostedJobsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.grey[300],
       body: ListView.builder(
         itemCount: myJobs.length,
         itemBuilder: (context, index) {
@@ -70,7 +70,11 @@ class _UsersPostedJobsViewState extends State<UsersPostedJobsView> {
                           children: bidsForJob.map((bid) {
                             return Row(
                               children: [
-                                const Icon(Icons.monetization_on),
+                                const Icon(
+                                      Icons.monetization_on_outlined,
+                                      color: Colors
+                                          .green, // Set the desired color
+                                ),
                                 const SizedBox(width: 4),
                                 Text(
                                   'Bid Amount: ${bid.amount}',
@@ -96,11 +100,17 @@ class _UsersPostedJobsViewState extends State<UsersPostedJobsView> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => AcceptJobPage(
-                                            thisBid: bid,
-                                            theJob: myJobs[index]),
+                                          thisBid: bid,
+                                          theJob: myJobs[index],
+                                        ),
                                       ),
                                     );
                                   },
+                                  style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.green),
+                                  ),
                                   child: const Text('Accept Job'),
                                 ),
                               ],

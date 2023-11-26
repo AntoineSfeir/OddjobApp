@@ -101,8 +101,9 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
+        backgroundColor: Colors.black,
         title: const Text("Accept Job"),
       ),
       body: calculated
@@ -111,13 +112,13 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                    Text(
-                      'Job Description',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                  const Text(
+                    'Job Description',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
                     ),
+                  ),
                   const SizedBox(height: 4),
                   _buildRow("", finalBid.jobThatWasBidOn.description),
                   const SizedBox(height: 12),
@@ -138,6 +139,10 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
                       onPressed: () {
                         removeJobFromBidsAddToActive();
                       },
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.green),
+                      ),
                       child: const Text('Finalize Bid'),
                     ),
                   ),
@@ -151,34 +156,33 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
   }
 
   Widget _buildRow(String label, String value) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 8.0),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
           ),
-        ),
-        Flexible(
-          child: Container(
-            child: Text(
-              value,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.black,
+          Flexible(
+            child: Container(
+              child: Text(
+                value,
+                style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
               ),
             ),
           ),
-        ),
-      ],
-    ),
-  );
-}
-
+        ],
+      ),
+    );
+  }
 }
 
 class BidClosedPage extends StatelessWidget {

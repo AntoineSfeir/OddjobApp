@@ -8,6 +8,7 @@ class JobHistoryPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
+         backgroundColor: Colors.black,
         title: const Text(
           "Job History",
           style: TextStyle(

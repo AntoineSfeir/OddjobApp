@@ -18,8 +18,11 @@ class JobCard extends StatelessWidget {
   late final user currentUser;
   ComputeDistance computedDistance = ComputeDistance();
   computeTime computedTime = computeTime();
-  final String cardBackground = '#1B475E';
-  final String moneyText = '#8BD5FF';
+  
+  // final String cardBackground = '#1B475E';
+  // final String moneyText = '#8BD5FF';
+    final String cardBackground = '#1C2833';
+  final String moneyText = '#2ECC71';
   late final Color cardBackgroundColor =
       Color(int.parse(cardBackground.substring(1, 7), radix: 16) + 0xFF000000);
   late final Color moneyTextColor =
@@ -69,6 +72,7 @@ class JobCard extends StatelessWidget {
         ),
       ),
       child: Card(
+        elevation: 5, // Adjust the elevation as needed
         color: cardBackgroundColor,
         margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
         shape: RoundedRectangleBorder(
@@ -95,10 +99,10 @@ class JobCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text(
+                  const Text(
                     'Current Bid',
                     textAlign: TextAlign.left,
-                    style: const TextStyle(
+                    style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 18, // Adjusted font size
@@ -137,7 +141,7 @@ class JobCard extends StatelessWidget {
                     '${computedDistance.compute(currentUser.currentLocation, job.longlat)} miles',
                     textAlign: TextAlign.left,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: Colors.lightBlueAccent,
                       fontWeight: FontWeight.bold,
                       fontSize: 18, // Adjusted font size
                     ),
@@ -148,7 +152,7 @@ class JobCard extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 18, // Adjusted font size
+                      fontSize: 15, // Adjusted font size
                     ),
                   ),
                 ],

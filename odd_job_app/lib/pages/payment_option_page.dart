@@ -16,6 +16,7 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
+       backgroundColor: Colors.black,
         title: const Text(
           "Payment Options",
           style: TextStyle(
@@ -44,7 +45,7 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
             const SizedBox(height: 20),
             PaymentOptionCard(
               title: "PayPal",
-              icon: Icons.payment,
+              icon: Icons.paypal,
               onTap: () {
                 Navigator.push(
                   context,
@@ -56,7 +57,7 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
             const SizedBox(height: 20),
             PaymentOptionCard(
               title: "Google Pay",
-              icon: Icons.attach_money,
+              icon: Icons.wallet,
               onTap: () {
                 Navigator.push(
                   context,

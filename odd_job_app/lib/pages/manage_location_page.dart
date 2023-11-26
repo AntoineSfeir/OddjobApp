@@ -25,7 +25,9 @@ class _ManageLocationInfoPageState extends State<ManageLocationInfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
+         backgroundColor: Colors.black,
         title: const Text("Manage Location Info"),
       ),
       body: SingleChildScrollView(

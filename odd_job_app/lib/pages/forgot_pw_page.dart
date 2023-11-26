@@ -45,7 +45,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     return Scaffold(
         backgroundColor: Colors.grey[300],
         appBar: AppBar(
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.black,
           elevation: 0,
         ),
         body: Column(

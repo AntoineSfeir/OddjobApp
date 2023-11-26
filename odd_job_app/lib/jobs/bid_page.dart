@@ -92,6 +92,7 @@ class _BidPageState extends State<BidPage> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
+        backgroundColor: Colors.indigo,
         title: const Text(
           'Bids',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -131,6 +132,10 @@ class _BidPageState extends State<BidPage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: updateBid,
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.green),
+                ),
                 child: const Text('Bid Now'),
               ),
             ),

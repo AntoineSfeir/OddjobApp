@@ -226,16 +226,17 @@ class _HomePage2State extends State<HomePage2> {
                       floating: false,
                       pinned: true,
                       stretch: true,
+                      backgroundColor: Colors.black,
                       flexibleSpace: FlexibleSpaceBar(
                           centerTitle: true,
                           collapseMode: CollapseMode.parallax,
                           title: const Text("My OddJobs",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 16.0,
+                                fontSize: 20.0,
                               )),
                           background: Image.network(
-                            "https://media.istockphoto.com/id/1138740533/photo/dark-blue-defocused-blurred-motion-abstract-background.jpg?s=612x612&w=0&k=20&c=QfnY1B69PD-FzeDCmwuJulHg1wawHotayzgeGjEuvCc=",
+                            "https://assets.entrepreneur.com/content/3x2/2000/1638387677-GettyImages-1317703626.jpg",
                             fit: BoxFit.cover,
                           )),
                     ),
@@ -243,7 +244,7 @@ class _HomePage2State extends State<HomePage2> {
                       delegate: _SliverAppBarDelegate(
                         const TabBar(
                           indicatorSize: TabBarIndicatorSize.label,
-                          labelColor: Colors.blue,
+                          labelColor: Colors.indigo,
                           unselectedLabelColor: Colors.grey,
                           tabs: _tabs,
                         ),
@@ -277,7 +278,7 @@ class _HomePage2State extends State<HomePage2> {
           }),
         ),
         bottomNavigationBar: BottomAppBar(
-          color: const Color(0xFF4F82A3),
+          color: Colors.black,
           shape: const CircularNotchedRectangle(),
           child: SizedBox(
             height: 60.0,
@@ -286,13 +287,13 @@ class _HomePage2State extends State<HomePage2> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.home),
-                  color: const Color.fromARGB(255, 248, 248, 248),
+                  color: Colors.white,
                   iconSize: 40.0,
                   onPressed: () {},
                 ),
                 IconButton(
                   icon: const Icon(Icons.search),
-                  color: const Color.fromARGB(255, 238, 239, 239),
+                  color: Colors.white,
                   iconSize: 40.0,
                   onPressed: () {
                     Navigator.push(
@@ -345,7 +346,7 @@ class _HomePage2State extends State<HomePage2> {
                   builder: (context) => PostJobPage(currentUser: currentUser)),
             );
           },
-          backgroundColor: const Color(0xFF2598D7),
+          backgroundColor: Color.fromARGB(255, 28, 185, 83),
           child: const Icon(Icons.add),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

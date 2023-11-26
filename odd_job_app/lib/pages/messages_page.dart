@@ -26,10 +26,10 @@ class _MessagesPageState extends State<MessagesPage> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-            backgroundColor: Colors.grey[100],
+            backgroundColor: Colors.grey[300],
           appBar: AppBar(
             backgroundColor:
-                const Color(0xFF4F82A3), // Set the same color as the bottom bar
+                Colors.black, // Set the same color as the bottom bar
             title: const Text(
               "Messages",
               style: TextStyle(
@@ -40,7 +40,7 @@ class _MessagesPageState extends State<MessagesPage> {
           ),
           body: buildUserList(),
           bottomNavigationBar: BottomAppBar(
-            color: const Color(0xFF4F82A3),
+            color: Colors.black,
             shape: const CircularNotchedRectangle(),
             child: SizedBox(
               height: 60.0,
@@ -49,7 +49,7 @@ class _MessagesPageState extends State<MessagesPage> {
                   children: [
                     IconButton(
                       icon: const Icon(Icons.home),
-                      color: const Color.fromARGB(255, 248, 248, 248),
+                      color:  Colors.white,
                       iconSize: 40.0,
                       onPressed: () {
                         Navigator.push(
@@ -61,7 +61,7 @@ class _MessagesPageState extends State<MessagesPage> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.search),
-                      color: const Color.fromARGB(255, 238, 239, 239),
+                      color:  Colors.white,
                       iconSize: 40.0,
                       onPressed: () {
                         Navigator.push(
@@ -75,13 +75,13 @@ class _MessagesPageState extends State<MessagesPage> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.chat),
-                      color: Colors.white,
+                      color:  Colors.white,
                       iconSize: 40.0,
                       onPressed: () {},
                     ),
                     IconButton(
                         icon: const Icon(Icons.person),
-                        color: const Color.fromARGB(255, 238, 239, 239),
+                        color:  Colors.white,
                         iconSize: 40.0,
                         onPressed: () {
                           Navigator.push(

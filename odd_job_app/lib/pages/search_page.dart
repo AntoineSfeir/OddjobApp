@@ -68,7 +68,7 @@ class _SearchPageState extends State<SearchPage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.grey[300],
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
@@ -76,7 +76,7 @@ class _SearchPageState extends State<SearchPage> {
                 expandedHeight: 55.0, // Set a fixed height
                 floating: false,
                 pinned: true,
-                backgroundColor: Color(0xFF4F82A3),
+                backgroundColor: Colors.black,
                 title: Text(
                   'Find a Job',
                   style: TextStyle(
@@ -111,6 +111,7 @@ class _SearchPageState extends State<SearchPage> {
                             decoration: const InputDecoration(
                               hintText: 'Type Here...',
                               hintStyle: TextStyle(color: Colors.black),
+                              fillColor: Colors.white,
                               border: OutlineInputBorder(),
                             ),
                             onChanged: (value) {
@@ -220,77 +221,62 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ),
           bottomNavigationBar: BottomAppBar(
-            color: const Color(0xFF4F82A3),
+            color: Colors.black,
             shape: const CircularNotchedRectangle(),
             child: SizedBox(
               height: 60.0,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.home),
-                    color: const Color.fromARGB(255, 248, 248, 248),
-                    iconSize: 40.0,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const HomePage2()),
-                      );
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.search),
-                    color: const Color.fromARGB(255, 238, 239, 239),
-                    iconSize: 40.0,
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    //alignment: ,
-                    icon: const Icon(Icons.chat),
-                    color: Colors.white,
-                    iconSize: 40.0,
-                    onPressed: () {
-                      Navigator.push(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.home),
+                      color: Colors.white,
+                      iconSize: 40.0,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomePage2()),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.search),
+                      color:  Colors.white,
+                      iconSize: 40.0,
+                      onPressed: () {
+                      },
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.chat),
+                      color:  Colors.white,
+                      iconSize: 40.0,
+                      onPressed: () {
+                        Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => MessagesPage(
                                   currentUser: widget.currentUser,
                                 )),
                       );
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.person),
-                    color: Colors.white,
-                    iconSize: 40.0,
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                ProfilePage(currentUser: widget.currentUser)),
-                      );
-                    },
-                  ),
-                  const SizedBox(width: 40.0),
-                ],
-              ),
+                      },
+                    ),
+                    IconButton(
+                        icon: const Icon(Icons.person),
+                        color: Colors.white,
+                        iconSize: 40.0,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfilePage(
+                                      currentUser: widget.currentUser,
+                                    )),
+                          );
+                        }),
+                  ]),
             ),
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        PostJobPage(currentUser: widget.currentUser)),
-              );
-            },
-            backgroundColor: const Color(0xFF2598D7),
-            child: const Icon(Icons.add),
-          ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         ));
   }
 }
