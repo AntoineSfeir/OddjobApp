@@ -10,8 +10,7 @@ import 'package:odd_job_app/jobs/geolocation/compute_distance.dart';
 
 class JobDescriptionPage extends StatefulWidget {
   final String ID;
-  // ignore: non_constant_identifier_names
-  const JobDescriptionPage({super.key, required this.ID});
+  const JobDescriptionPage({Key? key, required this.ID}) : super(key: key);
 
   @override
   State<JobDescriptionPage> createState() => _JobDescriptionPageState();
@@ -52,6 +51,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
 
     allJobs(); // Call the method in initState
   }
+  
 @override
 Widget build(BuildContext context) {
   return Scaffold(
@@ -81,47 +81,75 @@ Widget build(BuildContext context) {
                           spreadRadius: 3,
                           blurRadius: 7,
                           offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: SizedBox(
+                        height: 100,
+                        child: GoogleMap(
+                          initialCameraPosition:
+                              CameraPosition(target: l, zoom: 18),
+                          mapType: MapType.normal,
+                          myLocationButtonEnabled: true,
+                          compassEnabled: true,
+                          markers: _markers,
+                          onMapCreated: (GoogleMapController controller) {
+                            _mapController = controller;
+                            _markers.add(Marker(
+                              markerId: const MarkerId('jobMarker'),
+                              visible: true,
+                              position: l,
+                              infoWindow: InfoWindow(
+                                title:
+                                    '${computedDistance.compute(thisJob.longlat, thisJob.longlat).toString()} miles',
+                              ),
+                            ));
+                            _mapController.animateCamera(
+                              CameraUpdate.newLatLng(l),
+                            );
+                          },
                         ),
-                      ],
-                    ),
-                    child: SizedBox(
-                      height: 100,
-                      child: GoogleMap(
-                        initialCameraPosition:
-                            CameraPosition(target: l, zoom: 18),
-                        mapType: MapType.normal,
-                        myLocationButtonEnabled: true,
-                        compassEnabled: true,
-                        markers: _markers,
-                        onMapCreated: (GoogleMapController controller) {
-                          _mapController = controller;
-                          _markers.add(Marker(
-                            markerId: const MarkerId('jobMarker'),
-                            visible: true,
-                            position: l,
-                            infoWindow: InfoWindow(
-                              title:
-                                  '${computedDistance.compute(thisJob.longlat, thisJob.longlat).toString()} miles',
-                            ),
-                          ));
-                          _mapController.animateCamera(
-                            CameraUpdate.newLatLng(l),
-                          );
-                        },
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  OtherProfilePage(recieverUser: thisUser),
+                    Container(
+                      padding: const EdgeInsets.all(16.0),
+                      margin: const EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 3,
+                            blurRadius: 7,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => OtherProfilePage(
+                                    recieverUser: thisUser,
+                                  ),
+                                ),
+                              );
+                            },
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                const Color(0xFF2598D7),
+                              ),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                              ),
                             ),
                           );
                         },
@@ -134,80 +162,72 @@ Widget build(BuildContext context) {
                               borderRadius: BorderRadius.circular(20.0),
                             ),
                           ),
-                        ),
-                        child: Text(
-                          thisJob.displayName,
-                          style: const TextStyle(
-                            fontSize: 24.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                          buildStarRating(avgUserRating),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: GestureDetector(
+                              onTap: () {},
+                              child: Text(
+                                "${(avgUserRating / 2).round()}/5 stars based on ${5} ratings",
+                                style: const TextStyle(
+                                  fontSize: 24.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  buildStarRating(avgUserRating),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Text(
-                        "${(avgUserRating / 2).round()}/5 stars based on ${5} ratings",
-                        style: const TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Center(
-                      child: Text(
-                        "Time Remaining: ${computedTime.compute(thisJob.deadline)}",
-                        style: const TextStyle(
-                          fontSize: 24.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 16.0),
-                    padding: const EdgeInsets.all(16.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black,
-                        width: 1.0,
-                      ),
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          thisJob.title,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20.0,
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Center(
+                              child: Text(
+                                "Time Remaining: ${computedTime.compute(thisJob.deadline)}",
+                                style: const TextStyle(
+                                  fontSize: 24.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 8.0),
-                        const Divider(
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                      padding: const EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(
                           color: Colors.black,
-                          thickness: 1.0,
+                          width: 1.0,
                         ),
-                        const SizedBox(height: 8.0),
-                        Text(
-                          thisJob.description,
-                          style: const TextStyle(
-                            fontSize: 16.0,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            thisJob.title,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20.0,
+                            ),
                           ),
-                        ),
-                      ],
+                          const SizedBox(height: 8.0),
+                          const Divider(
+                            color: Colors.black,
+                            thickness: 1.0,
+                          ),
+                          const SizedBox(height: 8.0),
+                          Text(
+                            thisJob.description,
+                            style: const TextStyle(
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -273,42 +293,38 @@ Widget build(BuildContext context) {
               child: Text(snapshot.error.toString()),
             );
           } else {
-            return const Text('Something went wrong');
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
-        } else {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      },
-    ),
-  );
-}
-
-Widget buildStarRating(int userRating) {
-  List<Icon> stars = [];
-  userRating = (userRating / 2).round();
-
-  for (int i = 0; i < 5; i++) {
-    stars.add(
-      Icon(
-        Icons.star,
-        color: i < userRating ? Colors.amber : Colors.grey,
-        size: 28, // Adjusted star size
+        },
       ),
     );
   }
 
-  return Padding(
-    padding: const EdgeInsets.only(
-      left: 15.0,
-      top: 8.0, // Added top padding for spacing
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: stars,
-    ),
-  );
-}
+  Widget buildStarRating(int userRating) {
+    List<Icon> stars = [];
+    userRating = (userRating / 2).round();
 
+    for (int i = 0; i < 5; i++) {
+      stars.add(
+        Icon(
+          Icons.star,
+          color: i < userRating ? Colors.amber : Colors.grey,
+          size: 28, // Adjusted star size
+        ),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 15.0,
+        top: 8.0, // Added top padding for spacing
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: stars,
+      ),
+    );
+  }
 }
