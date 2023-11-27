@@ -208,6 +208,29 @@ class _HomePage2State extends State<HomePage2> {
     super.initState();
   }
 
+  Widget buildStarRating(int userRating) {
+    List<Icon> stars = [];
+    userRating = (userRating / 2).round();
+
+    for (int i = 0; i < 5; i++) {
+      stars.add(
+        Icon(
+          Icons.star,
+          color: i < userRating ? Colors.amber : Colors.grey,
+          size: 16, // Adjusted star size
+        ),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: stars,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -222,23 +245,52 @@ class _HomePage2State extends State<HomePage2> {
                     (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[
                     SliverAppBar(
-                      expandedHeight: 200.0,
+                      expandedHeight: 200,
                       floating: false,
                       pinned: true,
-                      stretch: true,
-                      backgroundColor: Colors.black,
-                      flexibleSpace: FlexibleSpaceBar(
-                          centerTitle: true,
-                          collapseMode: CollapseMode.parallax,
-                          title: const Text("My OddJobs",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0,
-                              )),
-                          background: Image.network(
-                            "https://assets.entrepreneur.com/content/3x2/2000/1638387677-GettyImages-1317703626.jpg",
-                            fit: BoxFit.cover,
-                          )),
+                      flexibleSpace: LayoutBuilder(
+                        builder:
+                            (BuildContext context, BoxConstraints constraints) {
+                          bool isExpanded = constraints.maxHeight >
+                              200; // Adjust this threshold as needed
+                          return FlexibleSpaceBar(
+                            centerTitle: true,
+                            collapseMode: CollapseMode.pin,
+                            title: isExpanded
+                                ? Column(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      const CircleAvatar(
+                                        backgroundColor: Colors.black,
+                                        radius: 20,
+                                      ),
+                                      Text(
+                                        currentUser.username,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20.0,
+                                        ),
+                                      ),
+                                      buildStarRating(
+                                          currentUser.averageRating.toInt()),
+                                    ],
+                                  )
+                                : Text(
+                                    currentUser.username,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20.0,
+                                    ),
+                                  ),
+                            background: Image.network(
+                              "https://media.istockphoto.com/id/1089592832/vector/studio-room-blurred-background-soft-gradient-pastel-with-lighting-well-use-as-business.jpg?s=612x612&w=0&k=20&c=nm5mtV7RsQvvcRIIcbZkhxqOwK0sVIjbIjnNVd2ORew=",
+                              fit: BoxFit.cover,
+                            ),
+                          );
+                        },
+                      ),
                     ),
                     SliverPersistentHeader(
                       delegate: _SliverAppBarDelegate(
@@ -249,7 +301,7 @@ class _HomePage2State extends State<HomePage2> {
                           tabs: _tabs,
                         ),
                       ),
-                      pinned: true,
+                      pinned: false,
                     ),
                   ];
                 },
@@ -305,26 +357,6 @@ class _HomePage2State extends State<HomePage2> {
                     );
                   },
                 ),
-                Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.indigo,
-                      ),
-                      child: IconButton(
-                        icon: const Icon(Icons.add),
-                        color: Colors.white,
-                        iconSize: 35.0,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  PostJobPage(currentUser: currentUser),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
                 IconButton(
                   icon: const Icon(Icons.chat),
                   color: Colors.white,
