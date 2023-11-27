@@ -68,7 +68,72 @@ class JobCard extends StatelessWidget {
     return timeRemainingA.compareTo(timeRemainingB);
   }
 
-  @override
+ static IconData jobIcons(String jobName) {
+    switch (jobName) {
+      case 'Lawn Care':
+        return Icons.grass;
+      case 'Power Washing':
+        return Icons.water_drop;
+      case 'House Cleaning':
+        // Add more cases as needed
+        return Icons.home;
+      case 'Baby Sitting':
+        return Icons.child_care;
+      case 'Car Washing':
+        return Icons.local_car_wash;
+      case 'House Painting':
+        return Icons.brush;
+      case 'Tutoring':
+        return Icons.school;
+      case 'Moving Assistance':
+        return Icons.local_shipping;
+      case 'Pet Sitting':
+        return Icons.pets;
+      case 'Plumbing':
+        return Icons.build;
+      case 'Computer Repair':
+        return Icons.computer;
+      case 'Programming':
+        return Icons.code;
+      case 'Technology Services':
+        return Icons.devices_other;
+      case 'Graphic Design':
+        return Icons.palette;
+      case 'Car Repair':
+        return Icons.build;
+      case 'Other':
+        return Icons.help;
+      case 'Appliance Troubleshooting':
+        return Icons.settings;
+      case 'Woodworking':
+        return Icons.collections;
+      case 'Delivery':
+        return Icons.delivery_dining;
+      case 'Furniture Cleaning':
+        return Icons.weekend;
+      case 'Gardening':
+        return Icons.eco;
+      case 'Photography':
+        return Icons.camera_alt;
+      case 'Sewing and Alterations':
+        return Icons.content_cut;
+      case 'Organization':
+        return Icons.dashboard;
+      case 'Art':
+        return Icons.palette;
+      case 'Music':
+        return Icons.music_note;
+      case 'Pet Training':
+        return Icons.pets;
+      case 'Construction':
+        return Icons.build;
+      // Add more cases as needed
+      default:
+        return Icons.help; // Default icon if no match is found
+    }
+  }
+
+   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Navigator.push(
@@ -78,7 +143,7 @@ class JobCard extends StatelessWidget {
         ),
       ),
       child: Card(
-        elevation: 5, // Adjust the elevation as needed
+        elevation: 5,
         color: myColors.darkBlueColor,
         margin: const EdgeInsets.fromLTRB(16, 16, 16, 0),
         shape: RoundedRectangleBorder(
@@ -89,19 +154,31 @@ class JobCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Text(
-                job.title,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  color: myColors.whittishColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
-                ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  
+                
+                  Expanded(
+                    child: Text(
+                      job.title,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: myColors.whittishColor,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25,
+                      ),
+                    ),
+                  ),
+                   Icon(
+                    jobIcons(job.title),
+                    color: myColors.whittishColor,
+                    size: 30,
+                  ),
+                ],
               ),
-              const SizedBox(
-                height: 12, // Adjusted height for better spacing
-              ),
+              const SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -111,7 +188,7 @@ class JobCard extends StatelessWidget {
                     style: TextStyle(
                       color: myColors.whittishColor,
                       fontWeight: FontWeight.bold,
-                      fontSize: 18, // Adjusted font size
+                      fontSize: 18,
                     ),
                   ),
                   Row(
@@ -121,7 +198,7 @@ class JobCard extends StatelessWidget {
                         style: TextStyle(
                           color: moneyTextColor,
                           fontWeight: FontWeight.bold,
-                          fontSize: 24, // Adjusted font size
+                          fontSize: 24,
                         ),
                       ),
                       Text(
@@ -130,16 +207,14 @@ class JobCard extends StatelessWidget {
                         style: TextStyle(
                           color: moneyTextColor,
                           fontWeight: FontWeight.bold,
-                          fontSize: 24, // Adjusted font size
+                          fontSize: 24,
                         ),
                       ),
                     ],
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 8, // Adjusted height for better spacing
-              ),
+              const SizedBox(height: 8),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -149,7 +224,7 @@ class JobCard extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 18, // Adjusted font size
+                      fontSize: 18,
                     ),
                   ),
                   Text(
@@ -158,7 +233,7 @@ class JobCard extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 15, // Adjusted font size
+                      fontSize: 15,
                     ),
                   ),
                 ],
