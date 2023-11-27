@@ -246,8 +246,9 @@ class _HomePage2State extends State<HomePage2> {
                   return <Widget>[
                     SliverAppBar(
                       expandedHeight: 200,
-                      floating: false,
+                      floating: true,
                       pinned: true,
+                      backgroundColor: Colors.black, 
                       flexibleSpace: LayoutBuilder(
                         builder:
                             (BuildContext context, BoxConstraints constraints) {
@@ -280,7 +281,7 @@ class _HomePage2State extends State<HomePage2> {
                                 : Text(
                                     currentUser.username,
                                     style: const TextStyle(
-                                      color: Colors.black,
+                                      color: Colors.white,
                                       fontSize: 20.0,
                                     ),
                                   ),
@@ -356,6 +357,26 @@ class _HomePage2State extends State<HomePage2> {
                       ),
                     );
                   },
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.indigo,
+                  ),
+                  child: IconButton(
+                    icon: const Icon(Icons.add),
+                    color: Colors.white,
+                    iconSize: 35.0,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              PostJobPage(currentUser: currentUser),
+                        ),
+                      );
+                    },
+                  ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.chat),
