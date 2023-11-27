@@ -3,6 +3,7 @@ import 'package:odd_job_app/jobs/user.dart';
 import 'package:odd_job_app/pages/chat_page.dart';
 import 'package:odd_job_app/pages/job_history_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class OtherProfilePage extends StatefulWidget {
   final user recieverUser;
@@ -53,7 +54,8 @@ class _OtherProfileState extends State<OtherProfilePage> {
           children: [
             Expanded(
                 flex: 1,
-                child: _TopPortion(thisUser.username)), // Reduced top space
+                child: _TopPortion(
+                    thisUser.username, thisUser.ID)), // Reduced top space
             Expanded(
               flex: 3,
               child: Padding(
@@ -140,7 +142,8 @@ class _OtherProfileState extends State<OtherProfilePage> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue, // Set the desired background color
+                        backgroundColor:
+                            Colors.blue, // Set the desired background color
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(
                               20.0), // Adjusted border radius
@@ -246,9 +249,22 @@ class ProfileInfoItem {
 }
 
 class _TopPortion extends StatelessWidget {
-  _TopPortion(this.username);
+  _TopPortion(this.username, this.id);
 
   String username;
+  String id;
+
+  Future<String?> getProfilePictureUrl(String documentId) async {
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref('profilePictures/$documentId.jpg');
+      final result = await ref.getDownloadURL();
+      return result;
+    } catch (e) {
+      // The file does not exist
+      return null;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -261,19 +277,29 @@ class _TopPortion extends StatelessWidget {
             SizedBox(
               width: 150,
               height: 150,
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.black,
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    fit: BoxFit.cover,  
-                    image: NetworkImage(
-                      'https://imgs.search.brave.com/IqQs8kKNxjcbV_FjEBeZKiINN8kNBEh4ryKs5eF_V2I/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTMz/MjEwMDkxOS92ZWN0/b3IvbWFuLWljb24t/YmxhY2staWNvbi1w/ZXJzb24tc3ltYm9s/LmpwZz9zPTYxMng2/MTImdz0wJms9MjAm/Yz1BVlZKa3Z4UVFD/dUJoYXdIclVoRFJU/Q2VOUTNKZ3QwSzF0/WGpKc0Z5MWVnPQ',
-                    ),
-                  ),
-                ),
+              child: FutureBuilder<String?>(
+                future: getProfilePictureUrl(id), //fix this
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError || snapshot.data == null) {
+                    return CircleAvatar(
+                      backgroundColor: Colors.grey,
+                      radius: 50.0,
+                    );
+                  } else {
+                    return Center(
+                      child: CircleAvatar(
+                        backgroundColor: Colors.grey,
+                        backgroundImage: NetworkImage(snapshot.data!),
+                        radius: 50.0, // Adjust the radius as needed
+                        // You can customize other properties such as foregroundImage, etc.
+                      ),
+                    );
+                  }
+                },
               ),
-            ),
+            )
           ],
         ),
         const SizedBox(width: 16), // Adjust the spacing as needed
@@ -317,7 +343,6 @@ class _ProfileRatingsAndReviews extends StatelessWidget {
         children: [
           Text(
             'Ratings and Reviews',
-            
             style: Theme.of(context)
                 .textTheme
                 .titleLarge
@@ -326,27 +351,27 @@ class _ProfileRatingsAndReviews extends StatelessWidget {
           const SizedBox(height: 8.0),
           _RatingCategory(
             title: 'Overall Rating',
-            rating: avgRating,//avgRating,
+            rating: avgRating, //avgRating,
           ),
           const SizedBox(height: 8.0),
           _RatingCategory(
             title: 'Communication',
-            rating: communicationRating,//communicationRating,
+            rating: communicationRating, //communicationRating,
           ),
           const SizedBox(height: 8.0),
           _RatingCategory(
             title: 'Work Quality',
-            rating: workQualityRating,//workQualityRating,
+            rating: workQualityRating, //workQualityRating,
           ),
           const SizedBox(height: 8.0),
           _RatingCategory(
             title: 'Would Hire Again',
-            rating: wouldHireAgainRating,//wouldHireAgainRating,
+            rating: wouldHireAgainRating, //wouldHireAgainRating,
           ),
           const SizedBox(height: 8.0),
           _RatingCategory(
             title: 'Trust Score',
-            rating: trustScore,//trustScore,
+            rating: trustScore, //trustScore,
           ),
         ],
       ),
@@ -389,13 +414,12 @@ class _RatingCategory extends StatelessWidget {
     );
   }
 
-Widget _buildStarIcon(BuildContext context, double rating) {
-  return const Icon(
-    // Custom star icon, for example, using the FontAwesome icons
-    FontAwesomeIcons.solidStar,
-    color: Colors.yellow,
-    size: 20.0,
-  );
-}
-
+  Widget _buildStarIcon(BuildContext context, double rating) {
+    return const Icon(
+      // Custom star icon, for example, using the FontAwesome icons
+      FontAwesomeIcons.solidStar,
+      color: Colors.yellow,
+      size: 20.0,
+    );
+  }
 }
