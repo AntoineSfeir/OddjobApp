@@ -38,6 +38,7 @@ class _MessagesPageState extends State<MessagesPage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            centerTitle: true,
           ),
           body: buildUserList(),
           bottomNavigationBar: BottomAppBar(

@@ -86,6 +86,7 @@ class _SearchPageState extends State<SearchPage> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  centerTitle: true,
                 ),
               ];
             },

@@ -153,9 +153,11 @@ class _ProfileState extends State<ProfilePage> {
                           color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.bold)),
+                  centerTitle: true, // Center-align the title
+                  automaticallyImplyLeading: false,
                 ),
                 // Profile Picture and Name
-                
+
                 Row(
                   children: [
                     GestureDetector(
@@ -266,8 +268,9 @@ class _ProfileState extends State<ProfilePage> {
                         SizedBox(width: 5),
                         Text(
                           'Profile Info',
-                          style:
-                              TextStyle(fontSize: 20, color: Color.fromARGB(255, 0, 0, 0)),
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Color.fromARGB(255, 0, 0, 0)),
                         ),
                       ],
                     ),
@@ -312,7 +315,8 @@ class _ProfileState extends State<ProfilePage> {
                           Text(
                             'Job History',
                             style: TextStyle(
-                                fontSize: 20, color: Color.fromARGB(255, 0, 0, 0)),
+                                fontSize: 20,
+                                color: Color.fromARGB(255, 0, 0, 0)),
                           ),
                         ],
                       ),
@@ -354,7 +358,7 @@ class _ProfileState extends State<ProfilePage> {
                           'Manage Payment Options',
                           style: TextStyle(
                             fontSize: 20,
-                            color:  Color.fromARGB(255, 0, 0, 0),
+                            color: Color.fromARGB(255, 0, 0, 0),
                           ),
                         ),
                       ],
@@ -393,7 +397,7 @@ class _ProfileState extends State<ProfilePage> {
                             padding:
                                 EdgeInsets.only(right: 8.0), // Added padding
                             child: Icon(Icons.location_pin,
-                                size: 20, color:  Color.fromARGB(255, 0, 0, 0)),
+                                size: 20, color: Color.fromARGB(255, 0, 0, 0)),
                           ),
                           SizedBox(
                             width: 5,
@@ -401,7 +405,8 @@ class _ProfileState extends State<ProfilePage> {
                           Text(
                             'Manage Location Settings',
                             style: TextStyle(
-                                fontSize: 20, color:  Color.fromARGB(255, 0, 0, 0)),
+                                fontSize: 20,
+                                color: Color.fromARGB(255, 0, 0, 0)),
                           ),
                         ],
                       ),
@@ -438,7 +443,7 @@ class _ProfileState extends State<ProfilePage> {
                             padding:
                                 EdgeInsets.only(right: 8.0), // Added padding
                             child: Icon(Icons.info,
-                                size: 20, color:  Color.fromARGB(255, 0, 0, 0)),
+                                size: 20, color: Color.fromARGB(255, 0, 0, 0)),
                           ),
                           SizedBox(
                             width: 5,
@@ -447,7 +452,7 @@ class _ProfileState extends State<ProfilePage> {
                             'About OddJob',
                             style: TextStyle(
                               fontSize: 20,
-                              color:  Color.fromARGB(255, 0, 0, 0),
+                              color: Color.fromARGB(255, 0, 0, 0),
                             ),
                           ),
                         ],
@@ -493,25 +498,25 @@ class _ProfileState extends State<ProfilePage> {
                     },
                   ),
                   Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.indigo,
-                      ),
-                      child: IconButton(
-                        icon: const Icon(Icons.add),
-                        color: Colors.white,
-                        iconSize: 35.0,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  PostJobPage(currentUser: widget.currentUser),
-                            ),
-                          );
-                        },
-                      ),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.indigo,
                     ),
+                    child: IconButton(
+                      icon: const Icon(Icons.add),
+                      color: Colors.white,
+                      iconSize: 35.0,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                PostJobPage(currentUser: widget.currentUser),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                   IconButton(
                     icon: const Icon(Icons.chat),
                     color: Colors.white,
