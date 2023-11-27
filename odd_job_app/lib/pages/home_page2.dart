@@ -385,23 +385,10 @@ class _HomePage2State extends State<HomePage2> {
                     );
                   },
                 ),
-                const SizedBox(width: 40.0),
               ],
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => PostJobPage(currentUser: currentUser)),
-            );
-          },
-          backgroundColor: Colors.indigo, //Color.fromARGB(255, 28, 185, 83),
-          child: const Icon(Icons.add),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       ),
     );
   }

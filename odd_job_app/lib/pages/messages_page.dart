@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:odd_job_app/jobs/post_job_page.dart';
 import 'package:odd_job_app/jobs/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:odd_job_app/pages/chat_page.dart';
@@ -72,6 +73,26 @@ class _MessagesPageState extends State<MessagesPage> {
                                   )),
                         );
                       },
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.indigo,
+                      ),
+                      child: IconButton(
+                        icon: const Icon(Icons.add),
+                        color: Colors.white,
+                        iconSize: 35.0,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PostJobPage(currentUser: widget.currentUser),
+                            ),
+                          );
+                        },
+                      ),
                     ),
                     IconButton(
                       icon: const Icon(Icons.chat),
