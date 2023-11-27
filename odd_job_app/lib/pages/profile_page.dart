@@ -40,88 +40,8 @@ class _ProfileState extends State<ProfilePage> {
     thisUser = widget.currentUser; // Call the method in initState
   }
 
-  // Function to open the image picker
-  Future<void> _getImage() async {
-    try {
-      final pickedFile =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-
-      if (pickedFile != null) {
-        // Check if the image is of type JPEG
-        if (pickedFile.mimeType == 'image/jpeg') {
-          setState(() {
-            _image = File(pickedFile.path);
-          });
-
-          // Upload the selected image
-          await _uploadImage(_image);
-        } else {
-          // Display an error message if the selected file is not of type JPEG
-          // ignore: use_build_context_synchronously
-          showDialog(
-              context: context,
-              builder: (context) {
-                return const AlertDialog(
-                  content: Text('Please select a JPEG image'),
-                );
-              });
-        }
-      }
-      // ignore: empty_catches
-    } catch (error) {}
-  }
-
-  Future<void> _uploadImage(File imageFile) async {
-    try {
-      // Generate a unique filename for the image
-      String fileName = '${DateTime.now()}.png';
-
-      // Upload the image to Firebase Storage
-      firebase_storage.Reference storageReference =
-          firebase_storage.FirebaseStorage.instance.ref().child(fileName);
-
-      await storageReference.putFile(imageFile);
-
-      // Get the download URL of the uploaded image
-      String imageUrl = await storageReference.getDownloadURL();
-
-      // Update the user profile with the new avatar URL
-      await updateProfileWithNewAvatar(imageUrl);
-    } catch (error) {
-      // Display an error message if there's an error
-      // ignore: use_build_context_synchronously
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              content: Text(error.toString()),
-            );
-          });
-    }
-  }
 
   String? avatarUrl;
-// Function to update user profile with the new avatar URL
-  Future<void> updateProfileWithNewAvatar(String url) async {
-    // Extract the avatar URL from the server response
-    avatarUrl = url;
-    try {
-      // Update the user profile with the new avatar URL
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(thisUser.ID)
-          .update({'avatarUrl': avatarUrl});
-    } on FirebaseFirestore catch (e) {
-      // ignore: use_build_context_synchronously
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              content: Text(e.toString()),
-            );
-          });
-    }
-  }
 
   Future<String?> getProfilePictureUrl(String documentId) async {
     try {
@@ -153,15 +73,14 @@ class _ProfileState extends State<ProfilePage> {
                           color: Colors.white,
                           fontSize: 20,
                           fontWeight: FontWeight.bold)),
-                  centerTitle: true, // Center-align the title
-                  automaticallyImplyLeading: false,
+                          centerTitle: true, // Center-align the title
+                automaticallyImplyLeading: false, 
                 ),
                 // Profile Picture and Name
-
+                
                 Row(
                   children: [
-                    GestureDetector(
-                      onTap: _getImage, // Open image picker on tap
+                    GestureDetector( // Open image picker on tap
                       child: Container(
                         margin: EdgeInsets.only(
                           left: MediaQuery.of(context).size.width * 0.15,
@@ -268,9 +187,8 @@ class _ProfileState extends State<ProfilePage> {
                         SizedBox(width: 5),
                         Text(
                           'Profile Info',
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Color.fromARGB(255, 0, 0, 0)),
+                          style:
+                              TextStyle(fontSize: 20, color: Color.fromARGB(255, 0, 0, 0)),
                         ),
                       ],
                     ),
@@ -315,8 +233,7 @@ class _ProfileState extends State<ProfilePage> {
                           Text(
                             'Job History',
                             style: TextStyle(
-                                fontSize: 20,
-                                color: Color.fromARGB(255, 0, 0, 0)),
+                                fontSize: 20, color: Color.fromARGB(255, 0, 0, 0)),
                           ),
                         ],
                       ),
@@ -358,7 +275,7 @@ class _ProfileState extends State<ProfilePage> {
                           'Manage Payment Options',
                           style: TextStyle(
                             fontSize: 20,
-                            color: Color.fromARGB(255, 0, 0, 0),
+                            color:  Color.fromARGB(255, 0, 0, 0),
                           ),
                         ),
                       ],
@@ -397,7 +314,7 @@ class _ProfileState extends State<ProfilePage> {
                             padding:
                                 EdgeInsets.only(right: 8.0), // Added padding
                             child: Icon(Icons.location_pin,
-                                size: 20, color: Color.fromARGB(255, 0, 0, 0)),
+                                size: 20, color:  Color.fromARGB(255, 0, 0, 0)),
                           ),
                           SizedBox(
                             width: 5,
@@ -405,8 +322,7 @@ class _ProfileState extends State<ProfilePage> {
                           Text(
                             'Manage Location Settings',
                             style: TextStyle(
-                                fontSize: 20,
-                                color: Color.fromARGB(255, 0, 0, 0)),
+                                fontSize: 20, color:  Color.fromARGB(255, 0, 0, 0)),
                           ),
                         ],
                       ),
@@ -443,7 +359,7 @@ class _ProfileState extends State<ProfilePage> {
                             padding:
                                 EdgeInsets.only(right: 8.0), // Added padding
                             child: Icon(Icons.info,
-                                size: 20, color: Color.fromARGB(255, 0, 0, 0)),
+                                size: 20, color:  Color.fromARGB(255, 0, 0, 0)),
                           ),
                           SizedBox(
                             width: 5,
@@ -452,7 +368,7 @@ class _ProfileState extends State<ProfilePage> {
                             'About OddJob',
                             style: TextStyle(
                               fontSize: 20,
-                              color: Color.fromARGB(255, 0, 0, 0),
+                              color:  Color.fromARGB(255, 0, 0, 0),
                             ),
                           ),
                         ],
@@ -498,25 +414,25 @@ class _ProfileState extends State<ProfilePage> {
                     },
                   ),
                   Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.indigo,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.indigo,
+                      ),
+                      child: IconButton(
+                        icon: const Icon(Icons.add),
+                        color: Colors.white,
+                        iconSize: 35.0,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PostJobPage(currentUser: widget.currentUser),
+                            ),
+                          );
+                        },
+                      ),
                     ),
-                    child: IconButton(
-                      icon: const Icon(Icons.add),
-                      color: Colors.white,
-                      iconSize: 35.0,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                PostJobPage(currentUser: widget.currentUser),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
                   IconButton(
                     icon: const Icon(Icons.chat),
                     color: Colors.white,

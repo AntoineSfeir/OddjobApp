@@ -9,6 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:odd_job_app/jobs/compute_time_to_display.dart';
 import 'package:odd_job_app/jobs/geolocation/compute_distance.dart';
 import 'package:odd_job_app/oddjob_colors.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class JobDescriptionPage extends StatefulWidget {
   final String ID;
@@ -33,6 +34,18 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
   OddJobColors myColors = new OddJobColors();
 
   late int avgUserRating;
+
+  Future<String?> getProfilePictureUrl(String documentId) async {
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref('profilePictures/$documentId.jpg');
+      final result = await ref.getDownloadURL();
+      return result;
+    } catch (e) {
+      // The file does not exist
+      return null;
+    }
+  }
 
   Future<void> allJobs() async {
     widget.ID.trim();
@@ -133,20 +146,53 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                             ),
                           ],
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Row(
                           children: [
-                            Text(
-                              thisJob.displayName,
-                              style: const TextStyle(
-                                // Apply your desired styles here
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white, // Change color as needed
-                                // You can add more styles like fontFamily, letterSpacing, etc.
-                              ),
+                            FutureBuilder<String?>(
+                              future: getProfilePictureUrl(thisJob.posterID), //fix this
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                } else if (snapshot.hasError ||
+                                    snapshot.data == null) {
+                                  return CircleAvatar(
+                                    backgroundColor: Colors
+                                        .grey,
+                                    radius: 30.0, 
+                                
+                                  );
+                                } else {
+                                  return Center(
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors
+                                          .grey, 
+                                      backgroundImage:
+                                          NetworkImage(snapshot.data!),
+                                      radius:
+                                          30.0, // Adjust the radius as needed
+                                      // You can customize other properties such as foregroundImage, etc.
+                                    ),
+                                  );
+                                }
+                              },
                             ),
-                            buildStarRating(avgUserRating),
+                            const SizedBox(width: 10.0),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  thisJob.displayName,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                buildStarRating(avgUserRating),
+                              ],
+                            ),
                           ],
                         ),
                       ),
