@@ -75,7 +75,7 @@ class _MessagesPageState extends State<MessagesPage> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.chat),
-                      color:  Colors.white,
+                      color:  Colors.grey,
                       iconSize: 40.0,
                       onPressed: () {},
                     ),

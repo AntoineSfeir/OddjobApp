@@ -287,7 +287,7 @@ class _HomePage2State extends State<HomePage2> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.home),
-                  color: Colors.white,
+                  color: Colors.grey,
                   iconSize: 40.0,
                   onPressed: () {},
                 ),
@@ -346,7 +346,7 @@ class _HomePage2State extends State<HomePage2> {
                   builder: (context) => PostJobPage(currentUser: currentUser)),
             );
           },
-          backgroundColor: Color.fromARGB(255, 28, 185, 83),
+          backgroundColor: Colors.indigo,//Color.fromARGB(255, 28, 185, 83),
           child: const Icon(Icons.add),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

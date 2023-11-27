@@ -26,7 +26,7 @@ class ChatBubble extends StatelessWidget {
 
   Color getColor() {
     if (isSender) {
-      return const Color(0xFF2499D7);
+      return Colors.indigo;//const Color(0xFF2499D7);
     }
     return const Color(0xFFC9D1D5);
   }
