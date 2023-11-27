@@ -305,6 +305,26 @@ class _HomePage2State extends State<HomePage2> {
                     );
                   },
                 ),
+                Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.indigo,
+                      ),
+                      child: IconButton(
+                        icon: const Icon(Icons.add),
+                        color: Colors.white,
+                        iconSize: 35.0,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PostJobPage(currentUser: currentUser),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                 IconButton(
                   icon: const Icon(Icons.chat),
                   color: Colors.white,
@@ -333,23 +353,10 @@ class _HomePage2State extends State<HomePage2> {
                     );
                   },
                 ),
-                const SizedBox(width: 40.0),
               ],
             ),
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => PostJobPage(currentUser: currentUser)),
-            );
-          },
-          backgroundColor: Colors.indigo,//Color.fromARGB(255, 28, 185, 83),
-          child: const Icon(Icons.add),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       ),
     );
   }

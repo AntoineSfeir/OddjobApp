@@ -229,25 +229,25 @@ class _SearchPageState extends State<SearchPage> {
                       onPressed: () {},
                     ),
                     Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.indigo,
-          ),
-          child: IconButton(
-            icon: const Icon(Icons.add),
-            color: Colors.white,
-            iconSize: 35.0,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      PostJobPage(currentUser: widget.currentUser),
-                ),
-              );
-            },
-          ),
-        ),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.indigo,
+                      ),
+                      child: IconButton(
+                        icon: const Icon(Icons.add),
+                        color: Colors.white,
+                        iconSize: 35.0,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  PostJobPage(currentUser: widget.currentUser),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                     IconButton(
                       icon: const Icon(Icons.chat),
                       color: Colors.white,
