@@ -19,6 +19,7 @@ class user {
   late double wouldHireAgain;
   late double trustScore;
   late double averageRating;
+  late List<String> dontShow;
 
   user({
     required this.address,

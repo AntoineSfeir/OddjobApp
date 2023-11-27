@@ -172,14 +172,27 @@ class _PostJobPageState extends State<PostJobPage> {
     // jo = jobData;
   }
 
-  Future compareLists() async {
-    for (int i = 0; i < secondList.length; i++) {
-      if (!firstList.contains(secondList[i])) {
-        jobID = secondList[i].ID;
+  Future<String> compareLists() async {
+  
+
+  for (int i = 0; i < secondList.length; i++) {
+    bool found = false;
+
+    for (int j = 0; j < firstList.length; j++) {
+      if (firstList[j].ID == secondList[i].ID) {
+        found = true;
+        break; // Break the loop if a match is found in firstList
       }
     }
-    return jobID;
+
+    if (found == false) {
+      jobID = secondList[i].ID;
+      break; // Break the loop once a unique ID is found
+    }
   }
+
+  return jobID;
+}
 
   Future getUsers() async {
     await db
@@ -239,6 +252,7 @@ class _PostJobPageState extends State<PostJobPage> {
       address,
     );
     await addJobToUserCollection(current);
+    dispose();
     //await addBidsToJobFile();
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => const JobPostedSuccessfullyPage(),

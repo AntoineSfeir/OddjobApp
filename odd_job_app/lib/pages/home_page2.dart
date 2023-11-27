@@ -32,7 +32,7 @@ class _HomePage2State extends State<HomePage2> {
   List<bid> myBids = []; //bids that I have placed
   List<bid> bidsOnMyJobs =
       []; //bids that others have placed on the jobs I have posted
-
+  List<String> dontShowTheseOnSearchPage = [];
   List<String> docIDs = [];
 
   bool firstLoad = false;
@@ -72,6 +72,7 @@ class _HomePage2State extends State<HomePage2> {
     }
   }
 
+  late Job b;
   Future sortJobs() async {
     await db
         .collection('users')
@@ -81,14 +82,26 @@ class _HomePage2State extends State<HomePage2> {
         .then((snapshot) => snapshot.docs.forEach((element) {
               for (int i = 0; i < allJobsInDB.length; i++) {
                 if (element['jobID'] == allJobsInDB[i].ID) {
-                  Job b = allJobsInDB[i];
+                  print("ELEMENT jobID = ${element.id}");
+                  b = allJobsInDB[i];
                   b.working = element['Working'];
+                  print(b.working);
+                  print("JOBPOSTER = ${b.displayName}");
                   b.contractorID = element['contractorID'];
+                  //b.contractorID = element.id;
                   b.workerID = element['workerID'];
                   allActiveJobs.add(b);
+                  break;
                 }
               }
             }));
+
+    for (int i = 0; i < allActiveJobs.length; i++) {
+      print("ALLACTIVEJOBS ELEMENT ${i} WORKING = ${allActiveJobs[i].working}");
+      print(
+          "ALLACTIVEJOBS ELEMENT ${i} JOBNAME = ${allActiveJobs[i].workerID}");
+      print("ALLACTIVEJOBS ELEMENT ${i} ID = ${allActiveJobs[i].contractorID}");
+    }
     //Grab all of my bids
     print("Baby Active Jobs: ${allActiveJobs.length}");
     await db
@@ -185,6 +198,19 @@ class _HomePage2State extends State<HomePage2> {
     print("JOBSIHAVEPOSTEDLENGTH =  ${jobsIHavePosted.length}");
     allPostedJobs = jobsIHavePosted;
     await setfinalListForPostedJobsPanel();
+
+    for (int i = 0; i < allPostedJobs.length; i++) {
+      print("adding to dontshow : ${allPostedJobs[i].ID}");
+      dontShowTheseOnSearchPage.add(allPostedJobs[i].ID);
+    }
+    for (int i = 0; i < allActiveJobs.length; i++) {
+      dontShowTheseOnSearchPage.add(allActiveJobs[i].ID);
+    }
+    for (int i = 0; i < myBids.length; i++) {
+      dontShowTheseOnSearchPage.add(myBids[i].jobThatWasBidOn.ID);
+    }
+
+    currentUser.dontShow = dontShowTheseOnSearchPage;
   }
 
   Future allJobs() async {
@@ -248,7 +274,7 @@ class _HomePage2State extends State<HomePage2> {
                       expandedHeight: 200,
                       floating: true,
                       pinned: true,
-                      backgroundColor: Colors.black, 
+                      backgroundColor: Colors.black,
                       flexibleSpace: LayoutBuilder(
                         builder:
                             (BuildContext context, BoxConstraints constraints) {

@@ -10,6 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SearchPage extends StatefulWidget {
   final user currentUser;
+
   const SearchPage({super.key, required this.currentUser});
 
   @override
@@ -31,7 +32,18 @@ class _SearchPageState extends State<SearchPage> {
           .then((snapshot) => snapshot.docs.forEach((element) {
                 Job i = Job.fromSnapshot(element);
                 i.ID = element.id;
-                jo.add(i);
+                print(i.ID);
+                bool show = true;
+                for (int j = 0; j < widget.currentUser.dontShow.length; j++) {
+                  print(widget.currentUser.dontShow[j]);
+                  if (i.ID == widget.currentUser.dontShow[j]) {
+                    show = false;
+                  }
+                }
+
+                if (show) {
+                  jo.add(i);
+                }
               }));
       firstAllJOB = true;
     }

@@ -14,7 +14,7 @@ class Job {
   late String posterID;
   late List<bid> bids = [];
   //for Active Jobs
-  late bool working;
+  late String working;
   late String contractorID;
   late String workerID;
 

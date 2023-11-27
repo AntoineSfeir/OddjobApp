@@ -27,9 +27,9 @@ class _activeJobsViewTabState extends State<activeJobsViewTab> {
     myJobs = widget.activeJobs;
     for (int i = 0; i < myJobs.length; i++) {
       print("Working bool value ${myJobs[i].working}");
-      if (myJobs[i].working) {
+      if (myJobs[i].working == 'true') {
         jobsThatIAmWorking.add(myJobs[i]);
-      } else if (!myJobs[i].working) {
+      } else if (myJobs[i].working == 'false') {
         jobsThatIAmContracting.add(myJobs[i]);
       }
     }
@@ -128,12 +128,13 @@ class _activeJobsViewTabState extends State<activeJobsViewTab> {
                       textStyle: const TextStyle(fontSize: 15),
                     ),
                     onPressed: () {
-                     Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                       //   builder: (context) => GoToCheckout(jobToCheckout: job)),
-                       builder:(context) => JobRatingsPage(jobToReview: job)),
-                    );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            //   builder: (context) => GoToCheckout(jobToCheckout: job)),
+                            builder: (context) =>
+                                JobRatingsPage(jobToReview: job)),
+                      );
                     },
                     child: const Text('Finished'),
                   ),

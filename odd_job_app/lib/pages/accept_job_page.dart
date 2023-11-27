@@ -74,7 +74,7 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
         .doc(finalJob.posterID)
         .collection('ActiveJobs')
         .add({
-      'Working': false,
+      'Working': 'false',
       'jobID': finalJob.ID,
       'workerID': finalBid.bidder.ID,
       'contractorID': finalJob.posterID,
@@ -86,7 +86,7 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
         .doc(finalBid.bidder.ID)
         .collection('ActiveJobs')
         .add({
-      'Working': true,
+      'Working': 'true',
       'jobID': finalJob.ID,
       'workerID': finalBid.bidder.ID,
       'contractorID': finalJob.posterID,
@@ -109,44 +109,67 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
       body: calculated
           ? Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Job Description',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+              child: Container(
+                margin: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(12.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10.0),
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 1.0,
                   ),
-                  const SizedBox(height: 4),
-                  _buildRow("", finalBid.jobThatWasBidOn.description),
-                  const SizedBox(height: 12),
-                  _buildRow("Worker:", finalBid.bidder.username),
-                  const SizedBox(height: 12),
-                  _buildRow("Bid Amount:", finalBid.amount),
-                  const SizedBox(height: 12),
-                  _buildRow("Cost:", finalBid.amount),
-                  const SizedBox(height: 12),
-                  _buildRow("Tax:", '\$$tax'),
-                  const SizedBox(height: 12),
-                  _buildRow("Fee:", '\$$fee'),
-                  const SizedBox(height: 12),
-                  _buildRow("Total:", '\$$total'),
-                  const SizedBox(height: 24),
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        removeJobFromBidsAddToActive();
-                      },
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.green),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 3,
+                      blurRadius: 7,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    
+                    const SizedBox(height: 4),
+                    Text(
+                      finalBid.jobThatWasBidOn.title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 22,
                       ),
-                      child: const Text('Finalize Bid'),
                     ),
-                  ),
-                ],
+                      const SizedBox(height: 4),
+                    _buildRowJobDescription(
+                         finalBid.jobThatWasBidOn.description, ""),
+                    const SizedBox(height: 12),
+                    _buildBigJobDescription("Worker:", finalBid.bidder.username),
+                    const SizedBox(height: 12),
+                    _buildRow("Bid Amount:", finalBid.amount),
+                    const SizedBox(height: 12),
+                    _buildRow("Cost:", finalBid.amount),
+                    const SizedBox(height: 12),
+                    _buildRow("Tax:", '\$$tax'),
+                    const SizedBox(height: 12),
+                    _buildRow("Fee:", '\$$fee'),
+                    const SizedBox(height: 12),
+                    _buildBigJobDescription("Total:", '\$$total'),
+                    const SizedBox(height: 24),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          removeJobFromBidsAddToActive();
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.green),
+                        ),
+                        child: const Text('Finalize Bid'),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             )
           : const Center(
@@ -183,6 +206,72 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
       ),
     );
   }
+
+  Widget _buildRowJobDescription(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+             textAlign: TextAlign.left,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
+          Flexible(
+            child: Container(
+              child: Text(
+                value,
+                textAlign: TextAlign.left,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBigJobDescription(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+             textAlign: TextAlign.left,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            ),
+          ),
+          Flexible(
+            child: Container(
+              child: Text(
+                value,
+                textAlign: TextAlign.left,
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  
 }
 
 class BidClosedPage extends StatelessWidget {
