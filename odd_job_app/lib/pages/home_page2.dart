@@ -11,6 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/pages/activeJobsTab.dart';
 import 'package:odd_job_app/pages/messages_page.dart';
 import 'package:odd_job_app/pages/user_posted_jobs_view.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class HomePage2 extends StatefulWidget {
   const HomePage2({super.key});
@@ -208,6 +209,18 @@ class _HomePage2State extends State<HomePage2> {
     super.initState();
   }
 
+  Future<String?> getProfilePictureUrl(String documentId) async {
+    try {
+      final ref = firebase_storage.FirebaseStorage.instance
+          .ref('profilePictures/$documentId.jpg');
+      final result = await ref.getDownloadURL();
+      return result;
+    } catch (e) {
+      // The file does not exist
+      return null;
+    }
+  }
+
   Widget buildStarRating(int userRating) {
     List<Icon> stars = [];
     userRating = (userRating / 2).round();
@@ -248,7 +261,7 @@ class _HomePage2State extends State<HomePage2> {
                       expandedHeight: 200,
                       floating: true,
                       pinned: true,
-                      backgroundColor: Colors.black, 
+                      backgroundColor: Colors.black,
                       flexibleSpace: LayoutBuilder(
                         builder:
                             (BuildContext context, BoxConstraints constraints) {
@@ -263,9 +276,29 @@ class _HomePage2State extends State<HomePage2> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      const CircleAvatar(
-                                        backgroundColor: Colors.black,
-                                        radius: 20,
+                                      FutureBuilder<String?>(
+                                        future:
+                                            getProfilePictureUrl(currentUser.ID),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            // You can display a loading indicator here if needed
+                                            return const CircularProgressIndicator();
+                                          } else if (snapshot.hasError ||
+                                              snapshot.data == null) {
+                                            return const CircleAvatar(
+                                              backgroundColor:
+                                                  Color(0xFFC9D0D4),
+                                            );
+                                          } else {
+                                            return CircleAvatar(
+                                              backgroundColor:
+                                                  const Color(0xFFC9D0D4),
+                                              backgroundImage:
+                                                  NetworkImage(snapshot.data!),
+                                            );
+                                          }
+                                        },
                                       ),
                                       Text(
                                         currentUser.username,
