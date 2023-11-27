@@ -63,6 +63,7 @@ dependencies:
   text_form_field_wrapper: ^1.0.0
   checkout_screen_ui: ^0.1.3
   font_awesome_flutter: ^10.6.0
+  flutter_rating_bar: ^4.0.1
 
 dependency_overrides: 
  http: ^0.13.4

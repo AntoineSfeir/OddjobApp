@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/jobs/checkout/checkout_page.dart';
 import 'package:odd_job_app/jobs/checkout/go_to_checkout.dart';
 import 'package:odd_job_app/jobs/compute_time_to_display.dart';
+import 'package:odd_job_app/pages/job_rating_page.dart';
 
 class activeJobsViewTab extends StatefulWidget {
   final List<Job> activeJobs;
@@ -130,7 +131,8 @@ class _activeJobsViewTabState extends State<activeJobsViewTab> {
                      Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => GoToCheckout(jobToCheckout: job)),
+                       //   builder: (context) => GoToCheckout(jobToCheckout: job)),
+                       builder:(context) => JobRatingsPage(jobToReview: job)),
                     );
                     },
                     child: const Text('Finished'),
