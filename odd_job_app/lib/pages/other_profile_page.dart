@@ -266,7 +266,7 @@ class _TopPortion extends StatelessWidget {
                   color: Colors.black,
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    fit: BoxFit.cover,
+                    fit: BoxFit.cover,  
                     image: NetworkImage(
                       'https://imgs.search.brave.com/IqQs8kKNxjcbV_FjEBeZKiINN8kNBEh4ryKs5eF_V2I/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTMz/MjEwMDkxOS92ZWN0/b3IvbWFuLWljb24t/YmxhY2staWNvbi1w/ZXJzb24tc3ltYm9s/LmpwZz9zPTYxMng2/MTImdz0wJms9MjAm/Yz1BVlZKa3Z4UVFD/dUJoYXdIclVoRFJU/Q2VOUTNKZ3QwSzF0/WGpKc0Z5MWVnPQ',
                     ),

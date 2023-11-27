@@ -60,6 +60,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
         await db.collection('users/').doc(thisJob.posterID).get();
 
     thisUser = user.fromSnapshot(userDoc);
+    thisUser.ID=userDoc.id;
     avgUserRating = thisUser.averageRating.toInt();
   }
 
@@ -149,7 +150,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                         child: Row(
                           children: [
                             FutureBuilder<String?>(
-                              future: getProfilePictureUrl(thisJob.posterID), //fix this
+                              future: getProfilePictureUrl(thisUser.ID), //fix this
                               builder: (context, snapshot) {
                                 if (snapshot.connectionState ==
                                     ConnectionState.waiting) {
