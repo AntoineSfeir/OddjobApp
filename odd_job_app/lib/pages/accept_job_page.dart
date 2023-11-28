@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobs/bid.dart';
 import 'package:odd_job_app/jobs/job.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/pages/home_page2.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AcceptJobPage extends StatefulWidget {
   final bid thisBid;
@@ -257,6 +257,7 @@ class BidClosedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         automaticallyImplyLeading: false,
         title: const Text(
           'Close Bid',

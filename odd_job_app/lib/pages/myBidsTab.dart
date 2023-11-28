@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobs/bid.dart';
 import 'package:odd_job_app/jobs/job.dart';
+import 'package:odd_job_app/pages/home_page2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/jobs/compute_time_to_display.dart';
-import 'package:odd_job_app/pages/home_page2.dart';
 
 class MyBidsViewTab extends StatefulWidget {
   final List<bid> myBids;
@@ -118,59 +118,6 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
                                         ),
                                       ),
                                     ],
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 12,
-                                        vertical:
-                                            8), // Adjust the left padding as needed
-                                    child: Row(
-                                      children: [
-                                        Expanded(
-                                          child: TextFormField(
-                                            controller: _bidControllers[index],
-                                            keyboardType: TextInputType.number,
-                                            decoration: const InputDecoration(
-                                              hintText: 'Edit your bid',
-                                            ),
-                                            onTap: () {
-                                              
-                                            },
-                                          ),
-                                        ),
-                                        const SizedBox(width: 20),
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            changeBid(bidsForJob[index],
-                                                _bidControllers[index]);
-
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) => const HomePage2(
-                                                      )),
-                                              );
-                                            // Navigate to the accept job page
-                                          },
-                                          style: ButtonStyle(
-                                            padding: MaterialStateProperty.all<
-                                                EdgeInsetsGeometry>(
-                                              const EdgeInsets.symmetric(
-                                                  horizontal: 12, vertical: 8),
-                                            ),
-                                            minimumSize:
-                                                MaterialStateProperty.all<Size>(
-                                              const Size(100,
-                                                  36), // Adjust the size as needed
-                                            ),
-                                            backgroundColor:
-                                                MaterialStateProperty.all<
-                                                    Color>(Colors.green),
-                                          ),
-                                          child: const Text('Change Bid'),
-                                        ),
-                                      ],
-                                    ),
                                   ),
                                 ],
                               ),

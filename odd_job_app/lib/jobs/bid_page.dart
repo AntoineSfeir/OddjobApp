@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobs/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/pages/home_page2.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class BidPage extends StatefulWidget {
@@ -93,7 +93,7 @@ class _BidPageState extends State<BidPage> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        backgroundColor: Colors.indigo,
+        backgroundColor: Colors.black,
         title: const Text(
           'Bids',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -154,6 +154,7 @@ class BidPostedSuccessfullyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.black,
         automaticallyImplyLeading: false,
         title: const Text(
           'Bids',
