@@ -195,7 +195,7 @@ class _activeJobsViewTabState extends State<activeJobsViewTab> {
                         MaterialPageRoute(
                             //   builder: (context) => GoToCheckout(jobToCheckout: job)),
                             builder: (context) =>
-                                JobRatingsPage(jobToReview: job)),
+                                JobRatingsPage(jobToReview: job,workerUserName: getWorkerUserName(job.workerID),)),
                       );
                     },
                     child: const Text('Finished'),

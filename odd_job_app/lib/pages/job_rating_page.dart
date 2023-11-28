@@ -6,9 +6,9 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class JobRatingsPage extends StatefulWidget {
   final Job jobToReview;
-  
+  final String workerUserName;
 
-  JobRatingsPage({required this.jobToReview});
+  JobRatingsPage({required this.jobToReview, required this.workerUserName});
 
   @override
   State<StatefulWidget> createState() => _JobRatingsState();
@@ -23,23 +23,23 @@ class _JobRatingsState extends State<JobRatingsPage> {
   double trustScoreRating = 0;
   String review = '';
 
-  Future<void> getUserToReview() async {
-    await FirebaseFirestore.instance.collection('users').get().then(
-      (snapshot) => snapshot.docs.forEach((document) {
-        if (document.reference.id == thisJob.workerID) {
-          setState(() {
-            userToReview = document['username'];
-          });
-        }
-      }),
-    );
-  }
+  // Future<void> getUserToReview() async {
+  //   await FirebaseFirestore.instance.collection('users').get().then(
+  //         (snapshot) => snapshot.docs.forEach((document) {
+  //           if (document.reference.id == thisJob.workerID) {
+  //             setState(() {
+  //               userToReview = document['username'];
+  //             });
+  //           }
+  //         }),
+  //       );
+  // }
 
   @override
   void initState() {
     super.initState();
     thisJob = widget.jobToReview;
-    getUserToReview();
+    userToReview = widget.workerUserName;
   }
 
   @override
@@ -51,7 +51,7 @@ class _JobRatingsState extends State<JobRatingsPage> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-        padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -96,14 +96,14 @@ class _JobRatingsState extends State<JobRatingsPage> {
                 },
               ),
               const SizedBox(height: 20),
-      
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => GoToCheckout(jobToCheckout: thisJob)),
-                      );
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            GoToCheckout(jobToCheckout: thisJob)),
+                  );
                 },
                 child: const Text('Submit'),
               ),
@@ -114,8 +114,8 @@ class _JobRatingsState extends State<JobRatingsPage> {
     );
   }
 
-  
-  Widget buildRatingRow(String label, double rating, Function(double) onRatingChanged) {
+  Widget buildRatingRow(
+      String label, double rating, Function(double) onRatingChanged) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
