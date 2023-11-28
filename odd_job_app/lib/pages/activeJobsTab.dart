@@ -3,6 +3,7 @@ import 'package:odd_job_app/jobs/job.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/jobs/compute_time_to_display.dart';
 import 'package:odd_job_app/jobs/user.dart';
+import 'package:odd_job_app/pages/chat_page.dart';
 import 'package:odd_job_app/pages/job_rating_page.dart';
 
 class activeJobsViewTab extends StatefulWidget {
@@ -107,10 +108,31 @@ class _activeJobsViewTabState extends State<activeJobsViewTab> {
     String worker = "ERROR";
     for (int i = 0; i < users.length; i++) {
       if (users[i].ID == workerID) {
-        worker = "Worker : ${users[i].firstName} ${users[i].lastName.substring(0,1)}.";
+        worker =
+            "Worker : ${users[i].firstName} ${users[i].lastName.substring(0, 1)}.";
       }
     }
     return worker;
+  }
+
+  String getWorkerUserName(String workerID) {
+    String workerUserName = "ERROR";
+    for (int i = 0; i < users.length; i++) {
+      if (users[i].ID == workerID) {
+        workerUserName = users[i].username;
+      }
+    }
+    return workerUserName;
+  }
+
+  String getWorkerEmail(String workerID) {
+    String workerEmail = "ERROR";
+    for (int i = 0; i < users.length; i++) {
+      if (users[i].ID == workerID) {
+        workerEmail = users[i].email;
+      }
+    }
+    return workerEmail;
   }
 
   List<Widget> _buildContractJobList(List<Job> jobs) {
@@ -141,6 +163,14 @@ class _activeJobsViewTabState extends State<activeJobsViewTab> {
                   IconButton(
                     icon: const Icon(Icons.message),
                     onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ChatPage(
+                                  recieverEmail: getWorkerEmail(job.workerID),
+                                  recieverUser: getWorkerUserName(job.workerID),
+                                )),
+                      );
                       // Handle the action when the message icon is clicked
                       // For example, you can open a chat with the worker
                       print(
@@ -202,8 +232,32 @@ class _activeJobsViewTabState extends State<activeJobsViewTab> {
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              Text(
-                'Client: ${job.displayName}',
+              Row(
+                children: [
+                  Text(
+                    "Client: ${job.displayName}",
+                    // 'Worker: ${await}',
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.message),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ChatPage(
+                                  recieverEmail:
+                                      getWorkerEmail(job.contractorID),
+                                  recieverUser:
+                                      getWorkerUserName(job.contractorID),
+                                )),
+                      );
+                      // Handle the action when the message icon is clicked
+                      // For example, you can open a chat with the worker
+                      print(
+                          'Message icon clicked for worker: ${job.displayName}');
+                    },
+                  ),
+                ],
               ),
               Text(
                 'Address: ${job.address}',
