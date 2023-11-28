@@ -114,7 +114,7 @@ class _PostJobPageState extends State<PostJobPage> {
             ),
             hintText: 'Enter job title',
             contentPadding: const EdgeInsets.symmetric(
-                vertical: 16, horizontal: 12), // Adjust padding
+                vertical: 8, horizontal: 12), // Adjust padding
           ),
         );
       },
@@ -421,9 +421,9 @@ class _PostJobPageState extends State<PostJobPage> {
                         return Column(
                           children: [
                             const Text(
-                              'Job Title:',
+                              "",
                               style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                                  fontSize: 15, fontWeight: FontWeight.bold),
                             ),
                             _buildJobTitleAutocomplete(),
                             const SizedBox(height: 16),
@@ -431,9 +431,9 @@ class _PostJobPageState extends State<PostJobPage> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 const Text(
-                                  'Job Description:',
+                                  '',
                                   style: TextStyle(
-                                    fontSize: 24,
+                                    fontSize: 3,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -474,7 +474,7 @@ class _PostJobPageState extends State<PostJobPage> {
                                 style: ButtonStyle(
                                   backgroundColor:
                                       MaterialStateProperty.all<Color>(
-                                          Color.fromARGB(255, 11, 160, 68)),
+                                          Color(0xFF2ecc71)),
                                   minimumSize: MaterialStateProperty.all<Size>(
                                       const Size(double.infinity, 50)),
                                   padding: MaterialStateProperty.all<
@@ -520,7 +520,7 @@ class _PostJobPageState extends State<PostJobPage> {
                                     style: ButtonStyle(
                                       backgroundColor:
                                           MaterialStateProperty.all<Color>(
-                                              const Color(0xFF2598D7)),
+                                              const Color(0xFF1c2833)),
                                       minimumSize:
                                           MaterialStateProperty.all<Size>(
                                               const Size(double.infinity, 50)),

@@ -184,7 +184,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  thisJob.displayName,
+                                  "    " + thisJob.displayName,
                                   style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
