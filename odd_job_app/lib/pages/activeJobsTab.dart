@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobs/job.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:odd_job_app/jobs/checkout/checkout_page.dart';
-import 'package:odd_job_app/jobs/checkout/go_to_checkout.dart';
 import 'package:odd_job_app/jobs/compute_time_to_display.dart';
 import 'package:odd_job_app/jobs/user.dart';
 import 'package:odd_job_app/pages/job_rating_page.dart';

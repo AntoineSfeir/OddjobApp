@@ -98,13 +98,9 @@ class _HomePage2State extends State<HomePage2> {
             }));
 
     for (int i = 0; i < allActiveJobs.length; i++) {
-      print("ALLACTIVEJOBS ELEMENT ${i} WORKING = ${allActiveJobs[i].working}");
-      print(
-          "ALLACTIVEJOBS ELEMENT ${i} JOBNAME = ${allActiveJobs[i].workerID}");
-      print("ALLACTIVEJOBS ELEMENT ${i} ID = ${allActiveJobs[i].contractorID}");
+
     }
     //Grab all of my bids
-    print("Baby Active Jobs: ${allActiveJobs.length}");
     await db
         .collection('users')
         .doc(currentUser.ID)
@@ -114,20 +110,20 @@ class _HomePage2State extends State<HomePage2> {
               String bidAmount = element['bidAmount'];
               String jobID = element['jobID'];
               late Job thisJob;
-              late user thisUser;
+              //late user thisUser;
               for (int i = 0; i < allJobsInDB.length; i++) {
                 if (allJobsInDB[i].ID == jobID) {
                   thisJob = allJobsInDB[i];
                 }
               }
-              for (int i = 0; i < users.length; i++) {
-                if (users[i].ID == thisJob.posterID) {
-                  thisUser = users[i];
-                }
-              }
+              // for (int i = 0; i < users.length; i++) {
+              //   if (users[i].ID == thisJob.posterID) {
+              //     thisUser = users[i];
+              //   }
+              // }
 
               bid b = bid(
-                  bidder: thisUser,
+                  bidder: currentUser,
                   amount: bidAmount,
                   jobThatWasBidOn: thisJob);
               b.bidID = element.id;

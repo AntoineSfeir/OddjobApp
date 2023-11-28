@@ -21,6 +21,7 @@ class user {
   late double averageRating;
   late List<String> dontShow;
 
+  //Constructor for Testing
   user({
     required this.address,
     required this.city,
@@ -41,6 +42,7 @@ class user {
     required this.averageRating,
   });
 
+  //Constructor when pulling from Firebase
   factory user.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data();
     if (data == null) {

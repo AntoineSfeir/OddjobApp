@@ -7,30 +7,19 @@ import 'package:odd_job_app/jobs/compute_time_to_display.dart';
 import 'package:odd_job_app/jobs/geolocation/compute_distance.dart';
 import 'package:odd_job_app/oddjob_colors.dart';
 
-//import 'package:geolocator/geolocator.dart';
-
-// ignore: must_be_immutable
-
-//import 'package:geolocator/geolocator.dart';
-
-// ignore: must_be_immutable
 class JobCard extends StatelessWidget {
+  
   late final Job job;
   late final user currentUser;
-  ComputeDistance computedDistance = ComputeDistance();
-  computeTime computedTime = computeTime();
-  OddJobColors myColors = new OddJobColors();
-
-  // final String cardBackground = '#1B475E';
-  // final String moneyText = '#8BD5FF';
+  final ComputeDistance computedDistance = ComputeDistance();
+  final computeTime computedTime = computeTime();
+  final OddJobColors myColors = new OddJobColors();
   final String cardBackground = '#1C2833';
   final String moneyText = '#2ECC71';
   late final Color cardBackgroundColor =
       Color(int.parse(cardBackground.substring(1, 7), radix: 16) + 0xFF000000);
   late final Color moneyTextColor =
       Color(int.parse(moneyText.substring(1, 7), radix: 16) + 0xFF000000);
-
-  //used for sortByDistance
   static ComputeDistance? _computedDistance;
   static user? _currentUser;
 
@@ -68,14 +57,14 @@ class JobCard extends StatelessWidget {
     return timeRemainingA.compareTo(timeRemainingB);
   }
 
- static IconData jobIcons(String jobName) {
+// Add more cases as needed
+  static IconData jobIcons(String jobName) {
     switch (jobName) {
       case 'Lawn Care':
         return Icons.grass;
       case 'Power Washing':
         return Icons.water_drop;
       case 'House Cleaning':
-        // Add more cases as needed
         return Icons.home;
       case 'Baby Sitting':
         return Icons.child_care;
@@ -133,13 +122,13 @@ class JobCard extends StatelessWidget {
     }
   }
 
-   @override
+  @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => JobDescriptionPage(ID: job.ID),
+          builder: (context) => JobDescriptionPage(jobID: job.ID),
         ),
       ),
       child: Card(
@@ -157,8 +146,6 @@ class JobCard extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  
-                
                   Expanded(
                     child: Text(
                       job.title,
@@ -171,7 +158,7 @@ class JobCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                   Icon(
+                  Icon(
                     jobIcons(job.title),
                     color: myColors.whittishColor,
                     size: 30,

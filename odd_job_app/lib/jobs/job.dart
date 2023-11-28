@@ -18,6 +18,7 @@ class Job {
   late String contractorID;
   late String workerID;
 
+  //use this constructor when testing
   Job({
     required this.description,
     required this.title,
@@ -30,6 +31,7 @@ class Job {
     required this.posterID,
   });
 
+  //use this constructor when pulling from Firebase
   factory Job.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
     final data = document.data();
     if (data == null) {

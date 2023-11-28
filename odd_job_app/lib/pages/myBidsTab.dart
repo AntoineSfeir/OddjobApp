@@ -13,8 +13,8 @@ class MyBidsViewTab extends StatefulWidget {
 }
 
 class _MyBidsViewTabState extends State<MyBidsViewTab> {
+  
   List<TextEditingController> _bidControllers = [];
-
   late final List<bid> myJobs;
   computeTime computedTime = computeTime();
 
@@ -99,8 +99,8 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
                           const SizedBox(height: 12),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: bidsForJob.map((thebid) {
-                              return Column(
+                            children: <Widget>[
+                             Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
@@ -112,7 +112,7 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
                                       ),
                                       const SizedBox(width: 4),
                                       Text(
-                                        ' Current Bid: ${thebid.amount}',
+                                        ' Current Bid: ${bidsForJob[index].amount}',
                                         style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -140,7 +140,7 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
                                         ElevatedButton(
                                           onPressed: () {
                                             changeBid(
-                                                thebid, _bidControllers[index]);
+                                                bidsForJob[index], _bidControllers[index]);
                                             // Navigate to the accept job page
                                           },
                                           style: ButtonStyle(
@@ -164,8 +164,8 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
                                     ),
                                   ),
                                 ],
-                              );
-                            }).toList(),
+                              ),
+                        ],
                           ),
                         ],
                       ),

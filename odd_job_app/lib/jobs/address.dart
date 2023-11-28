@@ -17,10 +17,16 @@ class SearchLocationScreen extends StatefulWidget {
 }
 
 class _SearchLocationScreenState extends State<SearchLocationScreen> {
+  
   List<AutocompletePreds> placePredictions = [];
   Set<Marker> _markers = {};
   TextEditingController locationController = TextEditingController();
   FocusNode locationFocus = FocusNode();
+  List<Location> location = [];
+  LatLng addressLoc = const LatLng(0, 0);
+  String addressAddress = '';
+  final Completer<GoogleMapController> _controller = Completer();
+  late GoogleMapController? _mapController;
 
   void placeAutocomplete(String query) async {
     Uri uri =
@@ -49,12 +55,6 @@ class _SearchLocationScreenState extends State<SearchLocationScreen> {
         address,
         localeIdentifier: localeIdentifier,
       );
-
-  List<Location> location = [];
-  LatLng addressLoc = const LatLng(0, 0);
-  String addressAddress = '';
-  final Completer<GoogleMapController> _controller = Completer();
-  late GoogleMapController? _mapController;
 
   Future<void> initializeLocation(String address) async {
     location = await locationFromAddress(address);
@@ -165,66 +165,3 @@ class _SearchLocationScreenState extends State<SearchLocationScreen> {
         ));
   }
 }
-
-
-
-
-
-
-
-
-// class AddressPage extends StatefulWidget {
-//   const AddressPage({super.key});
-
-//   @override
-//   State<AddressPage> createState() => _AddressPageState();
-// }
-
-// class _AddressPageState extends State<AddressPage> {
-//   late GoogleMapController mapController;
-//   late String searchAddress;
-
-//   Completer<GoogleMapController> _controller = Completer();
-//   List<Marker> _marker = [];
-//   final List<Marker> _list = const [
-//     Marker(
-//       markerId: MarkerId('1'),
-//       position: LatLng(30.3997505, -91.1715959),
-//       infoWindow: InfoWindow(
-//         title: "My current location",
-//       ),
-//     )
-//   ];
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _marker.addAll(_list);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text("Enter Your Address Here"),
-//         centerTitle: true,
-//       ),
-//       body: SafeArea(
-//       child: GoogleMap(
-//           initialCameraPosition: CameraPosition(
-//             target: LatLng(30.3997505, -91.1715959),
-//           ),
-//           mapType: MapType.normal,
-//           myLocationButtonEnabled: true,
-//           compassEnabled: true,
-//           markers: Set<Marker>.of(_marker),
-//           onMapCreated: (GoogleMapController controller) {
-//             _controller.complete(controller);
-//           }),
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         child
-//       ),
-//     );
-//   }
-// }

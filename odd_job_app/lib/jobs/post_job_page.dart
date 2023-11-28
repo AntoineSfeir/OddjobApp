@@ -18,31 +18,29 @@ class PostJobPage extends StatefulWidget {
 }
 
 class _PostJobPageState extends State<PostJobPage> {
-  final userEmail = FirebaseAuth.instance.currentUser!.email;
-  final db = FirebaseFirestore.instance;
-  List<user> users = [];
-  late String displayName;
-  late String userID;
-  late int totalPostedJobs = widget.currentUser.jobsPosted;
 
   final _jobTitleController = TextEditingController();
   final _jobDescriptionController = TextEditingController();
   final _jobDeadlineDateController = TextEditingController();
   final _jobDeadLineTimeController = TextEditingController();
   final _jobStartingBidController = TextEditingController();
+  final PanelController _panelController = PanelController();
 
+  final userEmail = FirebaseAuth.instance.currentUser!.email;
+  final db = FirebaseFirestore.instance;
+
+  late String displayName;
+  late String userID;
+  late String jobID;
+  String stringForAddressButton = 'Address';
+  late int totalPostedJobs = widget.currentUser.jobsPosted;
   late Timestamp jobTime;
-  String enterYourAddressHere = 'Address';
   DateTime? _selectedDate = DateTime.now();
-
-  //9999999999
   late LatLng location;
   late String address = '';
-
   List<Job> firstList = [];
   List<Job> secondList = [];
-  late String jobID;
-
+  List<user> users = [];
   final List<String> possibleJobs = [
     'Lawn Care',
     'Power Washing',
@@ -73,6 +71,7 @@ class _PostJobPageState extends State<PostJobPage> {
     'Pet Training',
     'Construction'
   ];
+
 
   Autocomplete<String> _buildJobTitleAutocomplete() {
     return Autocomplete<String>(
@@ -147,33 +146,8 @@ class _PostJobPageState extends State<PostJobPage> {
       },
     );
   }
-
-  Future allJobs(bool whichList) async {
-    if (whichList == true) {
-      await db
-          .collection('jobs')
-          .get()
-          .then((snapshot) => snapshot.docs.forEach((element) {
-                Job i = Job.fromSnapshot(element);
-                i.ID = element.id;
-                firstList.add(i);
-              }));
-    } else {
-      await db
-          .collection('jobs')
-          .get()
-          .then((snapshot) => snapshot.docs.forEach((element) {
-                Job i = Job.fromSnapshot(element);
-                i.ID = element.id;
-                secondList.add(i);
-              }));
-    }
-    // final jobData = snapshot.docs.map((e) => Job.fromSnapshot(e)).toList();
-    // jo = jobData;
-  }
-
-  Future<String> compareLists() async {
   
+  Future<String> getAddedJobsFirebaseID() async {
 
   for (int i = 0; i < secondList.length; i++) {
     bool found = false;
@@ -193,129 +167,7 @@ class _PostJobPageState extends State<PostJobPage> {
 
   return jobID;
 }
-
-  Future getUsers() async {
-    await db
-        .collection('users')
-        .get()
-        .then((snapshot) => snapshot.docs.forEach((element) {
-              user i = user.fromSnapshot(element);
-              i.ID = element.id;
-              users.add(i);
-            }));
-  }
-
-  void upDateLocation(String chosenAddress, LatLng coordinates) {
-    location = coordinates;
-    address = chosenAddress;
-  }
-
-  @override
-  void dispose() {
-    _jobTitleController.dispose();
-    _jobDescriptionController.dispose();
-    _jobDeadlineDateController.dispose();
-    _jobDeadLineTimeController.dispose();
-    _jobStartingBidController.dispose();
-
-    super.dispose();
-  }
-
-  // Post job to database
-  Future postJob() async {
-    await getUsers();
-    await allJobs(true);
-    late user current;
-    for (int i = 0; i < users.length; i++) {
-      if (users[i].email == userEmail) {
-        displayName =
-            "${users[i].firstName} ${users[i].lastName.characters.first.toUpperCase()}.";
-        userID = users[i].ID;
-        current = users[i];
-      }
-    }
-
-    totalPostedJobs++;
-
-    await FirebaseFirestore.instance.collection('users').doc(userID).set({
-      "totalPostedJobs": totalPostedJobs,
-    }, SetOptions(merge: true)).then(
-        ((value) => print("Total Posted Jobs Updated")));
-
-    GeoPoint g = GeoPoint(location.latitude, location.longitude);
-    addJobDetails(
-      _jobTitleController.text.trim(),
-      _jobDescriptionController.text.trim(),
-      _selectedDate!,
-      _jobStartingBidController.text.trim(),
-      g,
-      address,
-    );
-    await addJobToUserCollection(current);
-    dispose();
-    //await addBidsToJobFile();
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (context) => const JobPostedSuccessfullyPage(),
-    ));
-  }
-
-  // Future addBidsToJobFile() async {
-  //   CollectionReference jobDoc = FirebaseFirestore.instance
-  //       .collection('jobs')
-  //       .doc(jobID)
-  //       .collection('currentBids');
-
-  //   jobDoc
-  //       .add({
-  //         'userID': 'PLACEHOLDER',
-  //         'bidAmount': 'PLACEHOLDER',
-  //       })
-  //       .then((value) => print("job put in userPosted"))
-  //       .catchError(
-  //           (error) => print("Failed to put job in UserPoster: $error"));
-  // }
-
-  Future addJobToUserCollection(user current) async {
-    await allJobs(false);
-    await compareLists();
-    print("JOB ID = $jobID");
-    user thisUser = current;
-    print("USER ID = ${thisUser.ID}");
-    CollectionReference postedJobs = FirebaseFirestore.instance
-        .collection('users')
-        .doc(thisUser.ID)
-        .collection('postedJobs');
-    print('ABOUT TO POST \n\n\n\n');
-
-    return postedJobs
-        .add({
-          'ID': jobID,
-        })
-        .then((value) => print("job put in userPosted"))
-        .catchError(
-            (error) => print("Failed to put job in UserPoster: $error"));
-  }
-
-  // Add job details to database
-  Future addJobDetails(String title, String description, DateTime date,
-      String bid, GeoPoint coords, String address) async {
-    CollectionReference jobs = FirebaseFirestore.instance.collection('jobs');
-    return jobs
-        .add({
-          'title': title,
-          'description': description,
-          'deadline': date,
-          'address': address,
-          'longlat': coords,
-          'startingBid': bid,
-          'jobPoster': userEmail,
-          'displayName': displayName,
-          'posterID': userID,
-        })
-        .then((value) => print("Job posted"))
-        .catchError((error) => print("Failed to post job: $error"));
-  }
-
+  
   // Select date deadline
   Future<void> _selectDeadLineDate(BuildContext context) async {
     final DateTime currentDate = DateTime.now();
@@ -358,25 +210,150 @@ class _PostJobPageState extends State<PostJobPage> {
       });
     }
   }
-
-  late final PanelController _panelController = PanelController();
-
+ 
   void _openSlidingPanel() {
     _panelController.open();
   }
-
+  
+  void upDateLocation(String chosenAddress, LatLng coordinates) {
+    location = coordinates;
+    address = chosenAddress;
+  }
+  
   void handleVariableChange(LatLng newLocation, String newAddress) {
     location = newLocation;
     address = newAddress;
-    enterYourAddressHere = address;
+    stringForAddressButton = address;
     setState(() {
-      enterYourAddressHere;
+      stringForAddressButton;
     });
     _panelController.close();
     print(address);
-    print('LOCATION = ${location.latitude}, ${location.longitude}');
-    print('WE DIDIDIDIDIDIDIDIDI IT RAHHHHHHHHHHHHHHHHHH');
   }
+
+  // Post this Job to database and Update information in current user
+  // Uses getUsers(), putJobsInProperList(),addJobDetails(), addJobToUserCollection(), and dispose()
+  Future postJob() async {
+
+    await getUsers();
+    await putJobsInProperList(true);
+    late user current;
+    for (int i = 0; i < users.length; i++) {
+      if (users[i].email == userEmail) {
+        displayName =
+            "${users[i].firstName} ${users[i].lastName.characters.first.toUpperCase()}.";
+        userID = users[i].ID;
+        current = users[i];
+      }
+    }
+
+    totalPostedJobs++;
+    await FirebaseFirestore.instance.collection('users').doc(userID).set({
+      "totalPostedJobs": totalPostedJobs,
+    }, SetOptions(merge: true)).then(
+        ((value) => print("Total Posted Jobs Updated")));
+
+    GeoPoint g = GeoPoint(location.latitude, location.longitude);
+    addJobDetails(
+      _jobTitleController.text.trim(),
+      _jobDescriptionController.text.trim(),
+      _selectedDate!,
+      _jobStartingBidController.text.trim(),
+      g,
+      address,
+    );
+    await addJobToUserCollection(current);
+    dispose();
+    //await addBidsToJobFile();
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => const JobPostedSuccessfullyPage(),
+    ));
+  }
+    
+    Future getUsers() async {
+    await db
+        .collection('users')
+        .get()
+        .then((snapshot) => snapshot.docs.forEach((element) {
+              user i = user.fromSnapshot(element);
+              i.ID = element.id;
+              users.add(i);
+            }));
+  }
+    
+    Future putJobsInProperList(bool whichList) async {
+    if (whichList == true) {
+      await db
+          .collection('jobs')
+          .get()
+          .then((snapshot) => snapshot.docs.forEach((element) {
+                Job i = Job.fromSnapshot(element);
+                i.ID = element.id;
+                firstList.add(i);
+              }));
+    } else {
+      await db
+          .collection('jobs')
+          .get()
+          .then((snapshot) => snapshot.docs.forEach((element) {
+                Job i = Job.fromSnapshot(element);
+                i.ID = element.id;
+                secondList.add(i);
+              }));
+    }
+  }
+  // Add job details to database
+    
+    Future addJobDetails(String title, String description, DateTime date,
+      String bid, GeoPoint coords, String address) async {
+    CollectionReference jobs = FirebaseFirestore.instance.collection('jobs');
+    return jobs
+        .add({
+          'title': title,
+          'description': description,
+          'deadline': date,
+          'address': address,
+          'longlat': coords,
+          'startingBid': bid,
+          'jobPoster': userEmail,
+          'displayName': displayName,
+          'posterID': userID,
+        })
+        .then((value) => print("Job posted"))
+        .catchError((error) => print("Failed to post job: $error"));
+  }
+    
+    Future addJobToUserCollection(user current) async {
+    await putJobsInProperList(false);
+    await getAddedJobsFirebaseID();
+    print("JOB ID = $jobID");
+    user thisUser = current;
+    print("USER ID = ${thisUser.ID}");
+    CollectionReference postedJobs = FirebaseFirestore.instance
+        .collection('users')
+        .doc(thisUser.ID)
+        .collection('postedJobs');
+    print('ABOUT TO POST \n\n\n\n');
+
+    return postedJobs
+        .add({
+          'ID': jobID,
+        })
+        .then((value) => print("job put in userPosted"))
+        .catchError(
+            (error) => print("Failed to put job in UserPoster: $error"));
+  }
+    
+    @override
+    void dispose() {
+      _jobTitleController.dispose();
+      _jobDescriptionController.dispose();
+      _jobDeadlineDateController.dispose();
+      _jobDeadLineTimeController.dispose();
+      _jobStartingBidController.dispose();
+      super.dispose();
+    }
+
 
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -494,7 +471,7 @@ class _PostJobPageState extends State<PostJobPage> {
                                     SizedBox(
                                       width: 200,
                                       child: Text(
-                                        enterYourAddressHere,
+                                        stringForAddressButton,
                                         textAlign: TextAlign.center,
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(

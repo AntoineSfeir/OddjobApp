@@ -12,27 +12,26 @@ import 'package:odd_job_app/oddjob_colors.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class JobDescriptionPage extends StatefulWidget {
-  final String ID;
+  final String jobID;
   // ignore: non_constant_identifier_names
-  const JobDescriptionPage({super.key, required this.ID});
+  const JobDescriptionPage({super.key, required this.jobID});
 
   @override
   State<JobDescriptionPage> createState() => _JobDescriptionPageState();
 }
 
 class _JobDescriptionPageState extends State<JobDescriptionPage> {
+
   ComputeDistance computedDistance = ComputeDistance();
   computeTime computedTime = computeTime();
+  OddJobColors myColors = OddJobColors();
   final Set<Marker> _markers = {};
   final db = FirebaseFirestore.instance;
   late Job thisJob;
   late user thisUser;
   late GoogleMapController _mapController;
-  late LatLng l;
+  late LatLng coordinates;
   late String userDocId;
-
-  OddJobColors myColors = new OddJobColors();
-
   late int avgUserRating;
 
   Future<String?> getProfilePictureUrl(String documentId) async {
@@ -42,23 +41,22 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
       final result = await ref.getDownloadURL();
       return result;
     } catch (e) {
-      // The file does not exist
       return null;
     }
   }
 
-  Future<void> allJobs() async {
-    widget.ID.trim();
-    print('jobs/${widget.ID}');
+  Future getJobInfo() async {
+    
+    widget.jobID.trim();
     DocumentSnapshot<Map<String, dynamic>> doc =
-        await db.collection('jobs/').doc(widget.ID).get();
+        await db.collection('jobs/').doc(widget.jobID).get();
     thisJob = Job.fromSnapshot(doc);
     thisJob.ID = doc.id;
-    l = LatLng(thisJob.longlat.latitude, thisJob.longlat.longitude);
+    coordinates = LatLng(thisJob.longlat.latitude, thisJob.longlat.longitude);
+
 
     DocumentSnapshot<Map<String, dynamic>> userDoc =
         await db.collection('users/').doc(thisJob.posterID).get();
-
     thisUser = user.fromSnapshot(userDoc);
     thisUser.ID=userDoc.id;
     avgUserRating = thisUser.averageRating.toInt();
@@ -67,8 +65,32 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
   @override
   void initState() {
     super.initState();
+    getJobInfo(); // Call the method in initState
+  }
 
-    allJobs(); // Call the method in initState
+  Widget buildStarRating(int userRating) {
+    List<Icon> stars = [];
+    userRating = (userRating / 2).round();
+
+    for (int i = 0; i < 5; i++) {
+      stars.add(
+        Icon(
+          Icons.star,
+          color: i < userRating ? Colors.amber : Colors.grey,
+          size: 28, // Adjusted star size
+        ),
+      );
+    }
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 15.0,
+        top: 8.0, // Added top padding for spacing
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: stars,
+      ),
+    );
   }
 
   @override
@@ -81,7 +103,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
         elevation: 0,
       ),
       body: FutureBuilder(
-        future: allJobs(),
+        future: getJobInfo(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (thisJob != null) {
@@ -89,13 +111,13 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Container(
+                    SizedBox(
                       height: 200, // Adjusted height
                       //margin: const EdgeInsets.all(16),
 
                       child: GoogleMap(
                         initialCameraPosition:
-                            CameraPosition(target: l, zoom: 18),
+                            CameraPosition(target: coordinates, zoom: 18),
                         mapType: MapType.normal,
                         myLocationButtonEnabled: true,
                         compassEnabled: true,
@@ -105,14 +127,14 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                           _markers.add(Marker(
                             markerId: const MarkerId('jobMarker'),
                             visible: true,
-                            position: l,
+                            position: coordinates,
                             infoWindow: InfoWindow(
                               title:
                                   '${computedDistance.compute(thisJob.longlat, thisJob.longlat).toString()} miles',
                             ),
                           ));
                           _mapController.animateCamera(
-                            CameraUpdate.newLatLng(l),
+                            CameraUpdate.newLatLng(coordinates),
                           );
                         },
                       ),
@@ -158,7 +180,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                                       child: CircularProgressIndicator());
                                 } else if (snapshot.hasError ||
                                     snapshot.data == null) {
-                                  return CircleAvatar(
+                                  return const CircleAvatar(
                                     backgroundColor: Colors
                                         .grey,
                                     radius: 30.0, 
@@ -184,7 +206,7 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "    " + thisJob.displayName,
+                                  "    ${thisJob.displayName}",
                                   style: const TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
@@ -361,29 +383,4 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
     );
   }
 
-  Widget buildStarRating(int userRating) {
-    List<Icon> stars = [];
-    userRating = (userRating / 2).round();
-
-    for (int i = 0; i < 5; i++) {
-      stars.add(
-        Icon(
-          Icons.star,
-          color: i < userRating ? Colors.amber : Colors.grey,
-          size: 28, // Adjusted star size
-        ),
-      );
-    }
-
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 15.0,
-        top: 8.0, // Added top padding for spacing
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: stars,
-      ),
-    );
-  }
 }

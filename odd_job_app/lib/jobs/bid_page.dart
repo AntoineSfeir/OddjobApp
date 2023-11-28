@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:odd_job_app/jobs/job.dart';
 import 'package:odd_job_app/jobs/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-// ignore_for_file: unused_import
+
 
 class BidPage extends StatefulWidget {
   final String stringBid;
@@ -15,6 +14,7 @@ class BidPage extends StatefulWidget {
 }
 
 class _BidPageState extends State<BidPage> {
+
   late String userID;
   late String bidAmount;
   late int bid;
