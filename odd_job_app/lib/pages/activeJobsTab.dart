@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/jobs/checkout/checkout_page.dart';
 import 'package:odd_job_app/jobs/checkout/go_to_checkout.dart';
 import 'package:odd_job_app/jobs/compute_time_to_display.dart';
+import 'package:odd_job_app/jobs/user.dart';
 import 'package:odd_job_app/pages/job_rating_page.dart';
 
 class activeJobsViewTab extends StatefulWidget {
@@ -18,7 +19,18 @@ class _activeJobsViewTabState extends State<activeJobsViewTab> {
   late final List<Job> myJobs;
   late final List<Job> jobsThatIAmWorking = [];
   late final List<Job> jobsThatIAmContracting = [];
+  late List<user> users = [];
   computeTime computedTime = computeTime();
+
+  Future getCurrentUser() async {
+    await FirebaseFirestore.instance.collection('users').get().then(
+          (snapshot) => snapshot.docs.forEach((element) {
+            user i = user.fromSnapshot(element);
+            i.ID = element.id;
+            users.add(i);
+          }),
+        );
+  }
 
   @override
   void initState() {
@@ -51,18 +63,29 @@ class _activeJobsViewTabState extends State<activeJobsViewTab> {
   }
 
   Widget _buildContractExpansionTile(String title, List<Job> jobs) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        elevation: 1,
-        child: ExpansionTile(
-          title: Text(
-            title,
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          children: _buildContractJobList(jobs),
-        ),
-      ),
+    return FutureBuilder(
+      future: getCurrentUser(),
+      builder: ((context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              elevation: 1,
+              child: ExpansionTile(
+                title: Text(
+                  title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                children: _buildContractJobList(jobs),
+              ),
+            ),
+          );
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      }),
     );
   }
 
@@ -80,6 +103,16 @@ class _activeJobsViewTabState extends State<activeJobsViewTab> {
         ),
       ),
     );
+  }
+
+  String getWorkerName(String workerID) {
+    String worker = "ERROR";
+    for (int i = 0; i < users.length; i++) {
+      if (users[i].ID == workerID) {
+        worker = "Worker : ${users[i].firstName} ${users[i].lastName.substring(0,1)}.";
+      }
+    }
+    return worker;
   }
 
   List<Widget> _buildContractJobList(List<Job> jobs) {
@@ -104,7 +137,8 @@ class _activeJobsViewTabState extends State<activeJobsViewTab> {
               Row(
                 children: [
                   Text(
-                    'Worker: ${job.displayName}',
+                    getWorkerName(job.workerID),
+                    // 'Worker: ${await}',
                   ),
                   IconButton(
                     icon: const Icon(Icons.message),
