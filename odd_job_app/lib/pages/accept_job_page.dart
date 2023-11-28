@@ -131,30 +131,32 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    
                     const SizedBox(height: 4),
                     Text(
                       finalBid.jobThatWasBidOn.title,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 22,
                       ),
                     ),
-                      const SizedBox(height: 4),
-                    _buildRowJobDescription(
-                         finalBid.jobThatWasBidOn.description, ""),
+                   _buildBigJobDescription(
+                               finalBid.jobThatWasBidOn.description, ""),
                     const SizedBox(height: 12),
-                    _buildBigJobDescription("Worker:", finalBid.bidder.username),
+                    Text('Worker: ${finalBid.bidder.username}',
+                    style: const TextStyle(
+                       fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                    ) ,),
                     const SizedBox(height: 12),
-                    _buildRow("Bid Amount:", finalBid.amount),
+                    _buildRow("Bid Amount:", double.parse(finalBid.amount)),
                     const SizedBox(height: 12),
-                    _buildRow("Cost:", finalBid.amount),
+                    _buildRow("Cost:", double.parse(finalBid.amount)),
                     const SizedBox(height: 12),
-                    _buildRow("Tax:", '\$$tax'),
+                    _buildRow("Tax:", tax),
                     const SizedBox(height: 12),
-                    _buildRow("Fee:", '\$$fee'),
+                    _buildRow("Fee:", fee),
                     const SizedBox(height: 12),
-                    _buildBigJobDescription("Total:", '\$$total'),
+                    _buildBigJobDescription("Total:", total.toStringAsFixed(2)),
                     const SizedBox(height: 24),
                     Center(
                       child: ElevatedButton(
@@ -178,7 +180,7 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
     );
   }
 
-  Widget _buildRow(String label, String value) {
+  Widget _buildRow(String label, double value) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
@@ -194,7 +196,7 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
           Flexible(
             child: Container(
               child: Text(
-                value,
+                value.toStringAsFixed(2),
                 style: const TextStyle(
                   fontSize: 16,
                   color: Colors.black,
@@ -207,69 +209,35 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
     );
   }
 
-  Widget _buildRowJobDescription(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-             textAlign: TextAlign.left,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
-          Flexible(
-            child: Container(
-              child: Text(
-                value,
-                textAlign: TextAlign.left,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
-  Widget _buildBigJobDescription(String label, String value) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            label,
-             textAlign: TextAlign.left,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 22,
-            ),
+Widget _buildBigJobDescription(String label, String value) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 8.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          textAlign: TextAlign.left,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
           ),
-          Flexible(
-            child: Container(
-              child: Text(
-                value,
-                textAlign: TextAlign.left,
-                style: const TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
-            ),
+        ),
+        Text(
+          value,
+          textAlign: TextAlign.left,
+          style: const TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+            color: Colors.black,
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
+
 
   
 }
