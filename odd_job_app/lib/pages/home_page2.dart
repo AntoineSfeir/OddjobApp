@@ -13,9 +13,9 @@ import 'package:odd_job_app/pages/messages_page.dart';
 import 'package:odd_job_app/pages/user_posted_jobs_view.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
+
 class HomePage2 extends StatefulWidget {
   const HomePage2({super.key});
-
   @override
   State<HomePage2> createState() => _HomePage2State();
 }
@@ -23,16 +23,15 @@ class HomePage2 extends StatefulWidget {
 class _HomePage2State extends State<HomePage2> {
   final db = FirebaseFirestore.instance;
   final userEmail = FirebaseAuth.instance.currentUser!.email;
-  List<user> users = [];
   late user currentUser;
 
+  List<user> users = [];
   List<Job> allJobsInDB = [];
   List<Job> allActiveJobs = [];
   List<Job> finalListForPostedJobsPanel = [];
   List<Job> allPostedJobs = [];
   List<bid> myBids = []; //bids that I have placed
-  List<bid> bidsOnMyJobs =
-      []; //bids that others have placed on the jobs I have posted
+  List<bid> bidsOnMyJobs = []; //bids that others have placed on the jobs I have posted
   List<String> dontShowTheseOnSearchPage = [];
   List<String> docIDs = [];
 
@@ -89,7 +88,7 @@ class _HomePage2State extends State<HomePage2> {
                   print(b.working);
                   print("JOBPOSTER = ${b.displayName}");
                   b.contractorID = element['contractorID'];
-                  //b.contractorID = element.id;
+                  
                   b.workerID = element['workerID'];
                   allActiveJobs.add(b);
                   break;
@@ -280,6 +279,7 @@ class _HomePage2State extends State<HomePage2> {
                     (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[
                     SliverAppBar(
+                      automaticallyImplyLeading: false,
                       expandedHeight: 200,
                       floating: true,
                       pinned: true,

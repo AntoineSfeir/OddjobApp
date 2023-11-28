@@ -3,6 +3,7 @@ import 'package:odd_job_app/jobs/bid.dart';
 import 'package:odd_job_app/jobs/job.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/jobs/compute_time_to_display.dart';
+import 'package:odd_job_app/pages/home_page2.dart';
 
 class MyBidsViewTab extends StatefulWidget {
   final List<bid> myBids;
@@ -13,7 +14,6 @@ class MyBidsViewTab extends StatefulWidget {
 }
 
 class _MyBidsViewTabState extends State<MyBidsViewTab> {
-  
   List<TextEditingController> _bidControllers = [];
   late final List<bid> myJobs;
   computeTime computedTime = computeTime();
@@ -100,7 +100,7 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                             Column(
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
@@ -133,14 +133,23 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
                                             decoration: const InputDecoration(
                                               hintText: 'Edit your bid',
                                             ),
-                                            onTap: () {},
+                                            onTap: () {
+                                              
+                                            },
                                           ),
                                         ),
                                         const SizedBox(width: 20),
                                         ElevatedButton(
                                           onPressed: () {
-                                            changeBid(
-                                                bidsForJob[index], _bidControllers[index]);
+                                            changeBid(bidsForJob[index],
+                                                _bidControllers[index]);
+
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) => const HomePage2(
+                                                      )),
+                                              );
                                             // Navigate to the accept job page
                                           },
                                           style: ButtonStyle(
@@ -165,7 +174,7 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
                                   ),
                                 ],
                               ),
-                        ],
+                            ],
                           ),
                         ],
                       ),

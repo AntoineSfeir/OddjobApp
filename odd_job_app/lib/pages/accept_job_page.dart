@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobs/bid.dart';
 import 'package:odd_job_app/jobs/job.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:odd_job_app/pages/home_page2.dart';
 
 class AcceptJobPage extends StatefulWidget {
   final bid thisBid;
@@ -256,6 +257,7 @@ class BidClosedPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           'Close Bid',
           style: TextStyle(
@@ -270,7 +272,7 @@ class BidClosedPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Animated Check Mark
-            AnimatedCheckMark(),
+            AnimatedCheckmark(),
 
             // Success Message
             SizedBox(height: 16),
@@ -290,14 +292,14 @@ class BidClosedPage extends StatelessWidget {
   }
 }
 
-class AnimatedCheckMark extends StatefulWidget {
-  const AnimatedCheckMark({super.key});
+class AnimatedCheckmark extends StatefulWidget {
+  const AnimatedCheckmark({Key? key}) : super(key: key);
 
   @override
-  _AnimatedCheckMarkState createState() => _AnimatedCheckMarkState();
+  _AnimatedCheckmarkState createState() => _AnimatedCheckmarkState();
 }
 
-class _AnimatedCheckMarkState extends State<AnimatedCheckMark>
+class _AnimatedCheckmarkState extends State<AnimatedCheckmark>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _opacityAnimation;
@@ -307,13 +309,11 @@ class _AnimatedCheckMarkState extends State<AnimatedCheckMark>
   void initState() {
     super.initState();
 
-    // Animation Controller
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 1),
     );
 
-    // Opacity Animation
     _opacityAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
@@ -322,7 +322,6 @@ class _AnimatedCheckMarkState extends State<AnimatedCheckMark>
       curve: const Interval(0.7, 1.0, curve: Curves.easeOut),
     ));
 
-    // Scale Animation
     _scaleAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
@@ -331,8 +330,15 @@ class _AnimatedCheckMarkState extends State<AnimatedCheckMark>
       curve: const Interval(0.0, 0.7, curve: Curves.easeOutBack),
     ));
 
-    // Start the animation
     _controller.forward();
+
+    // Redirect to another page after 4 seconds
+    Future.delayed(const Duration(seconds: 4), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage2()),
+      );
+    });
   }
 
   @override
