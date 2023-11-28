@@ -6,6 +6,7 @@ import 'package:odd_job_app/jobs/job.dart';
 import 'package:odd_job_app/jobs/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:checkout_screen_ui/checkout_page.dart';
+import 'package:odd_job_app/pages/home_page2.dart';
 
 class GoToCheckout extends StatefulWidget {
   late final Job jobToCheckout;
@@ -21,14 +22,14 @@ class _GoToCheckoutState extends State<GoToCheckout> {
   Future<void> getUserToPay() async {
     await FirebaseFirestore.instance.collection('users').get().then(
           (snapshot) => snapshot.docs.forEach((document) {
-            if (document.reference.id ==  jobToCheckout.workerID) {
+            if (document.reference.id == jobToCheckout.workerID) {
               setState(() {
-               userToPay = document['username'];
+                userToPay = document['username'];
               });
             }
           }),
         );
-  } 
+  }
 
   @override
   void initState() {
@@ -77,14 +78,22 @@ class _GoToCheckoutState extends State<GoToCheckout> {
     /// no requirement to have this function built here in live code.
     Future<void> _creditPayClicked(CardFormResults results) async {
       // you can update the pay button to show something is happening
-      _payBtnKey.currentState?.updateStatus(CardPayButtonStatus.processing);
+
+      //_payBtnKey.currentState?.updateStatus(CardPayButtonStatus.processing);
 
       // This is where you would implement you Third party credit card
       // processing api
-      demoOnlyStuff.callTransactionApi(_payBtnKey);
+      // demoOnlyStuff.callTransactionApi(_payBtnKey);
 
       // ignore: avoid_print
-      print(results);
+
+      //gets IDS for contractor active
+
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) =>  JobPostedSuccessfullyPage(myJob: jobToCheckout,),
+      ));
+
+      print("results");
       // WARNING: you should NOT print the above out using live code
     }
 
@@ -94,13 +103,18 @@ class _GoToCheckoutState extends State<GoToCheckout> {
     /// simple demo array of [PriceItem]s used to make the demo work. The total
     /// price is automatically added later.
     final List<PriceItem> _priceItems = [
-      
       PriceItem(
           name: jobToCheckout.title,
           quantity: 1,
           totalPriceCents: int.parse(jobToCheckout.startingBid) * 100),
-      PriceItem(name: 'Tax', quantity: 1, totalPriceCents: int.parse(jobToCheckout.startingBid)),
-      PriceItem(name: 'Fee', quantity: 1, totalPriceCents: int.parse(jobToCheckout.startingBid)) 
+      PriceItem(
+          name: 'Tax',
+          quantity: 1,
+          totalPriceCents: int.parse(jobToCheckout.startingBid)),
+      PriceItem(
+          name: 'Fee',
+          quantity: 1,
+          totalPriceCents: int.parse(jobToCheckout.startingBid))
     ];
 
     /// REQUIRED: A name representing the receiver of the funds from user
@@ -202,5 +216,172 @@ class DemoOnlyStuff {
       provideSomeTimeBeforeReset(_payBtnKey);
       return;
     });
+  }
+}
+
+class JobPostedSuccessfullyPage extends StatelessWidget {
+  final Job myJob;
+  const JobPostedSuccessfullyPage({super.key, required this.myJob});
+
+  Future deleteActive(Job jobToCheckout) async {
+    String contractorActiveID = '';
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(jobToCheckout.contractorID)
+        .collection('ActiveJobs')
+        .get()
+        .then((snapshot) => snapshot.docs.forEach((element) {
+              if (element['contractorID'] == jobToCheckout.contractorID &&
+                  element['workerID'] == jobToCheckout.workerID) {
+                contractorActiveID = element.id;
+              }
+            }));
+    //gets IDs for worker active
+    String workerActiveID = '';
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(jobToCheckout.workerID)
+        .collection('ActiveJobs')
+        .get()
+        .then((snapshot) => snapshot.docs.forEach((element) {
+              if (element['contractorID'] == jobToCheckout.contractorID &&
+                  element['workerID'] == jobToCheckout.workerID) {
+                workerActiveID = element.id;
+              }
+            }));
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(jobToCheckout.contractorID)
+        .collection('ActiveJobs')
+        .doc(contractorActiveID)
+        .delete();
+
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(jobToCheckout.workerID)
+        .collection('ActiveJobs')
+        .doc(workerActiveID)
+        .delete();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text(
+          '',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+      body: Center(
+        child: FutureBuilder(
+          future: deleteActive(myJob),
+          builder: ((context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Animated Check Mark
+                  AnimatedCheckmark(),
+
+                  // Success Message
+                  SizedBox(height: 16),
+                  Text(
+                    'Payment Accepted',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ],
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          }),
+        ),
+      ),
+    );
+  }
+}
+
+class AnimatedCheckmark extends StatefulWidget {
+  const AnimatedCheckmark({Key? key}) : super(key: key);
+
+  @override
+  _AnimatedCheckmarkState createState() => _AnimatedCheckmarkState();
+}
+
+class _AnimatedCheckmarkState extends State<AnimatedCheckmark>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _opacityAnimation;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+
+    _opacityAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: const Interval(0.7, 1.0, curve: Curves.easeOut),
+    ));
+
+    _scaleAnimation = Tween<double>(
+      begin: 0.0,
+      end: 1.0,
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: const Interval(0.0, 0.7, curve: Curves.easeOutBack),
+    ));
+
+    _controller.forward();
+
+    // Redirect to another page after 4 seconds
+    Future.delayed(const Duration(seconds: 3), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage2()),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Opacity(
+          opacity: _opacityAnimation.value,
+          child: Transform.scale(
+            scale: _scaleAnimation.value,
+            child: const Icon(
+              Icons.check_circle,
+              color: Colors.green,
+              size: 100,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
