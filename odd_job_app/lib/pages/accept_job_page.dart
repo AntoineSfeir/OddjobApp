@@ -139,14 +139,27 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
                         fontSize: 22,
                       ),
                     ),
-                   _buildBigJobDescription(
-                               finalBid.jobThatWasBidOn.description, ""),
-                    const SizedBox(height: 12),
-                    Text('Worker: ${finalBid.bidder.username}',
-                    style: const TextStyle(
-                       fontWeight: FontWeight.bold,
+                    _buildBigJobDescription(
+                        finalBid.jobThatWasBidOn.description, ""),
+                    const SizedBox(height: 8),
+                    Row(
+                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          'Worker: ',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                        Text(
+                      finalBid.bidder.username,
+                      style: const TextStyle(
                         fontSize: 18,
-                    ) ,),
+                      ),
+                    ),
+                      ],
+                    ),
                     const SizedBox(height: 12),
                     _buildRow("Bid Amount:", double.parse(finalBid.amount)),
                     const SizedBox(height: 12),
@@ -156,7 +169,7 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
                     const SizedBox(height: 12),
                     _buildRow("Fee:", fee),
                     const SizedBox(height: 12),
-                    _buildBigJobDescription("Total:", total.toStringAsFixed(2)),
+                    _buildRow("Total:", double.parse(total.toStringAsFixed(2))),
                     const SizedBox(height: 24),
                     Center(
                       child: ElevatedButton(
@@ -190,17 +203,15 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
             label,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 16,
+              fontSize: 18,
             ),
           ),
           Flexible(
-            child: Container(
-              child: Text(
-                value.toStringAsFixed(2),
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.black,
-                ),
+            child: Text(
+              value.toStringAsFixed(2),
+              style: const TextStyle(
+                fontSize: 18,
+                color: Colors.black,
               ),
             ),
           ),
@@ -209,37 +220,33 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
     );
   }
 
-
-Widget _buildBigJobDescription(String label, String value) {
-  return Padding(
-    padding: const EdgeInsets.symmetric(vertical: 8.0),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          textAlign: TextAlign.left,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
+  Widget _buildBigJobDescription(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            label,
+            textAlign: TextAlign.left,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
           ),
-        ),
-        Text(
-          value,
-          textAlign: TextAlign.left,
-          style: const TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
+          Text(
+            value,
+            textAlign: TextAlign.left,
+            style: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            ),
           ),
-        ),
-      ],
-    ),
-  );
-}
-
-
-  
+        ],
+      ),
+    );
+  }
 }
 
 class BidClosedPage extends StatelessWidget {
