@@ -345,7 +345,7 @@ class _HomePage2State extends State<HomePage2> {
                                     ),
                                   ),
                             background: Image.network(
-                              "https://media.istockphoto.com/id/1089592832/vector/studio-room-blurred-background-soft-gradient-pastel-with-lighting-well-use-as-business.jpg?s=612x612&w=0&k=20&c=nm5mtV7RsQvvcRIIcbZkhxqOwK0sVIjbIjnNVd2ORew=",
+                              "https://cdn.discordapp.com/attachments/1156019469907394671/1178809496936648704/VJ-71054__39080.png?ex=65777ee5&is=656509e5&hm=3bb5f84edf9e8cc0652e6cff74c076dd8b283e05082c6cf86ac4bc1d4bdf2091&",
                               fit: BoxFit.cover,
                             ),
                           );
