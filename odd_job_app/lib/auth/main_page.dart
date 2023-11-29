@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/auth/auth_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:odd_job_app/pages/home_page2.dart';
+import 'package:odd_job_app/pages/homePage_Pages/home_page2.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
