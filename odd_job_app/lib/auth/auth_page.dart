@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:odd_job_app/pages/login_Pages/login_page.dart';
-import 'package:odd_job_app/pages/login_Pages/register_page.dart';
+import 'package:odd_job_app/pages/login_page.dart';
+import 'package:odd_job_app/pages/register_page.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({super.key});
