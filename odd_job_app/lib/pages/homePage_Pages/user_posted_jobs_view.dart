@@ -18,7 +18,7 @@ class UsersPostedJobsView extends StatefulWidget {
 class _UsersPostedJobsViewState extends State<UsersPostedJobsView> {
   late final List<Job> myJobs;
   computeTime computedTime = computeTime();
-
+  
   @override
   void initState() {
     super.initState();
