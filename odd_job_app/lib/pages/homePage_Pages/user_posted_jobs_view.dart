@@ -18,7 +18,7 @@ class UsersPostedJobsView extends StatefulWidget {
 class _UsersPostedJobsViewState extends State<UsersPostedJobsView> {
   late final List<Job> myJobs;
   computeTime computedTime = computeTime();
-  
+
   @override
   void initState() {
     super.initState();
@@ -113,8 +113,13 @@ class _UsersPostedJobsViewState extends State<UsersPostedJobsView> {
                                     shadowColor: Colors.grey[300],
                                     margin:
                                         const EdgeInsets.symmetric(vertical: 8),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          20), // Adjust the radius as needed
+                                    ),
                                     child: Padding(
-                                      padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+                                      padding: const EdgeInsets.fromLTRB(
+                                          12, 8, 12, 8),
                                       child: ListTile(
                                         title: ElevatedButton(
                                           onPressed: () {
@@ -123,7 +128,8 @@ class _UsersPostedJobsViewState extends State<UsersPostedJobsView> {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     OtherProfilePage(
-                                                  recieverUser: currentBid.bidder,
+                                                  recieverUser:
+                                                      currentBid.bidder,
                                                 ),
                                               ),
                                             );
