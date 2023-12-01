@@ -225,7 +225,7 @@ class _SearchPageState extends State<SearchPage> {
                   children: [
                     IconButton(
                       icon: const Icon(Icons.home),
-                      color: Colors.white,
+                      color: Colors.grey,
                       iconSize: 40.0,
                       onPressed: () {
                         Navigator.push(
@@ -237,7 +237,7 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.search),
-                      color: Colors.grey,
+                      color: Colors.white,
                       iconSize: 40.0,
                       onPressed: () {},
                     ),
@@ -263,7 +263,7 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.chat),
-                      color: Colors.white,
+                      color: Colors.grey,
                       iconSize: 40.0,
                       onPressed: () {
                         Navigator.push(
@@ -277,7 +277,7 @@ class _SearchPageState extends State<SearchPage> {
                     ),
                     IconButton(
                         icon: const Icon(Icons.person),
-                        color: Colors.white,
+                        color: Colors.grey,
                         iconSize: 40.0,
                         onPressed: () {
                           Navigator.push(

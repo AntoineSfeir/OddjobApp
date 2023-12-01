@@ -3,14 +3,14 @@ import 'package:odd_job_app/jobAssets/bid.dart';
 import 'package:odd_job_app/jobAssets/job.dart';
 import 'package:odd_job_app/jobAssets/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:odd_job_app/pages/homePage_Pages/myBidsTab.dart';
-import 'package:odd_job_app/pages/jobs_Pages/search_page.dart';
-import 'package:odd_job_app/pages/jobs_Pages/post_job_page.dart';
-import 'package:odd_job_app/pages/profile_Pages/profile_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:odd_job_app/pages/homePage_Pages/activeJobsTab.dart';
 import 'package:odd_job_app/pages/chat_Pages/messages_page.dart';
+import 'package:odd_job_app/pages/homePage_Pages/activeJobsTab.dart';
+import 'package:odd_job_app/pages/homePage_Pages/myBidsTab.dart';
 import 'package:odd_job_app/pages/homePage_Pages/user_posted_jobs_view.dart';
+import 'package:odd_job_app/pages/jobs_Pages/post_job_page.dart';
+import 'package:odd_job_app/pages/jobs_Pages/search_page.dart';
+import 'package:odd_job_app/pages/profile_Pages/profile_page.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 
@@ -365,7 +365,7 @@ class _HomePage2State extends State<HomePage2> {
                   children: _tabs.map((tab) {
                     if (tab.text == "Posted Jobs") {
                       return UsersPostedJobsView(
-                        myJobs: finalListForPostedJobsPanel,
+                        myJobs: allJobsInDB,
                       );
                     } else if (tab.text == "Active Jobs") {
                       return activeJobsViewTab(activeJobs: allActiveJobs);
@@ -395,13 +395,13 @@ class _HomePage2State extends State<HomePage2> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.home),
-                  color: Colors.white,
+                  color: Colors.grey,
                   iconSize: 40.0,
                   onPressed: () {},
                 ),
                 IconButton(
                   icon: const Icon(Icons.search),
-                  color: Colors.grey,
+                  color: Colors.white,
                   iconSize: 40.0,
                   onPressed: () {
                     Navigator.push(
@@ -435,7 +435,7 @@ class _HomePage2State extends State<HomePage2> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.chat),
-                  color: Colors.grey,
+                  color: Colors.white,
                   iconSize: 40.0,
                   onPressed: () {
                     Navigator.push(
@@ -449,7 +449,7 @@ class _HomePage2State extends State<HomePage2> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.person),
-                  color: Colors.grey,
+                  color: Colors.white,
                   iconSize: 40.0,
                   onPressed: () {
                     Navigator.push(
