@@ -1,5 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/jobAssets/bid.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Job {
   late String description;
@@ -13,6 +13,9 @@ class Job {
   late String displayName;
   late String posterID;
   late List<bid> bids = [];
+  double lowestBid = 0;
+  double currentBid = 0;
+  double highestBid = 0;
   //for Active Jobs
   late String working;
   late String contractorID;

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-//import 'package:google_maps/google_maps_visualization.dart';
 import 'package:odd_job_app/jobAssets/job.dart';
+import 'package:odd_job_app/oddjob_colors.dart';
 import 'package:odd_job_app/jobAssets/user.dart';
-import 'package:odd_job_app/pages/jobs_Pages/bid_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:odd_job_app/pages/profile_Pages/other_profile_page.dart';
+import 'package:odd_job_app/pages/jobs_Pages/bid_page.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:odd_job_app/jobAssets/compute_time_to_display.dart';
+import 'package:odd_job_app/pages/profile_Pages/other_profile_page.dart';
 import 'package:odd_job_app/jobAssets/geolocation/compute_distance.dart';
-import 'package:odd_job_app/oddjob_colors.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+//import 'package:google_maps/google_maps_visualization.dart';
 
 class JobDescriptionPage extends StatefulWidget {
   final String jobID;
@@ -287,21 +287,10 @@ class _JobDescriptionPageState extends State<JobDescriptionPage> {
                             ),
                             Row(
                               children: [
-                                const Padding(
+                               Padding(
                                   padding: EdgeInsets.all(8.0),
                                   child: Text(
-                                    'Current Bid', // Concatenating '$' with the startingBid
-                                    style: TextStyle(
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black, // Adjust the color
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    '\$${thisJob.startingBid}', // Concatenating '$' with the startingBid
+                                    'Current Bid: \$${thisJob.startingBid}', // Concatenating '$' with the startingBid
                                     style: const TextStyle(
                                       fontSize: 18.0,
                                       fontWeight: FontWeight.bold,

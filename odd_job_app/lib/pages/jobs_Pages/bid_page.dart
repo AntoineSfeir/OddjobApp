@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobAssets/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:odd_job_app/pages/homePage_Pages/home_page2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:odd_job_app/pages/homePage_Pages/home_page2.dart';
 
 
 class BidPage extends StatefulWidget {
@@ -95,7 +95,7 @@ class _BidPageState extends State<BidPage> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text(
-          'Bids',
+          'Place your bid',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
       ),

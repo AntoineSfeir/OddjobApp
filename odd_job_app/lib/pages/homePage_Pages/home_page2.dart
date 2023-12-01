@@ -3,15 +3,15 @@ import 'package:odd_job_app/jobAssets/bid.dart';
 import 'package:odd_job_app/jobAssets/job.dart';
 import 'package:odd_job_app/jobAssets/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:odd_job_app/pages/homePage_Pages/myBidsTab.dart';
-import 'package:odd_job_app/pages/jobs_Pages/search_page.dart';
-import 'package:odd_job_app/pages/jobs_Pages/post_job_page.dart';
-import 'package:odd_job_app/pages/profile_Pages/profile_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:odd_job_app/pages/homePage_Pages/activeJobsTab.dart';
+import 'package:odd_job_app/pages/jobs_Pages/search_page.dart';
+import 'package:odd_job_app/pages/homePage_Pages/myBidsTab.dart';
+import 'package:odd_job_app/pages/jobs_Pages/post_job_page.dart';
 import 'package:odd_job_app/pages/chat_Pages/messages_page.dart';
-import 'package:odd_job_app/pages/homePage_Pages/user_posted_jobs_view.dart';
+import 'package:odd_job_app/pages/profile_Pages/profile_page.dart';
+import 'package:odd_job_app/pages/homePage_Pages/activeJobsTab.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:odd_job_app/pages/homePage_Pages/user_posted_jobs_view.dart';
 
 
 class HomePage2 extends StatefulWidget {
@@ -432,7 +432,7 @@ class _HomePage2State extends State<HomePage2> {
                       );
                     },
                   ),
-                ),
+                ), 
                 IconButton(
                   icon: const Icon(Icons.chat),
                   color: Colors.white,
