@@ -52,7 +52,7 @@ class _LoginPageState extends State<LoginPage> {
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
 
-              const Icon(Icons.art_track, size: 100, color: Colors.indigoAccent),
+              const Icon(Icons.palette, size: 100, color: Colors.indigoAccent),
               // Hello again!
               Text('Welcome Back!',
                   style: GoogleFonts.bebasNeue(

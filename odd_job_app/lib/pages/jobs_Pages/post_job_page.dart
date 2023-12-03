@@ -1,12 +1,12 @@
 import "package:flutter/material.dart";
 import 'package:odd_job_app/jobAssets/job.dart';
 import 'package:odd_job_app/jobAssets/user.dart';
-import 'package:odd_job_app/pages/jobs_Pages/address.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:odd_job_app/pages/homePage_Pages/home_page2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:odd_job_app/pages/jobs_Pages/address.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:odd_job_app/pages/homePage_Pages/home_page2.dart';
 
 // ignore_for_file: library_private_types_in_public_api
 
@@ -43,33 +43,15 @@ class _PostJobPageState extends State<PostJobPage> {
   List<Job> secondList = [];
   List<user> users = [];
   final List<String> possibleJobs = [
-    'Lawn Care',
-    'Power Washing',
-    'House Cleaning',
-    'Baby Sitting',
-    'Car Washing',
     'House Painting',
-    'Tutoring',
-    'Moving Assistance',
-    'Pet Sitting',
-    'Plumbing',
-    'Computer Repair',
-    'Programming',
-    'Technology Services',
     'Graphic Design',
-    'Car Repair',
     'Other',
-    'Appliance Troubleshooting',
     'Woodworking',
-    'Delivery',
-    'Furniture Cleaning',
-    'Gardening',
     'Photography',
-    'Sewing and Alterations',
+'Sewing and Alterations',
     'Organization',
-    'Art',
+    'Painting',
     'Music',
-    'Pet Training',
     'Construction'
   ];
 
