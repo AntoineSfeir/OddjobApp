@@ -52,12 +52,7 @@ class _LoginPageState extends State<LoginPage> {
             child:
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
 
-              Image.asset(
-                'assets/imgs/OddjobLogo.png',
-                width: 300, // Adjust the width as needed
-                height: 150, // Adjust the height as needed
-
-              ),
+              const Icon(Icons.art_track, size: 100, color: Colors.indigoAccent),
               // Hello again!
               Text('Welcome Back!',
                   style: GoogleFonts.bebasNeue(

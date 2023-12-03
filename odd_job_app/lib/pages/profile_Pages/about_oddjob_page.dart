@@ -11,7 +11,7 @@ class AboutOddJobPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text(
-          "About OddJob",
+          "About ArtBoard",
           style: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -28,7 +28,7 @@ class AboutOddJobPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Welcome to OddJob!",
+              "Welcome to ArtBoard!",
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -44,7 +44,7 @@ class AboutOddJobPage extends StatelessWidget {
             ),
             SizedBox(height: 8),
             Text(
-              "OddJob is a platform connecting job seekers with various odd jobs and gig opportunities. Whether you need help with tasks or you're looking for a quick job, OddJob is here to help you find the right match.",
+              "ArtBoard is a platform connecting job seekers with various odd jobs and gig opportunities. Whether you need help with tasks or you're looking for a quick job, OddJob is here to help you find the right match.",
               style: TextStyle(fontSize: 16),
             ),
             SizedBox(height: 16),

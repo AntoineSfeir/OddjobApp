@@ -121,7 +121,7 @@ class _GoToCheckoutState extends State<GoToCheckout> {
     ///
     /// Demo vendor name provided here. User's need to know who is receiving
     /// their money
-    const String _payToName = 'OddJob';
+    const String _payToName = 'ArtBoard';
 
     /// REQUIRED: (if you are using the native pay options)
     ///
