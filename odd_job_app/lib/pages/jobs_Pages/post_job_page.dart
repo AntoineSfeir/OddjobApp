@@ -48,7 +48,7 @@ class _PostJobPageState extends State<PostJobPage> {
     'Other',
     'Woodworking',
     'Photography',
-'Sewing and Alterations',
+    'Sewing and Alterations',
     'Organization',
     'Painting',
     'Music',

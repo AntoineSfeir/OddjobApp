@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobAssets/bid.dart';
-import 'package:odd_job_app/jobAssets/job.dart';
+import 'package:odd_job_app/jobAssets/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:odd_job_app/pages/homePage_Pages/home_page2.dart';
 import 'package:odd_job_app/jobAssets/compute_time_to_display.dart';
+import 'package:odd_job_app/pages/profile_Pages/other_profile_page.dart';
 
 class MyBidsViewTab extends StatefulWidget {
   final List<bid> myBids;
@@ -17,6 +18,8 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
   List<TextEditingController> _bidControllers = [];
   late final List<bid> myBids;
   computeTime computedTime = computeTime();
+  List<user> userThatPostedJob = [];
+  final db = FirebaseFirestore.instance;
 
   @override
   void initState() {
@@ -76,9 +79,10 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
                     children: [
                       Text(
                         myBids[index].jobThatWasBidOn.title,
-                        style: const TextStyle(fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: Colors.black),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.black),
                       ),
                       Text(
                         computedTime
@@ -87,13 +91,21 @@ class _MyBidsViewTabState extends State<MyBidsViewTab> {
                       ),
                     ],
                   ),
-                  subtitle: Text(
-                    'Winning Bid: \$${bidsForJob[index].amount}',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                      color: Colors.indigo,
-                    ),
+                  subtitle: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                          'Posted by ${myBids[index].jobThatWasBidOn.displayName}',
+                          style: const TextStyle(color: Colors.indigo)),
+                      Text(
+                        'Winning Bid: \$${bidsForJob[index].amount}',
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: Colors.green,
+                        ),
+                      ),
+                    ],
                   ),
                   children: [
                     Padding(
