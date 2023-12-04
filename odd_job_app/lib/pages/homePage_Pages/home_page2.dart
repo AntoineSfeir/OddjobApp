@@ -395,13 +395,13 @@ class _HomePage2State extends State<HomePage2> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.home),
-                  color: Colors.white,
+                  color: Colors.grey,
                   iconSize: 40.0,
                   onPressed: () {},
                 ),
                 IconButton(
                   icon: const Icon(Icons.search),
-                  color: Colors.grey,
+                  color: Colors.white,
                   iconSize: 40.0,
                   onPressed: () {
                     Navigator.push(
@@ -435,7 +435,7 @@ class _HomePage2State extends State<HomePage2> {
                 ), 
                 IconButton(
                   icon: const Icon(Icons.chat),
-                  color: Colors.grey,
+                  color: Colors.white,
                   iconSize: 40.0,
                   onPressed: () {
                     Navigator.push(
@@ -449,7 +449,7 @@ class _HomePage2State extends State<HomePage2> {
                 ),
                 IconButton(
                   icon: const Icon(Icons.person),
-                  color: Colors.grey,
+                  color: Colors.white,
                   iconSize: 40.0,
                   onPressed: () {
                     Navigator.push(
