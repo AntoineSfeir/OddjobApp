@@ -393,7 +393,7 @@ class _PostJobPageState extends State<PostJobPage> {
                                   fontSize: 15, fontWeight: FontWeight.bold),
                             ),
                             _buildJobTitleAutocomplete(),
-                            const SizedBox(height: 16),
+                            const SizedBox(height: 8),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
@@ -527,7 +527,6 @@ class _PostJobPageState extends State<PostJobPage> {
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(height: 16),
                                 ],
                               ),
                             ),
@@ -539,11 +538,10 @@ class _PostJobPageState extends State<PostJobPage> {
                                 const Text(
                                   'Starting Bid',
                                   style: TextStyle(
-                                    fontSize: 24,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                const SizedBox(height: 10),
                                 TextField(
                                   keyboardType: TextInputType.number,
                                   controller: _jobStartingBidController,
