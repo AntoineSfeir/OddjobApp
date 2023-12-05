@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
 import 'package:odd_job_app/jobAssets/user.dart';
 import "package:firebase_auth/firebase_auth.dart";
-import 'package:odd_job_app/chatAssets/chat_service.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
+import 'package:odd_job_app/chatAssets/chat_service.dart';
 import 'package:odd_job_app/chatAssets/message_bubble.dart';
 import 'package:odd_job_app/pages/profile_Pages/other_profile_page.dart';
 
@@ -67,10 +67,20 @@ class _ChatPageState extends State<ChatPage> {
         appBar: AppBar(
           backgroundColor:
                 Colors.black,
-          title: Text(widget.recieverUser),
+          title: Text(widget.recieverUser,
+              style: const TextStyle(
+                  color: Colors.white)),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ), // Display the user's name
           actions: [
             IconButton(
               icon: const Icon(Icons.person),
+              color: Colors.white,
               onPressed: () {
                 Navigator.push(
                   context,
