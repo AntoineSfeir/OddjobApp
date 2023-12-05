@@ -28,7 +28,15 @@ class _ManageLocationInfoPageState extends State<ManageLocationInfoPage> {
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
          backgroundColor: Colors.black,
-        title: const Text("Manage Location Info"),
+        title: const Text("Manage Location Info",
+        style: TextStyle(color: Colors.white),),
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
       ),
       body: SingleChildScrollView(
         child: Container(

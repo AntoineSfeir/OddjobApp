@@ -20,10 +20,18 @@ class _PaymentOptionsPageState extends State<PaymentOptionsPage> {
         title: const Text(
           "Payment Options",
           style: TextStyle(
+            color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

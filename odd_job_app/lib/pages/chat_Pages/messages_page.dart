@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:odd_job_app/pages/jobs_Pages/post_job_page.dart';
 import 'package:odd_job_app/jobAssets/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:odd_job_app/pages/chat_Pages/chat_page.dart';
-import 'package:odd_job_app/pages/homePage_Pages/home_page2.dart';
-import 'package:odd_job_app/pages/jobs_Pages/search_page.dart';
-import 'package:odd_job_app/chatAssets/chat_service.dart';
-import 'package:odd_job_app/pages/profile_Pages/profile_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:odd_job_app/chatAssets/chat_service.dart';
+import 'package:odd_job_app/pages/chat_Pages/chat_page.dart';
+import 'package:odd_job_app/pages/jobs_Pages/search_page.dart';
+import 'package:odd_job_app/pages/jobs_Pages/post_job_page.dart';
+import 'package:odd_job_app/pages/homePage_Pages/home_page2.dart';
+import 'package:odd_job_app/pages/profile_Pages/profile_page.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class MessagesPage extends StatefulWidget {
@@ -34,6 +34,7 @@ class _MessagesPageState extends State<MessagesPage> {
             title: const Text(
               "Messages",
               style: TextStyle(
+                color: Colors.white,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),

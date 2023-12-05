@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobAssets/user.dart';
 import 'package:odd_job_app/pages/chat_Pages/chat_page.dart';
-import 'package:odd_job_app/pages/profile_Pages/job_history_page.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:odd_job_app/pages/profile_Pages/job_history_page.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class OtherProfilePage extends StatefulWidget {
@@ -41,13 +41,14 @@ class _OtherProfileState extends State<OtherProfilePage> {
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: Text(thisUser.username),
+        title: Text(thisUser.username, style: const TextStyle(color: Colors.white)),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
       ),
       body: Center(
         child: Column(

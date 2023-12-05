@@ -12,10 +12,18 @@ class JobHistoryPage extends StatelessWidget {
         title: const Text(
           "Job History",
           style: TextStyle(
+            color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
       ),
       body: const Padding(
         padding: EdgeInsets.all(16.0),

@@ -32,13 +32,22 @@ late final user thisUser;
           title: const Text(
             "Account Information",
             style: TextStyle(
+              color: Colors.white,
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
           ),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
           actions: [
             IconButton(
               icon: const Icon(Icons.logout),
+              color: Colors.white,
               onPressed: () {
                 FirebaseAuth.instance.signOut();
                 Navigator.push(

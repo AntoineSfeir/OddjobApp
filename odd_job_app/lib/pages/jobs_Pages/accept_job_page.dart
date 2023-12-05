@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:odd_job_app/jobAssets/bid.dart';
 import 'package:odd_job_app/jobAssets/job.dart';
-import 'package:odd_job_app/pages/homePage_Pages/home_page2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:odd_job_app/pages/homePage_Pages/home_page2.dart';
 
 class AcceptJobPage extends StatefulWidget {
   final bid thisBid;
@@ -101,11 +101,21 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home:
+    Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
         backgroundColor: Colors.black,
-        title: const Text("Accept Job"),
+        title: const Text("Accept Job", style: TextStyle(color: Colors.white),),
+           leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
       ),
       body: calculated
           ? Padding(
@@ -144,7 +154,7 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
                         finalBid.jobThatWasBidOn.description, ""),
                     const SizedBox(height: 8),
                     Row(
-                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
                           'Worker: ',
@@ -154,11 +164,11 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
                           ),
                         ),
                         Text(
-                      finalBid.bidder.username,
-                      style: const TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
+                          finalBid.bidder.username,
+                          style: const TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 12),
@@ -191,7 +201,9 @@ class _AcceptJobPageState extends State<AcceptJobPage> {
           : const Center(
               child: CircularProgressIndicator(),
             ),
+    ),
     );
+    
   }
 
   Widget _buildRow(String label, double value) {

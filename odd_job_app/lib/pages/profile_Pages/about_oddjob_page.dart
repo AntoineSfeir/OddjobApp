@@ -6,21 +6,28 @@ class AboutOddJobPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+       home:
+    Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: const Text(
           "About ArtBoard",
           style: TextStyle(
+            color: Colors.white,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
+            icon: const Icon(Icons.arrow_back),
+            color: Colors.white,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
       ),
       body: const Padding(
         padding: EdgeInsets.all(16.0),
@@ -76,6 +83,7 @@ class AboutOddJobPage extends StatelessWidget {
           ],
         ),
       ),
+    )
     );
   }
 }

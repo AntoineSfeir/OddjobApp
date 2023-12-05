@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:odd_job_app/jobAssets/checkout/go_to_checkout.dart';
 import 'package:odd_job_app/jobAssets/job.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:odd_job_app/jobAssets/checkout/go_to_checkout.dart';
 
 class JobRatingsPage extends StatefulWidget {
   final Job jobToReview;
@@ -44,74 +44,86 @@ class _JobRatingsState extends State<JobRatingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Rate $userToReview'), // Display the user's name
-        backgroundColor: Colors.black,
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildRatingRow(
-                'Communication:',
-                communicationRating,
-                (rating) => setState(() => communicationRating = rating),
-              ),
-              const SizedBox(height: 20),
-              buildRatingRow(
-                'Work Quality:',
-                workQualityRating,
-                (rating) => setState(() => workQualityRating = rating),
-              ),
-              const SizedBox(height: 20),
-              buildRatingRow(
-                'Would Hire Again:',
-                wouldHireAgainRating,
-                (rating) => setState(() => wouldHireAgainRating = rating),
-              ),
-              const SizedBox(height: 20),
-              buildRatingRow(
-                'Trust Score:',
-                trustScoreRating,
-                (rating) => setState(() => trustScoreRating = rating),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Review:',
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  hintText: 'Type your review here',
-                  border: OutlineInputBorder(),
-                ),
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                onChanged: (value) {
-                  // Logic to save the review
-                  review = value;
-                },
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            GoToCheckout(jobToCheckout: thisJob)),
-                  );
-                },
-                child: const Text('Submit'),
-              ),
-            ],
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text('Rate $userToReview',
+                style: const TextStyle(
+                    color: Colors.white)), // Display the user's name
+            backgroundColor: Colors.black,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              color: Colors.white,
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
-        ),
-      ),
-    );
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildRatingRow(
+                    'Communication:',
+                    communicationRating,
+                    (rating) => setState(() => communicationRating = rating),
+                  ),
+                  const SizedBox(height: 20),
+                  buildRatingRow(
+                    'Work Quality:',
+                    workQualityRating,
+                    (rating) => setState(() => workQualityRating = rating),
+                  ),
+                  const SizedBox(height: 20),
+                  buildRatingRow(
+                    'Would Hire Again:',
+                    wouldHireAgainRating,
+                    (rating) => setState(() => wouldHireAgainRating = rating),
+                  ),
+                  const SizedBox(height: 20),
+                  buildRatingRow(
+                    'Trust Score:',
+                    trustScoreRating,
+                    (rating) => setState(() => trustScoreRating = rating),
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'Review:',
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'Type your review here',
+                      border: OutlineInputBorder(),
+                    ),
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    onChanged: (value) {
+                      // Logic to save the review
+                      review = value;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                GoToCheckout(jobToCheckout: thisJob)),
+                      );
+                    },
+                    child: const Text('Submit'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ));
   }
 
   Widget buildRatingRow(
