@@ -1,9 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:odd_job_app/jobAssets/bid.dart';
 import 'package:odd_job_app/jobAssets/job.dart';
-import 'package:odd_job_app/jobAssets/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:checkout_screen_ui/checkout_page.dart';
 import 'package:odd_job_app/pages/homePage_Pages/home_page2.dart';
